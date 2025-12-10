@@ -1,33 +1,28 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
+import { MainNav } from "./main-nav";
 
 import { siteConfig } from "@/config/site";
-import { Icons } from "@/components/icons";
+
+import { cn } from "@/lib/utils";
+import { fontDisplay } from "@/lib/fonts";
 
 export const SiteHeader = () => {
   return (
-    <div className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="container h-16 grid grid-cols-[auto_1fr_auto] items-center ">
-        <Link href="/" className="mr-auto font-medium text-xl">
+    <header className="sticky top-0 z-50 w-full bg-background-light backdrop-blur-lg supports-backdrop-filter:bg-background/60">
+      <div className="container h-18 grid grid-cols-[auto_1fr] items-center ">
+        <Link
+          href="/"
+          className={cn(fontDisplay.className, "mr-auto font-medium text-2xl")}
+        >
           {siteConfig.name}
         </Link>
-        <nav className="mx-auto">
-          <ul className="flex gap-6">
-            {siteConfig.siteMap.map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.href}
-                  data-active={link.name === "Home"}
-                  className="text-foreground/80 hover:text-primary data-[active=true]:font-semibold"
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav className="ml-auto">
+          <MainNav />
         </nav>
-        <div className="ml-auto">
+        <div className="ml-auto hidden">
           <Button
             className="rounded-sm"
             variant={"outline"}
@@ -41,6 +36,6 @@ export const SiteHeader = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </header>
   );
 };

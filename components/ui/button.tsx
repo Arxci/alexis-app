@@ -13,10 +13,12 @@ const rippleVariants = cva("absolute h-8 w-8 rounded-full opacity-100 ", {
     variant: {
       default: "bg-white/60",
       destructive: "bg-foreground/60",
-      outline: "bg-foreground/60",
+      outline: "bg-accent/60",
       secondary: "bg-secondary-foreground/60",
-      ghost: "bg-foreground/60",
+      ghost: "bg-accent/60",
       link: "bg-foreground/60",
+      light: "bg-accent/80",
+      shadow: "bg-white/60",
     },
   },
 });
@@ -26,7 +28,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-accent text-accent-foreground hover:bg-accent/90",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
@@ -36,11 +38,14 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        light: "bg-background text-accent hover:bg-accent/20",
+        shadow:
+          "shadow-lg shadow-accent/60 bg-accent text-accent-foreground hover:bg-accent/90",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        lg: "h-12 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
         "icon-sm": "size-8",
         "icon-lg": "size-10",

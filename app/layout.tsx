@@ -4,7 +4,7 @@ import { SiteHeader } from "./_components/layout/site-header";
 import { SiteFooter } from "./_components/layout/site-footer";
 
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/lib/fonts";
+import { fontSerif } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
@@ -21,8 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen antialiased", fontSans.variable)}>
-        <div className="grid grid-rows-[auto_1fr_auto]">
+      <body className={cn("antialiased", fontSerif.className)}>
+        <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
           <SiteHeader />
           {children}
           <SiteFooter />

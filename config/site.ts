@@ -1,13 +1,13 @@
 export const siteConfig = {
-  name: "Name",
+  name: "Alexis Nesteby",
   description: "Description",
   url: "https://example.com",
   author: "John Doe",
   siteMap: [
     { name: "Home", href: "/" },
-    { name: "About Me", href: "/" },
-    { name: "Recent Work", href: "/" },
-    { name: "Gallery", href: "/" },
+    { name: "About Me", href: "/about" },
+    { name: "Recent Work", href: "/recent" },
+    { name: "Gallery", href: "/gallery" },
   ],
 };
 
