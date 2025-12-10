@@ -7,11 +7,9 @@ export default function Home() {
   return (
     <main className="">
       <HomeBanner />
-    </main>
-  );
-}
-/*
       <HomeAbout />
       <HomeGallery />
       <HomeRecentWork />
-      */
+    </main>
+  );
+}

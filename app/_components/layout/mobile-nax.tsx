@@ -59,7 +59,7 @@ export const MobileNav = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="no-scrollbar h-(--radix-popper-available-height) w-(--radix-popper-available-width) overflow-y-auto rounded-none border-none p-0 shadow-none bg-background-light backdrop-blur-lg supports-backdrop-filter:bg-background-light/60 duration-100 data-[side=bottom]:slide-in-from-top-0!"
+        className="no-scrollbar h-(--radix-popper-available-height) w-(--radix-popper-available-width) overflow-y-auto rounded-none border-none p-0 shadow-none bg-background-light  duration-100 data-[side=bottom]:slide-in-from-top-0!"
         align="end"
         side="bottom"
         sideOffset={18}
@@ -105,7 +105,6 @@ function MobileLink({
     <Link
       href={href}
       onClick={() => {
-        router.push(href.toString());
         onOpenChange?.(false);
       }}
       className={cn(

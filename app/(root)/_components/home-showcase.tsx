@@ -33,7 +33,12 @@ export const HomeShowcase = ({
       >
         {label}
       </h2>
-      <div className={cn("grid grid-cols-3 gap-6 pt-12 pb-6", style?.content)}>
+      <div
+        className={cn(
+          "grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-6 pt-12 pb-6",
+          style?.content
+        )}
+      >
         {children}
       </div>
       <div className="flex justify-center">

@@ -5,14 +5,25 @@ import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export const HomeAbout = () => {
   return (
     <section className="container">
-      <div className="grid grid-cols-2 gap-8 pt-30 w-4/5 mx-auto">
-        <ImagePlaceholder aspectRatio={3 / 4} />
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,350px),1fr))] gap-8 pt-30 lg:w-4/5 mx-auto">
+        <AspectRatio ratio={3 / 4} className="overflow-hidden bg-red-500">
+          <Image
+            src={"/about-me.jpg"}
+            alt="Photo of author"
+            fill
+            loading="eager"
+            sizes="(max-width: 1024px) 100vw, 1024px"
+            className="object-cover"
+          />
+        </AspectRatio>
+        {/*<ImagePlaceholder aspectRatio={3 / 4} />*/}
         <div className="flex-1 flex flex-col gap-2">
-          <h2 className={cn(fontDisplay.className, "text-4xl font-semibold ")}>
+          <h2 className={cn(fontDisplay.className, "text-4xl font-semibold")}>
             Lorem, ipsum dolor.
           </h2>
           <p className="text-muted-foreground leading-relaxed">
