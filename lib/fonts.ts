@@ -4,6 +4,7 @@ import {
   Libre_Baskerville,
   Rye,
   Sancreek,
+  Rammetto_One,
 } from "next/font/google";
 
 export const fontSans = FontSans({
@@ -22,7 +23,7 @@ export const fontSerif = Libre_Baskerville({
   weight: ["400", "700"],
 });
 
-export const fontDisplay = Rye({
+export const fontDisplay = Rammetto_One({
   subsets: ["latin"],
   variable: "--font-display",
   weight: "400",

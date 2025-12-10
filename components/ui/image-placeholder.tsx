@@ -14,7 +14,7 @@ export const ImagePlaceholder = ({
     <AspectRatio
       ratio={aspectRatio}
       className={cn(
-        "flex items-center justify-center bg-stone-800 border border-gray-900 w-full",
+        "flex items-center justify-center bg-stone-800 border border-gray-600 w-full shadow-lg shadow-stone-300",
         className
       )}
     >

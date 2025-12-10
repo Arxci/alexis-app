@@ -10,9 +10,9 @@ export const HomeAbout = () => {
   return (
     <section className="container">
       <div className="grid grid-cols-2 gap-8 pt-30 w-4/5 mx-auto">
-        <ImagePlaceholder aspectRatio={3 / 4} className="rounded-md" />
+        <ImagePlaceholder aspectRatio={3 / 4} />
         <div className="flex-1 flex flex-col gap-2">
-          <h2 className={cn(fontDisplay.className, "text-4xl font-semibold")}>
+          <h2 className={cn(fontDisplay.className, "text-4xl font-semibold ")}>
             Lorem, ipsum dolor.
           </h2>
           <p className="text-muted-foreground leading-relaxed">
@@ -21,9 +21,9 @@ export const HomeAbout = () => {
             officia error distinctio at, ipsum in atque beatae nihil! Dicta?
           </p>
           <Button
-            variant={"shadow"}
+            variant={"outline"}
             size={"lg"}
-            className="my-10 h-12 text-lg "
+            className="my-10 h-12 text-lg"
           >
             Button
           </Button>
