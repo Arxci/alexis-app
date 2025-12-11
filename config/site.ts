@@ -6,8 +6,8 @@ export const siteConfig = {
   siteMap: [
     { name: "Home", href: "/" },
     { name: "About Me", href: "/about" },
-    { name: "Recent Work", href: "/recent" },
     { name: "Flash", href: "/flash" },
+    { name: "Recent Work", href: "/recent" },
   ],
 };
 
