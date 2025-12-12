@@ -108,7 +108,7 @@ function MobileLink({
         onOpenChange?.(false);
       }}
       className={cn(
-        "text-2xl font-medium data-[active=true]:text-accent",
+        "text-2xl font-medium data-[active=true]:text-accent uppercase",
         className
       )}
       {...props}

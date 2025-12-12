@@ -16,7 +16,10 @@ export const SiteHeader = () => {
       <div className="container h-18 grid grid-cols-[auto_1fr] items-center px-4">
         <Link
           href="/"
-          className={cn(fontDisplay.className, "mr-auto font-medium text-2xl")}
+          className={cn(
+            fontDisplay.className,
+            "mr-auto font-medium text-2xl uppercase "
+          )}
         >
           {siteConfig.name}
         </Link>

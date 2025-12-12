@@ -1,4 +1,4 @@
-import { Image, Link } from "lucide-react";
+import { Image, Link, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -12,5 +12,8 @@ export const Icons = {
   ),
   placeholder: (props: IconProps) => (
     <Image {...props} className={cn("w-4 h-4", props.className)} />
+  ),
+  close: (props: IconProps) => (
+    <XIcon {...props} className={cn("w-4 h-4", props.className)} />
   ),
 };

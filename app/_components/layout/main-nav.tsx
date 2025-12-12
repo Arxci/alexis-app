@@ -23,7 +23,7 @@ export function MainNav() {
               data-active={isActive}
               className={cn(
                 "text-foreground/80 text-md font-normal hover:text-primary relative transition-colors",
-                "data-[active=true]:text-primary data-[active=true]:hover:text-foreground/80"
+                "data-[active=true]:text-primary uppercase data-[active=true]:hover:text-foreground/80 "
               )}
             >
               {link.name}

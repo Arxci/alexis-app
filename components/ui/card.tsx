@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export const SectionCard = ({
+export const Card = ({
   children,
   className,
 }: {
@@ -15,9 +15,9 @@ export const SectionCard = ({
         // Sharp edges
         "rounded-none",
         // Thick 'Ink' border
-        "border-2 border-stone-900",
+        "border-2",
         // Hard 'Block' Shadow (Offset) - gives it depth without softness
-        "shadow-[6px_6px_0px_0px_rgba(28,25,23,1)]",
+        "shadow-[6px_6px_0px_0px_var(--foreground)]",
         "my-10",
         className
       )}

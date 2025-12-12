@@ -1,0 +1,109 @@
+"use client";
+
+import { useState } from "react";
+
+import Image from "next/image";
+
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+
+import { AspectRatio } from "./aspect-ratio";
+import { Button } from "./button";
+import { ImageFrame } from "./image-frame";
+import {
+  Dialog,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+  DialogPortal,
+  DialogOverlay,
+  DialogDescription,
+} from "./dialog";
+import { cn } from "@/lib/utils";
+import { Icons } from "../icons";
+import { Card } from "./card";
+
+export const ImageCard = ({
+  src,
+  alt,
+  ratio,
+}: {
+  src: string;
+  alt: string;
+  ratio: number;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog onOpenChange={setOpen} open={open}>
+      <DialogTrigger className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none">
+        <ImageFrame>
+          <AspectRatio ratio={ratio} className="overflow-hidden">
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 1000px"
+              className="object-cover"
+            />
+          </AspectRatio>
+        </ImageFrame>
+      </DialogTrigger>
+      <DialogContent
+        onPointerDownOutside={() => setOpen(false)}
+        aria-describedby="Full screen image"
+      >
+        <DialogTitle className="sr-only" />
+        <DialogDescription className="sr-only" />
+        <div
+          className="relative 
+      bg-stone-800/50 
+      border-2 border-stone-900 "
+        >
+          <Image
+            src={src}
+            alt={alt}
+            width={1920}
+            height={1080}
+            className="w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+function DialogContent({
+  className,
+  children,
+  showCloseButton = true,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+  showCloseButton?: boolean;
+}) {
+  return (
+    <DialogPortal data-slot="dialog-portal">
+      <DialogOverlay className="bg-stone-900/60 supports-backdrop-filter:backdrop-blur-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 " />
+      <DialogPrimitive.Content
+        data-slot="dialog-content"
+        className={cn(
+          "outline-none flex items-center justify-center data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%]  p-6 duration-200",
+          className
+        )}
+        {...props}
+      >
+        {children}
+        {showCloseButton && (
+          <DialogClose
+            data-slot="dialog-close"
+            className=" data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-10 right-10 z-10 cursor-pointer opacity-60 transition-opacity focus:opacity-100 hover:opacity-100  disabled:pointer-events-none "
+          >
+            <Card className="m-0">
+              <Icons.close className="h-10 w-10" />
+              <span className="sr-only ">Close</span>
+            </Card>
+          </DialogClose>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  );
+}
