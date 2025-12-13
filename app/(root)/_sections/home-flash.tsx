@@ -6,8 +6,6 @@ import { ImageCard } from "@/components/ui/image-card";
 export const HomeFlash = async () => {
   const data = await getFlash();
 
-  console.log(data);
-
   return (
     <section className="container">
       <HomeShowcase
@@ -17,9 +15,15 @@ export const HomeFlash = async () => {
           container: "pt-0",
         }}
       >
-        <ImageCard src={"/flash-01.jpg"} alt="Thing" ratio={16 / 9} />
-        <ImageCard src={"/flash-02.jpg"} alt="Thing" ratio={16 / 9} />
-        <ImageCard src={"/flash-03.jpg"} alt="Thing" ratio={16 / 9} />
+        {data &&
+          data.map((image, _id: number) => (
+            <ImageCard
+              key={_id}
+              src={image.imageUrl}
+              alt={image?.alt}
+              ratio={16 / 9}
+            />
+          ))}
       </HomeShowcase>
     </section>
   );

@@ -1,13 +1,22 @@
+import { getRecentWork } from "@/lib/sanity/sanity-api";
 import { HomeShowcase } from "../_components/home-showcase";
 import { ImageCard } from "@/components/ui/image-card";
 
-export const HomeRecentWork = () => {
+export const HomeRecentWork = async () => {
+  const data = await getRecentWork();
+
   return (
     <section className="container">
       <HomeShowcase label="Recent Work" link="/recent">
-        <ImageCard src={"/recent-01.jpeg"} alt="Thing" ratio={3 / 4} />
-        <ImageCard src={"/recent-02.jpeg"} alt="Thing" ratio={3 / 4} />
-        <ImageCard src={"/recent-03.jpeg"} alt="Thing" ratio={3 / 4} />
+        {data &&
+          data.map((image, _id: number) => (
+            <ImageCard
+              key={_id}
+              src={image.imageUrl}
+              alt={image?.alt}
+              ratio={3 / 4}
+            />
+          ))}
       </HomeShowcase>
     </section>
   );
