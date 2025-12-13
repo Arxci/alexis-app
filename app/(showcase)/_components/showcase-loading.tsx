@@ -12,7 +12,7 @@ export default function ShowcaseLoading({
   ratio: number;
 }) {
   return (
-    <div className={"mx-auto"}>
+    <div className="mx-auto">
       <Card className="p-4 sm:p-8 md:p-10 lg:p-12">
         <div className="flex flex-col sm:flex-row justify-between sm:items-end border-b-2 border-stone-900 pb-6 mb-10 gap-6">
           <h2
