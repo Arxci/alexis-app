@@ -4,13 +4,13 @@ import { getRecentWork } from "@/lib/sanity/sanity-api";
 import { fetchMoreRecentWork } from "./actions";
 
 export default async function RecentPage() {
-  const { items, totalCount } = await getRecentWork(0, 2);
+  const { items, totalCount } = await getRecentWork(0, 9);
 
   return (
     <main>
       <section className="container lg:px-0">
         <InfiniteScrollShowcase
-          label="Flash"
+          label="Recent work"
           initialData={items}
           fetchData={fetchMoreRecentWork}
           totalCount={totalCount}

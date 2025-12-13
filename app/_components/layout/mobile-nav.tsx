@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link, { LinkProps } from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -15,17 +15,20 @@ import {
 import { siteConfig } from "@/config/site";
 
 import { cn } from "@/lib/utils";
-import useWindowDimensions, {
-  WindowSize,
-} from "../../../lib/hooks/useWindowDimensions";
+import useWindowDimensions from "../../../lib/hooks/useWindowDimensions";
 
 export const MobileNav = () => {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [prevPath, setPrevPath] = useState(pathname);
+
+  if (pathname !== prevPath) {
+    setOpen(false);
+    setPrevPath(pathname);
+  }
 
   useWindowDimensions(
-    useCallback((size: WindowSize) => {
-      console.log("hello");
+    useCallback(() => {
       setOpen(false);
     }, []),
     10
@@ -76,7 +79,6 @@ export const MobileNav = () => {
                     data-active={isActive}
                     key={index}
                     href={link.href}
-                    onOpenChange={setOpen}
                   >
                     {link.name}
                   </MobileLink>
@@ -92,22 +94,18 @@ export const MobileNav = () => {
 
 function MobileLink({
   href,
-  onOpenChange,
+
   className,
   children,
   ...props
 }: LinkProps & {
-  onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
 }) {
-  const router = useRouter();
   return (
     <Link
       href={href}
-      onClick={() => {
-        onOpenChange?.(false);
-      }}
+      onClick={() => {}}
       className={cn(
         "text-2xl font-medium data-[active=true]:text-accent uppercase",
         className

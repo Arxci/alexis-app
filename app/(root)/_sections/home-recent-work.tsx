@@ -3,7 +3,7 @@ import { ImageShowcase } from "../../../components/image/image-showcase";
 import { ImageCard } from "@/components/image/image-card";
 
 export const HomeRecentWork = async () => {
-  const { items } = await getRecentWork(0, 2);
+  const { items } = await getRecentWork(0, 3);
 
   return (
     <section className="container">

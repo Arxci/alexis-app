@@ -8,6 +8,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
+import { ImageLoading } from "./image.loading";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
@@ -17,7 +18,7 @@ type InfiniteScrollShowcaseProps = {
   imageRatio: number;
 };
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 3;
 
 export function InfiniteScrollShowcase({
   label,
@@ -90,17 +91,16 @@ export function InfiniteScrollShowcase({
         />
       ))}
 
+      {isFetchingNextPage &&
+        Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+          <ImageLoading key={`loading-${i}`} ratio={imageRatio} />
+        ))}
       {hasNextPage && (
         <div
           ref={ref}
-          className="col-span-1 md:col-span-3 h-24 w-full flex justify-center items-center"
-        >
-          {isFetchingNextPage ? (
-            <span className="opacity-50 text-sm animate-pulse">Loading...</span>
-          ) : (
-            <span className="h-full w-full" />
-          )}
-        </div>
+          className="col-span-full w-full h-4 invisible"
+          aria-hidden="true"
+        />
       )}
     </ImageShowcase>
   );

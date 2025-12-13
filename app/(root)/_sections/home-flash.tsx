@@ -4,7 +4,7 @@ import { ImageShowcase } from "../../../components/image/image-showcase";
 import { ImageCard } from "@/components/image/image-card";
 
 export const HomeFlash = async () => {
-  const { items } = await getFlash(0, 2);
+  const { items } = await getFlash(0, 3);
 
   return (
     <section className="container">

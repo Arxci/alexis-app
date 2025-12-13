@@ -20,30 +20,47 @@ export type PagedResult = {
 async function fetchPagedData(
   dataQuery: string,
   countQuery: string,
+  fetchCount = true,
   start?: number,
   end?: number
 ): Promise<PagedResult> {
   const safeStart = start ?? 0;
   const safeEnd = end ?? 10000;
 
-  const [items, totalCount] = await Promise.all([
-    client.fetch(dataQuery, { start: safeStart, end: safeEnd }),
-    client.fetch(countQuery),
-  ]);
+  if (fetchCount) {
+    const [items, totalCount] = await Promise.all([
+      client.fetch(dataQuery, { start: safeStart, end: safeEnd }),
+      client.fetch(countQuery),
+    ]);
+    return { items, totalCount };
+  }
 
-  return { items, totalCount };
+  const items = await client.fetch(dataQuery, {
+    start: safeStart,
+    end: safeEnd,
+  });
+
+  return { items, totalCount: -1 };
 }
 
 export async function getRecentWork(
   start: number,
-  end: number
+  end: number,
+  fetchCount = true
 ): Promise<PagedResult> {
-  return fetchPagedData(recentWorkQuery, recentWorkCountQuery, start, end);
+  return fetchPagedData(
+    recentWorkQuery,
+    recentWorkCountQuery,
+    fetchCount,
+    start,
+    end
+  );
 }
 
 export async function getFlash(
   start: number,
-  end: number
+  end: number,
+  fetchCount = true
 ): Promise<PagedResult> {
-  return fetchPagedData(flashQuery, flashCountQuery, start, end);
+  return fetchPagedData(flashQuery, flashCountQuery, fetchCount, start, end);
 }

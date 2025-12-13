@@ -3,13 +3,13 @@ import { getFlash } from "@/lib/sanity/sanity-api";
 import { fetchMoreFlashImages } from "./actions";
 
 export default async function GalleryPage() {
-  const { items, totalCount } = await getFlash(0, 2);
+  const { items, totalCount } = await getFlash(0, 9);
 
   return (
     <main>
       <section className="container lg:px-0">
         <InfiniteScrollShowcase
-          label="Recent Work"
+          label="Flash"
           initialData={items}
           fetchData={fetchMoreFlashImages}
           totalCount={totalCount}

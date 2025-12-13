@@ -1,6 +1,6 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 
 import Image from "next/image";
 
@@ -41,7 +41,7 @@ export const ImageCard = ({
     if (open) setIsLoading(true);
   };
 
-  const handleImageLoaded = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+  const handleImageLoaded = () => {
     setIsLoading(false);
   };
 

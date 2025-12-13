@@ -1,9 +1,9 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { SplitLayout } from "../(root)/_components/split-layout";
 import Image from "next/image";
+import Link from "next/link";
+
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export default function AboutPage() {
   return (
