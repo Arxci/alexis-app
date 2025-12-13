@@ -41,9 +41,7 @@ export const ImageShowcase = ({
             variant={"outline"}
             className={cn(style?.link)}
           >
-            <Link href={link} scroll={true}>
-              View More
-            </Link>
+            <Link href={link}>View More</Link>
           </Button>
         </div>
 

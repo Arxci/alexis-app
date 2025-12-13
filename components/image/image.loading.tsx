@@ -1,6 +1,5 @@
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Skeleton } from "../ui/skeleton";
-import { ImageFrame } from "./image-frame";
 
 export const ImageLoading = ({ ratio }: { ratio: number }) => {
   return (

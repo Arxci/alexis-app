@@ -1,4 +1,3 @@
-import { revalidate } from "@/app/(root)/page";
 import { client } from "./sanity-client";
 import {
   flashCountQuery,
