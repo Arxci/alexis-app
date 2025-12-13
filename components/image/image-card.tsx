@@ -19,6 +19,8 @@ import {
   DialogDescription,
 } from "../ui/dialog";
 import { Card } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
+
 import { Icons } from "../icons";
 
 import { cn } from "@/lib/utils";
@@ -33,16 +35,17 @@ export const ImageCard = ({
   ratio: number;
 }) => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isModalLoading, setIsModalLoading] = useState(true);
+  const [isThumbnailLoading, setIsThumbnailLoading] = useState(true);
 
   const handleOpenChanged = (open: boolean) => {
     setOpen(open);
 
-    if (open) setIsLoading(true);
+    if (open) setIsModalLoading(true);
   };
 
   const handleImageLoaded = () => {
-    setIsLoading(false);
+    setIsModalLoading(false);
   };
 
   return (
@@ -50,31 +53,38 @@ export const ImageCard = ({
       <DialogTrigger className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none">
         <ImageFrame>
           <AspectRatio ratio={ratio} className="overflow-hidden">
+            {isThumbnailLoading && (
+              <Skeleton className="h-full w-full bg-stone-300" />
+            )}
             <Image
               src={src}
               alt={alt}
               fill
-              sizes="(max-width: 768px) 100vw, 1000px"
-              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className={cn(
+                "object-cover transition-opacity duration-150",
+                isThumbnailLoading ? "opacity-0" : "opacity-100"
+              )}
+              onLoad={() => setIsThumbnailLoading(false)}
             />
           </AspectRatio>
         </ImageFrame>
       </DialogTrigger>
       <DialogContent
         aria-describedby="Full screen image"
-        showCloseButton={!isLoading}
+        showCloseButton={!isModalLoading}
         className="min-w-[300px] min-h-[300px]"
       >
         <DialogTitle className="sr-only" />
         <DialogDescription className="sr-only" />
-        {isLoading && (
+        {isModalLoading && (
           <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
         )}
 
         <div
           className={cn(
             "relative bg-stone-800/50 border-2 overflow-hidden transition-opacity duration-150",
-            isLoading ? "opacity-0" : "opacity-100"
+            isModalLoading ? "opacity-0" : "opacity-100"
           )}
         >
           <Image

@@ -1,4 +1,4 @@
-import { ImageLoading } from "@/components/image/image.loading";
+import { ImageLoading } from "@/components/image/image-loading";
 import { Card } from "@/components/ui/card";
 
 import { fontDisplay } from "@/lib/fonts";

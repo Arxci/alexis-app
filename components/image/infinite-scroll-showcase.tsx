@@ -8,7 +8,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
-import { ImageLoading } from "./image.loading";
+import { ImageLoading } from "./image-loading";
 
 type InfiniteScrollShowcaseProps = {
   label: string;

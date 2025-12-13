@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { ImageLoading } from "@/components/image/image.loading";
+import { ImageLoading } from "@/components/image/image-loading";
 import { HomeAbout } from "./_sections/home-about";
 import { HomeBanner } from "./_sections/home-banner";
 import { HomeFlash } from "./_sections/home-flash";
