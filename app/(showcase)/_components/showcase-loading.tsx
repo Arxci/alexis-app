@@ -16,7 +16,7 @@ export default function ShowcaseLoading({
         <div className="flex flex-col sm:flex-row justify-between sm:items-end border-b-2 border-stone-900 pb-6 mb-10 gap-6">
           <h2
             className={cn(
-              "text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter [-webkit-text-stroke:2px_var(--color-emerald-900)] text-green pt-4 text-center"
+              "text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter text-brand-outline pt-4 text-center"
             )}
           >
             {label}

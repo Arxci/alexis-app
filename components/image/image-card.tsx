@@ -62,7 +62,7 @@ export const ImageCard = ({
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               className={cn(
-                "object-cover transition-opacity duration-150",
+                "object-cover transition-opacity duration-300",
                 isThumbnailLoading ? "opacity-0" : "opacity-100"
               )}
               onLoad={() => setIsThumbnailLoading(false)}

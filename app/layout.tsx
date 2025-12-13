@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { SiteHeader } from "./_components/layout/site-header";
 import { SiteFooter } from "./_components/layout/site-footer";
+import { ScrollToTop } from "./_components/layout/scroll-top-top";
 
 import { Providers } from "./_helpers/providers";
 
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en" className={fontVariables}>
       <body className={cn("group/body overscroll-none antialiased")}>
         <Providers>
+          <ScrollToTop />
           <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
             <SiteHeader />
             {children}
