@@ -1,7 +1,7 @@
 "use server";
 
-import { getFlashPaged } from "@/lib/sanity/sanity-api";
+import { getFlash } from "@/lib/sanity/sanity-api";
 
 export async function fetchMoreFlashImages(start: number, end: number) {
-  return await getFlashPaged(start, end);
+  return await getFlash(start, end);
 }

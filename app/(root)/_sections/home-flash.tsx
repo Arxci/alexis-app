@@ -1,10 +1,10 @@
-import { getFlashHome } from "@/lib/sanity/sanity-api";
+import { getFlash } from "@/lib/sanity/sanity-api";
 import { ImageShowcase } from "../../../components/image/image-showcase";
 
 import { ImageCard } from "@/components/image/image-card";
 
 export const HomeFlash = async () => {
-  const data = await getFlashHome();
+  const { items } = await getFlash(0, 2);
 
   return (
     <section className="container">
@@ -15,8 +15,8 @@ export const HomeFlash = async () => {
           container: "pt-0",
         }}
       >
-        {data &&
-          data.map((image, _id: number) => (
+        {items &&
+          items.map((image, _id: number) => (
             <ImageCard
               key={_id}
               src={image.imageUrl}

@@ -1,34 +1,49 @@
 import { client } from "./sanity-client";
-import { flashQuery, recentWorkQuery } from "./sanity-queries";
+import {
+  flashCountQuery,
+  flashQuery,
+  recentWorkQuery,
+  recentWorkCountQuery,
+} from "./sanity-queries";
 
-export type RecentWorkQueryResult = {
+export type ImageItem = {
+  _key: string;
   alt: string;
   imageUrl: string;
-}[];
+};
 
-export async function getRecentWorkHome(): Promise<RecentWorkQueryResult> {
-  return await client.fetch(recentWorkQuery, { start: 0, end: 2 });
+export type PagedResult = {
+  items: ImageItem[];
+  totalCount: number;
+};
+
+async function fetchPagedData(
+  dataQuery: string,
+  countQuery: string,
+  start?: number,
+  end?: number
+): Promise<PagedResult> {
+  const safeStart = start ?? 0;
+  const safeEnd = end ?? 10000;
+
+  const [items, totalCount] = await Promise.all([
+    client.fetch(dataQuery, { start: safeStart, end: safeEnd }),
+    client.fetch(countQuery),
+  ]);
+
+  return { items, totalCount };
 }
 
-export async function getRecentWorkPaged(
+export async function getRecentWork(
   start: number,
   end: number
-): Promise<RecentWorkQueryResult> {
-  return await client.fetch(recentWorkQuery, { start, end });
+): Promise<PagedResult> {
+  return fetchPagedData(recentWorkQuery, recentWorkCountQuery, start, end);
 }
 
-export type FlashQueryResult = {
-  alt: string;
-  imageUrl: string;
-}[];
-
-export async function getFlashHome(): Promise<FlashQueryResult> {
-  return await client.fetch(flashQuery, { start: 0, end: 2 });
-}
-
-export async function getFlashPaged(
+export async function getFlash(
   start: number,
   end: number
-): Promise<FlashQueryResult> {
-  return await client.fetch(flashQuery, { start, end });
+): Promise<PagedResult> {
+  return fetchPagedData(flashQuery, flashCountQuery, start, end);
 }

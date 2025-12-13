@@ -7,24 +7,23 @@ import { useInView } from "react-intersection-observer";
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
 
-type GalleryItem = {
-  alt: string;
-  imageUrl: string;
-};
+import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
-  initialData: GalleryItem[];
-  fetchData: (start: number, end: number) => Promise<GalleryItem[]>;
+  initialData: ImageItem[];
+  fetchData: (start: number, end: number) => Promise<PagedResult>;
+  totalCount: number;
 };
 
 export function InfiniteScrollShowcase({
   label,
   initialData,
   fetchData,
+  totalCount,
 }: InfiniteScrollShowcaseProps) {
-  const [data, setData] = useState<GalleryItem[]>(initialData);
-  const [hasMore, setHasMore] = useState(true);
+  const [data, setData] = useState<ImageItem[]>(initialData);
+  const [hasMore, setHasMore] = useState(initialData.length < totalCount);
   const [isLoading, setIsLoading] = useState(false);
 
   const loadMore = useCallback(async () => {
@@ -36,7 +35,8 @@ export function InfiniteScrollShowcase({
     const end = start + 8;
 
     try {
-      const newImages = await fetchData(start, end);
+      const result = await fetchData(start, end);
+      const newImages = result.items;
 
       if (!newImages || newImages.length === 0) {
         setHasMore(false);
@@ -72,9 +72,9 @@ export function InfiniteScrollShowcase({
         link: "hidden",
       }}
     >
-      {data.map((image, idx) => (
+      {data.map((image) => (
         <ImageCard
-          key={`${idx}-${image.alt}`}
+          key={image._key}
           src={image?.imageUrl}
           alt={image?.alt}
           ratio={16 / 9}
