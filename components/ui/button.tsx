@@ -3,7 +3,6 @@
 import { FocusEvent, PointerEvent, useCallback, useState } from "react";
 
 import { Slot, Slottable } from "@radix-ui/react-slot";
-import { easeOut, motion } from "motion/react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";

@@ -25,6 +25,7 @@ export const MobileNav = () => {
 
   useWindowDimensions(
     useCallback((size: WindowSize) => {
+      console.log("hello");
       setOpen(false);
     }, []),
     10
