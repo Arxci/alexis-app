@@ -1,5 +1,5 @@
 import { Icons } from "../icons";
-import { AspectRatio } from "./aspect-ratio";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 import { cn } from "@/lib/utils";
 

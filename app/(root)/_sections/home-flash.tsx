@@ -1,14 +1,14 @@
-import { getFlash } from "@/lib/sanity/sanity-api";
-import { HomeShowcase } from "../_components/home-showcase";
+import { getFlashHome } from "@/lib/sanity/sanity-api";
+import { ImageShowcase } from "../../../components/image/image-showcase";
 
-import { ImageCard } from "@/components/ui/image-card";
+import { ImageCard } from "@/components/image/image-card";
 
 export const HomeFlash = async () => {
-  const data = await getFlash();
+  const data = await getFlashHome();
 
   return (
     <section className="container">
-      <HomeShowcase
+      <ImageShowcase
         label="Flash"
         link="/flash"
         style={{
@@ -24,7 +24,7 @@ export const HomeFlash = async () => {
               ratio={16 / 9}
             />
           ))}
-      </HomeShowcase>
+      </ImageShowcase>
     </section>
   );
 };

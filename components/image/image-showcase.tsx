@@ -1,19 +1,19 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "../../../components/ui/card";
+import { Card } from "../ui/card";
 
 import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
-export const HomeShowcase = ({
+export const ImageShowcase = ({
   label,
-  link,
+  link = "#",
   children,
   style,
 }: {
   label: string;
-  link: string;
+  link?: string;
   children?: React.ReactNode;
   style?: {
     container?: string;
@@ -53,7 +53,6 @@ export const HomeShowcase = ({
         >
           {children}
         </div>
-        <div className="flex justify-center pb-4"></div>
       </Card>
     </div>
   );

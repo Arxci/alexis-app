@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
-import { AspectRatio } from "./aspect-ratio";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 import { ImageFrame } from "./image-frame";
 import {
@@ -17,8 +17,8 @@ import {
   DialogPortal,
   DialogOverlay,
   DialogDescription,
-} from "./dialog";
-import { Card } from "./card";
+} from "../ui/dialog";
+import { Card } from "../ui/card";
 import { Icons } from "../icons";
 
 import { cn } from "@/lib/utils";

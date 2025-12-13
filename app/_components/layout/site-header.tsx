@@ -1,14 +1,12 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
 import { MainNav } from "./main-nav";
+import { MobileNav } from "./mobile-nav";
 
 import { siteConfig } from "@/config/site";
 
 import { cn } from "@/lib/utils";
 import { fontDisplay } from "@/lib/fonts";
-import { MobileNav } from "./mobile-nax";
 
 export const SiteHeader = () => {
   return (

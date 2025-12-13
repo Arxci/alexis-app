@@ -6,8 +6,15 @@ export type RecentWorkQueryResult = {
   imageUrl: string;
 }[];
 
-export async function getRecentWork(): Promise<RecentWorkQueryResult> {
-  return await client.fetch(recentWorkQuery);
+export async function getRecentWorkHome(): Promise<RecentWorkQueryResult> {
+  return await client.fetch(recentWorkQuery, { start: 0, end: 2 });
+}
+
+export async function getRecentWorkPaged(
+  start: number,
+  end: number
+): Promise<RecentWorkQueryResult> {
+  return await client.fetch(recentWorkQuery, { start, end });
 }
 
 export type FlashQueryResult = {
@@ -15,6 +22,13 @@ export type FlashQueryResult = {
   imageUrl: string;
 }[];
 
-export async function getFlash(): Promise<FlashQueryResult> {
-  return await client.fetch(flashQuery);
+export async function getFlashHome(): Promise<FlashQueryResult> {
+  return await client.fetch(flashQuery, { start: 0, end: 2 });
+}
+
+export async function getFlashPaged(
+  start: number,
+  end: number
+): Promise<FlashQueryResult> {
+  return await client.fetch(flashQuery, { start, end });
 }

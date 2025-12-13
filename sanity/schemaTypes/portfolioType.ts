@@ -4,12 +4,25 @@ export const portfolioType = defineType({
   name: 'images',
   title: 'Images',
   type: 'document',
+  fieldsets: [
+    {
+      name: 'flashSection',
+      title: 'Flash',
+      options: {collapsible: true, collapsed: true},
+    },
+    {
+      name: 'recentSection',
+      title: 'Recent Work',
+      options: {collapsible: true, collapsed: true},
+    },
+  ],
   fields: [
     defineField({
       name: 'flash',
       title: 'Flash',
       description: 'Upload flash',
       type: 'array',
+      fieldset: 'flashSection',
       of: [
         {
           type: 'image',
@@ -35,6 +48,7 @@ export const portfolioType = defineType({
       title: 'Recent Work',
       description: 'Upload recent work',
       type: 'array',
+      fieldset: 'recentSection',
       of: [
         {
           type: 'image',
