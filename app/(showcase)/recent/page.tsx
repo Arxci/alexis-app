@@ -5,7 +5,7 @@ import { fetchMoreRecentWork } from "./actions";
 
 export const revalidate = 60;
 
-export default async function RecentPage() {
+export default async function RecentWorkPage() {
   const { items, totalCount } = await getRecentWork(0, 9);
 
   return (

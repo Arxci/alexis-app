@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "../ui/card";
 
-import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 export const ImageShowcase = ({
@@ -28,7 +27,6 @@ export const ImageShowcase = ({
         <div className="flex flex-col sm:flex-row justify-between sm:items-end border-b-2 border-stone-900 pb-6 mb-10 gap-6">
           <h2
             className={cn(
-              fontDisplay.className,
               "text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter text-brand-outline pt-4 text-center",
               style?.header
             )}
@@ -41,7 +39,9 @@ export const ImageShowcase = ({
             variant={"outline"}
             className={cn(style?.link)}
           >
-            <Link href={link}>View More</Link>
+            <Link href={link} scroll={true}>
+              View More
+            </Link>
           </Button>
         </div>
 

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 
 export const revalidate = 60;
 
-export default function Home() {
+export default function IndexPage() {
   return (
     <main className="">
       <HomeBanner />

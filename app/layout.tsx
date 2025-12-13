@@ -7,7 +7,7 @@ import { Providers } from "./_helpers/providers";
 
 import { siteConfig } from "@/config/site";
 
-import { fontDisplay, fontSerif } from "@/lib/fonts";
+import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn("antialiased", fontSerif.className)}>
+    <html lang="en" className={fontVariables}>
+      <body className={cn("group/body overscroll-none antialiased")}>
         <Providers>
           <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
             <SiteHeader />

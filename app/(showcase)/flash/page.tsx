@@ -4,7 +4,7 @@ import { fetchMoreFlashImages } from "./actions";
 
 export const revalidate = 60;
 
-export default async function GalleryPage() {
+export default async function FlashPage() {
   const { items, totalCount } = await getFlash(0, 9);
 
   return (

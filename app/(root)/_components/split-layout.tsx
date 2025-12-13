@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "../../../components/ui/card";
 
-import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -48,7 +47,7 @@ export const SplitLayout = ({
             {heading}
           </h1>
 
-          <p className="text-lg md:text-xl font-medium text-stone-800 mb-10 max-w-md leading-relaxed">
+          <p className="text-lg md:text-xl text-stone-800 mb-10 max-w-md leading-relaxed">
             {subheading}
           </p>
 
@@ -69,9 +68,10 @@ export const SplitLayout = ({
               src={imageSrc}
               alt={imageAlt}
               fill
+              loading="eager"
               priority
               className={cn("object-cover", style?.image)}
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width: 1024px) 95vw, 50vw"
             />
           </AspectRatio>
         </div>
