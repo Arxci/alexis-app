@@ -1,3 +1,4 @@
+import { revalidate } from "@/app/(root)/page";
 import { client } from "./sanity-client";
 import {
   flashCountQuery,
@@ -29,8 +30,12 @@ async function fetchPagedData(
 
   if (fetchCount) {
     const [items, totalCount] = await Promise.all([
-      client.fetch(dataQuery, { start: safeStart, end: safeEnd }),
-      client.fetch(countQuery),
+      client.fetch(
+        dataQuery,
+        { start: safeStart, end: safeEnd },
+        { next: { revalidate: 60 } }
+      ),
+      client.fetch(countQuery, {}, { next: { revalidate: 60 } }),
     ]);
     return { items, totalCount };
   }

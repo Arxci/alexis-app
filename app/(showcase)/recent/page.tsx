@@ -3,6 +3,8 @@ import { InfiniteScrollShowcase } from "@/components/image/infinite-scroll-showc
 import { getRecentWork } from "@/lib/sanity/sanity-api";
 import { fetchMoreRecentWork } from "./actions";
 
+export const revalidate = 60;
+
 export default async function RecentPage() {
   const { items, totalCount } = await getRecentWork(0, 9);
 
@@ -10,7 +12,7 @@ export default async function RecentPage() {
     <main>
       <section className="container lg:px-0">
         <InfiniteScrollShowcase
-          label="Recent work"
+          label="Recent Work"
           initialData={items}
           fetchData={fetchMoreRecentWork}
           totalCount={totalCount}

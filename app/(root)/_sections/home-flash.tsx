@@ -1,6 +1,5 @@
 import { getFlash } from "@/lib/sanity/sanity-api";
 import { ImageShowcase } from "../../../components/image/image-showcase";
-
 import { ImageCard } from "@/components/image/image-card";
 
 export const HomeFlash = async () => {

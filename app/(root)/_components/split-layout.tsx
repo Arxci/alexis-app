@@ -56,7 +56,9 @@ export const SplitLayout = ({
 
           <div className="flex flex-col sm:flex-row  ">
             <Button asChild variant={"outline"} size="lg">
-              <Link href={buttonLink}>{buttonLabel}</Link>
+              <Link href={buttonLink} scroll={false}>
+                {buttonLabel}
+              </Link>
             </Button>
           </div>
         </div>

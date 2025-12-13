@@ -2,6 +2,8 @@ import { InfiniteScrollShowcase } from "@/components/image/infinite-scroll-showc
 import { getFlash } from "@/lib/sanity/sanity-api";
 import { fetchMoreFlashImages } from "./actions";
 
+export const revalidate = 60;
+
 export default async function GalleryPage() {
   const { items, totalCount } = await getFlash(0, 9);
 
