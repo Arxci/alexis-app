@@ -1,6 +1,8 @@
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
+import { InfiniteScrollShowcase } from "@/components/image/infinite-scroll-showcase";
 import { getFlashPaged } from "@/lib/sanity/sanity-api";
+import { fetchMoreFlashImages } from "./actions";
 
 export default async function GalleryPage() {
   const data = await getFlashPaged(0, 8);
@@ -8,23 +10,11 @@ export default async function GalleryPage() {
   return (
     <main className="">
       <section className="container lg:px-0">
-        <ImageShowcase
+        <InfiniteScrollShowcase
           label="Flash"
-          style={{
-            link: "hidden",
-          }}
-        >
-          {" "}
-          {data &&
-            data.map((image, _id: number) => (
-              <ImageCard
-                key={_id}
-                src={image?.imageUrl}
-                alt={image?.alt}
-                ratio={16 / 9}
-              />
-            ))}
-        </ImageShowcase>
+          initialData={data}
+          fetchData={fetchMoreFlashImages}
+        />
       </section>
     </main>
   );
