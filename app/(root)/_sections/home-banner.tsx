@@ -8,9 +8,7 @@ export const HomeBanner = () => {
         heading={
           <>
             Ace Arts <br />
-            <span className="text-emerald-700 [-webkit-text-stroke:2px_var(--color-emerald-900)]">
-              Tattoos
-            </span>
+            <span className="text-brand-outline">Tattoos</span>
           </>
         }
         subheading="Your friendly neighborhood tattoo artist."
@@ -29,9 +27,7 @@ export const HomeBanner = () => {
         heading={
           <>
             Ace Arts <br />
-            <span className="text-emerald-700 [-webkit-text-stroke:2px_var(--color-emerald-900)]">
-              Tattoos
-            </span>
+            <span className="text-brand-outline">Tattoos</span>
           </>
         }
         subheading="Your friendly neighborhood tattoo artist."

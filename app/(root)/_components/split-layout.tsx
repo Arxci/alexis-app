@@ -41,9 +41,7 @@ export const SplitLayout = ({
 
           <h1
             className={cn(
-              fontDisplay.className,
-
-              "text-[10vw] sm:text-5xl lg:text-5xl xl:text-6xl font-black uppercase leading-[0.9] text-foreground mb-6",
+              "font-display text-[10vw] sm:text-5xl lg:text-5xl xl:text-6xl font-black uppercase leading-[0.9] text-foreground mb-6",
               style?.heading
             )}
           >

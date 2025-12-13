@@ -29,7 +29,7 @@ export const ImageShowcase = ({
           <h2
             className={cn(
               fontDisplay.className,
-              "text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter [-webkit-text-stroke:2px_var(--color-emerald-900)] text-green pt-4 text-center",
+              "text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter text-brand-outline pt-4 text-center",
               style?.header
             )}
           >

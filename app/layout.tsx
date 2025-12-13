@@ -24,9 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn("antialiased", fontDisplay.variable, fontSerif.className)}
-      >
+      <body className={cn("antialiased", fontSerif.className)}>
         <Providers>
           <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
             <SiteHeader />

@@ -29,7 +29,7 @@
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
-  --color-green: var(--color-emerald-800);
+  --color-green: var(--color-emerald-700);
   --color-gold: var(--gold);
   --color-muted-foreground: var(--color-stone-800);
   --color-muted: var(--muted);
@@ -47,6 +47,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-display: var(--font-display)
 }
 
 :root {
@@ -129,3 +130,7 @@
   @apply max-w-5xl px-2 lg:px-0;
 }
 
+@utility text-brand-outline {
+  @apply text-green font-display;
+  -webkit-text-stroke: 2px var(--color-emerald-900);
+}

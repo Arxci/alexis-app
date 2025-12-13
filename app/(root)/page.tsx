@@ -1,15 +1,15 @@
 import { Suspense } from "react";
 
-import { ImageLoading } from "@/components/image/image-loading";
+import Link from "next/link";
+
 import { HomeAbout } from "./_sections/home-about";
 import { HomeBanner } from "./_sections/home-banner";
 import { HomeFlash } from "./_sections/home-flash";
 import { HomeRecentWork } from "./_sections/home-recent-work";
+
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { fontDisplay } from "@/lib/fonts";
+import { ImageLoading } from "@/components/image/image-loading";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export const revalidate = 60;
 
@@ -49,12 +49,7 @@ function SectionLoader({
       <div className="mx-auto">
         <Card className="p-4 sm:p-8 md:p-10 lg:p-12">
           <div className="flex flex-col sm:flex-row justify-between sm:items-end border-b-2 border-stone-900 pb-6 mb-10 gap-6">
-            <h2
-              className={cn(
-                fontDisplay.className,
-                "text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter [-webkit-text-stroke:2px_var(--color-emerald-900)] text-green pt-4 text-center"
-              )}
-            >
+            <h2 className="text-[11vw] sm:text-5xl md:text-6xl font-black tracking-tighter text-brand-outline  pt-4 text-center font-display">
               {label}
             </h2>
             <Button asChild size={"lg"} variant={"outline"}>
