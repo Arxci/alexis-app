@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 import Image from "next/image";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { AspectRatio } from "./aspect-ratio";
-import { Button } from "./button";
+
 import { ImageFrame } from "./image-frame";
 import {
   Dialog,
@@ -18,9 +18,10 @@ import {
   DialogOverlay,
   DialogDescription,
 } from "./dialog";
-import { cn } from "@/lib/utils";
-import { Icons } from "../icons";
 import { Card } from "./card";
+import { Icons } from "../icons";
+
+import { cn } from "@/lib/utils";
 
 export const ImageCard = ({
   src,
@@ -32,9 +33,20 @@ export const ImageCard = ({
   ratio: number;
 }) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleOpenChanged = (open: boolean) => {
+    setOpen(open);
+
+    if (open) setIsLoading(true);
+  };
+
+  const handleImageLoaded = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    setIsLoading(false);
+  };
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog onOpenChange={handleOpenChanged} open={open}>
       <DialogTrigger className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none">
         <ImageFrame>
           <AspectRatio ratio={ratio} className="overflow-hidden">
@@ -49,22 +61,31 @@ export const ImageCard = ({
         </ImageFrame>
       </DialogTrigger>
       <DialogContent
-        onPointerDownOutside={() => setOpen(false)}
         aria-describedby="Full screen image"
+        showCloseButton={!isLoading}
+        className="min-w-[300px] min-h-[300px]"
       >
         <DialogTitle className="sr-only" />
         <DialogDescription className="sr-only" />
+        {isLoading && (
+          <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
+        )}
+
         <div
-          className="relative 
-      bg-stone-800/50 
-      border-2 border-stone-900 "
+          className={cn(
+            "relative bg-stone-800/50 border-2 overflow-hidden transition-opacity duration-150",
+            isLoading ? "opacity-0" : "opacity-100"
+          )}
         >
           <Image
             src={src}
             alt={alt}
             width={1920}
             height={1080}
-            className="w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+            className={cn(
+              "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+            )}
+            onLoad={handleImageLoaded}
           />
         </div>
       </DialogContent>
