@@ -1,8 +1,13 @@
+import { getFlash } from "@/lib/sanity/sanity-api";
 import { HomeShowcase } from "../_components/home-showcase";
 
 import { ImageCard } from "@/components/ui/image-card";
 
-export const HomeFlash = () => {
+export const HomeFlash = async () => {
+  const data = await getFlash();
+
+  console.log(data);
+
   return (
     <section className="container">
       <HomeShowcase
