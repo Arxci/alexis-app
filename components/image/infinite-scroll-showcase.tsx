@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useMemo } from "react";
 
 import { useInView } from "react-intersection-observer";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
-
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
 
 type InfiniteScrollShowcaseProps = {
@@ -14,45 +14,50 @@ type InfiniteScrollShowcaseProps = {
   initialData: ImageItem[];
   fetchData: (start: number, end: number) => Promise<PagedResult>;
   totalCount: number;
+  imageRatio: number;
 };
+
+const ITEMS_PER_PAGE = 2;
 
 export function InfiniteScrollShowcase({
   label,
   initialData,
   fetchData,
   totalCount,
+  imageRatio,
 }: InfiniteScrollShowcaseProps) {
-  const [data, setData] = useState<ImageItem[]>(initialData);
-  const [hasMore, setHasMore] = useState(initialData.length < totalCount);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [label, "infinite-scroll"],
+      queryFn: async ({ pageParam }) => {
+        const start = pageParam as number;
+        const end = start + ITEMS_PER_PAGE;
+        return await fetchData(start, end);
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        if (!lastPage) return undefined;
 
-  const loadMore = useCallback(async () => {
-    if (isLoading || !hasMore) return;
+        const loadedItemsCount = allPages.flatMap((page) => page.items).length;
 
-    setIsLoading(true);
-
-    const start = data.length;
-    const end = start + 8;
-
-    try {
-      const result = await fetchData(start, end);
-      const newImages = result.items;
-
-      if (!newImages || newImages.length === 0) {
-        setHasMore(false);
-      } else {
-        setData((prev) => [...prev, ...newImages]);
-
-        if (newImages.length < 9) {
-          setHasMore(false);
+        if (loadedItemsCount >= totalCount) {
+          return undefined;
         }
-      }
-    } catch (error) {
-      console.error("Failed to load more images:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [data.length, hasMore, isLoading, fetchData]);
+
+        return loadedItemsCount;
+      },
+      initialData: {
+        pages: [
+          {
+            items: initialData,
+            totalCount: totalCount,
+          },
+        ],
+        pageParams: [0],
+      },
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    });
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -60,10 +65,14 @@ export function InfiniteScrollShowcase({
   });
 
   useEffect(() => {
-    if (inView && hasMore && !isLoading) {
-      loadMore();
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [inView, hasMore, isLoading, loadMore]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const allImages = useMemo(() => {
+    return data?.pages.flatMap((page) => page.items) ?? [];
+  }, [data]);
 
   return (
     <ImageShowcase
@@ -72,21 +81,21 @@ export function InfiniteScrollShowcase({
         link: "hidden",
       }}
     >
-      {data.map((image) => (
+      {allImages.map((image) => (
         <ImageCard
           key={image._key}
           src={image?.imageUrl}
           alt={image?.alt}
-          ratio={16 / 9}
+          ratio={imageRatio}
         />
       ))}
 
-      {hasMore && (
+      {hasNextPage && (
         <div
           ref={ref}
           className="col-span-1 md:col-span-3 h-24 w-full flex justify-center items-center"
         >
-          {isLoading ? (
+          {isFetchingNextPage ? (
             <span className="opacity-50 text-sm animate-pulse">Loading...</span>
           ) : (
             <span className="h-full w-full" />

@@ -8,6 +8,7 @@ import { fontSerif } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
+import { Providers } from "./_helpers/providers";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -22,11 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("antialiased", fontSerif.className)}>
-        <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </div>
+        <Providers>
+          <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </div>
+        </Providers>
       </body>
     </html>
   );
