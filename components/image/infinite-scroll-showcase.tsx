@@ -9,6 +9,7 @@ import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
 import { ImageLoading } from "./image-loading";
+import { useScrollRestoration } from "@/lib/hooks/useScrollRestoration";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
@@ -27,7 +28,7 @@ export function InfiniteScrollShowcase({
   totalCount,
   imageRatio,
 }: InfiniteScrollShowcaseProps) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: [label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
@@ -59,6 +60,8 @@ export function InfiniteScrollShowcase({
       staleTime: 5 * 60 * 1000,
       refetchOnWindowFocus: false,
     });
+
+  useScrollRestoration(isLoading);
 
   const { ref, inView } = useInView({
     threshold: 0,
