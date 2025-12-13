@@ -10,8 +10,8 @@ export default defineConfig({
   name: 'default',
   title: 'Alexis App',
 
-  projectId: 'ghd2xkxv',
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_DATASET || '',
+  dataset: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
 
   plugins: [
     structureTool({
