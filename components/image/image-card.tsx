@@ -68,6 +68,7 @@ export const ImageCard = ({
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               priority={priority}
+              fetchPriority={priority ? "high" : undefined}
               className={cn(
                 "object-cover transition-opacity duration-500",
                 isThumbnailLoading ? "opacity-0" : "opacity-100"

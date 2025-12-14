@@ -89,6 +89,8 @@ export default function RootLayout({
     <html lang="en" className={fontVariables}>
       <head>
         <JsonLd data={jsonLd} />
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
       </head>
       <body className={cn("group/body overscroll-none antialiased")}>
         <Providers>

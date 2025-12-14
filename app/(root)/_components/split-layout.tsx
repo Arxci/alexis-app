@@ -7,6 +7,12 @@ import { Card } from "../../../components/ui/card";
 import { cn } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
+type ImageSource = {
+  src: string;
+  aspectRatio: number;
+  breakpoint?: "sm" | "md" | "lg" | "xl";
+};
+
 export const SplitLayout = ({
   eyebrow,
   heading,
@@ -18,6 +24,8 @@ export const SplitLayout = ({
   flip = false,
   style,
   aspectRatio,
+  priority = false,
+  responsiveImages,
 }: {
   eyebrow?: string | React.ReactNode;
   heading?: string | React.ReactNode;
@@ -29,6 +37,8 @@ export const SplitLayout = ({
   flip?: boolean;
   style?: { image?: string; card?: string; heading?: string };
   aspectRatio: number;
+  priority?: boolean;
+  responsiveImages?: ImageSource[];
 }) => {
   return (
     <Card className={cn("p-0", style?.card)}>
@@ -59,21 +69,51 @@ export const SplitLayout = ({
         </div>
         <div
           className={cn(
-            "relative order-1 lg:order-2 ",
+            "relative order-1 lg:order-2",
             flip ? "row-start-1" : "row-start-0"
           )}
         >
-          <AspectRatio ratio={aspectRatio}>
-            <Image
-              src={imageSrc}
-              alt={imageAlt}
-              fill
-              loading="eager"
-              priority
-              className={cn("object-cover", style?.image)}
-              sizes="(max-width: 1024px) 95vw, 50vw"
-            />
-          </AspectRatio>
+          {responsiveImages ? (
+            <>
+              <div className="hidden lg:block">
+                <AspectRatio ratio={responsiveImages[0].aspectRatio}>
+                  <Image
+                    src={responsiveImages[0].src}
+                    alt={imageAlt}
+                    fill
+                    priority={priority}
+                    className={cn("object-cover", style?.image)}
+                    sizes="(min-width: 1024px) 50vw, 0px"
+                  />
+                </AspectRatio>
+              </div>
+
+              <div className="block lg:hidden">
+                <AspectRatio ratio={responsiveImages[1].aspectRatio}>
+                  <Image
+                    src={responsiveImages[1].src}
+                    alt={imageAlt}
+                    fill
+                    priority={priority}
+                    className={cn("object-cover", style?.image)}
+                    sizes="(max-width: 1023px) 95vw, 0px"
+                  />
+                </AspectRatio>
+              </div>
+            </>
+          ) : (
+            <AspectRatio ratio={aspectRatio}>
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                fill
+                loading={priority ? "eager" : "lazy"}
+                priority={priority}
+                className={cn("object-cover", style?.image)}
+                sizes="(max-width: 1024px) 95vw, 50vw"
+              />
+            </AspectRatio>
+          )}
         </div>
       </div>
     </Card>
