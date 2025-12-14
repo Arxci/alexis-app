@@ -5,10 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-export default function Error({
-  error,
-  reset,
-}: {
+export default function Error({}: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {

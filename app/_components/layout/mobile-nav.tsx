@@ -27,7 +27,7 @@ export const MobileNav = () => {
     setPrevPath(pathname);
   }
 
-  useWindowDimensions(() => setOpen(false), 10);
+  useWindowDimensions(() => setOpen(false), 150);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

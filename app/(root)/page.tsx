@@ -1,19 +1,12 @@
 import { Suspense } from "react";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 
 import { HomeAbout } from "./_sections/home-about";
 import { HomeBanner } from "./_sections/home-banner";
 
-const HomeFlash = dynamic(() =>
-  import("./_sections/home-flash").then((mod) => ({ default: mod.HomeFlash }))
-);
-const HomeRecentWork = dynamic(() =>
-  import("./_sections/home-recent-work").then((mod) => ({
-    default: mod.HomeRecentWork,
-  }))
-);
+import { HomeFlash } from "./_sections/home-flash";
+import { HomeRecentWork } from "./_sections/home-recent-work";
 
 import { Card } from "@/components/ui/card";
 import { ImageLoading } from "@/components/image/image-loading";

@@ -16,12 +16,7 @@ export const HomeFlash = async () => {
       >
         {items &&
           items.map((image, _id: number) => (
-            <ImageCard
-              key={_id}
-              src={image.imageUrl}
-              alt={image?.alt}
-              ratio={16 / 9}
-            />
+            <ImageCard key={_id} ratio={16 / 9} {...image} />
           ))}
       </ImageShowcase>
     </section>

@@ -7,19 +7,23 @@ export const SiteFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-muted py-24 bg-background-light">
+    <footer
+      className="border-t border-muted py-24 bg-background-light"
+      role="contentinfo"
+    >
       <div className="container px-4 flex flex-col gap-16">
         <div className="flex gap-10 md:gap-16 flex-col items-start lg:flex-row">
           <Link
             href="/"
             className="mr-auto   font-medium text-2xl uppercase font-display"
+            aria-label="Return to home page"
           >
             {siteConfig.name}
           </Link>
           <div className="flex gap-8 lg:gap-14 flex-col lg:flex-row">
             <div>
               <FooterLabel label="Menu" />
-              <nav>
+              <nav aria-label="Footer navigation">
                 <ul className="flex flex-col gap-2">
                   {siteConfig.siteMap.map((link, index) => (
                     <li key={index}>

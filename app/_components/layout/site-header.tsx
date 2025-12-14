@@ -15,7 +15,7 @@ export const SiteHeader = () => {
         >
           {siteConfig.name}
         </Link>
-        <nav className="ml-auto hidden lg:flex">
+        <nav aria-label="Main navigation" className="ml-auto hidden lg:flex">
           <MainNav />
         </nav>
         <MobileNav />

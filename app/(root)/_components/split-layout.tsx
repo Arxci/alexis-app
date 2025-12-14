@@ -88,9 +88,9 @@ export const SplitLayout = ({
           {responsiveImages ? (
             <>
               <div className="hidden lg:block">
-                <AspectRatio ratio={responsiveImages[0].aspectRatio}>
+                <AspectRatio ratio={responsiveImages[0]?.aspectRatio}>
                   <Image
-                    src={responsiveImages[0].src}
+                    src={responsiveImages[0]?.src || ""}
                     placeholder={placeholder}
                     alt={imageAlt}
                     fill
@@ -103,9 +103,9 @@ export const SplitLayout = ({
               </div>
 
               <div className="block lg:hidden">
-                <AspectRatio ratio={responsiveImages[1].aspectRatio}>
+                <AspectRatio ratio={responsiveImages[1]?.aspectRatio}>
                   <Image
-                    src={responsiveImages[1].src}
+                    src={responsiveImages[1]?.src || ""}
                     placeholder={placeholder}
                     alt={imageAlt}
                     fill

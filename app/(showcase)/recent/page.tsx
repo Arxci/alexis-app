@@ -66,10 +66,73 @@ export const revalidate = 3600;
 export default async function RecentWorkPage() {
   const { items, totalCount } = await getRecentWork(0, 24);
 
+  const imageGalleryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    name: "Recent Tattoo Work Portfolio by Ace Arts",
+    description: metadata.description,
+    creator: {
+      "@type": "Person",
+      name: siteConfig.artist.name,
+      jobTitle: siteConfig.artist.jobTitle,
+      worksFor: {
+        "@type": "TattooParlor",
+        name: siteConfig.business.shop,
+      },
+    },
+    thumbnailUrl: items.slice(0, 1).map((item) => item.imageUrl),
+    image: items.slice(0, 12).map((item) => ({
+      "@type": "ImageObject",
+      contentUrl: item.imageUrl,
+      thumbnailUrl: item.thumbUrl,
+      description: item.alt || "Custom tattoo work by Ace Arts",
+      width: item.dimensions?.width,
+      height: item.dimensions?.height,
+      creator: {
+        "@type": "Person",
+        name: siteConfig.artist.name,
+      },
+      copyrightHolder: {
+        "@type": "Person",
+        name: siteConfig.artist.name,
+      },
+    })),
+    numberOfItems: totalCount,
+  };
+
+  // Portfolio/Visual Artwork Collection
+  const portfolioJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Collection",
+    name: "Tattoo Portfolio",
+    description: "Portfolio of custom tattoo work by Alexis Nesteby (Ace Arts)",
+    collectionSize: totalCount,
+    creator: {
+      "@type": "Person",
+      name: siteConfig.artist.name,
+      jobTitle: siteConfig.artist.jobTitle,
+      description: siteConfig.artist.bio,
+    },
+    itemListElement: items.slice(0, 10).map((item, index) => ({
+      "@type": "VisualArtwork",
+      position: index + 1,
+      name: item.alt || `Tattoo Work ${index + 1}`,
+      image: item.imageUrl,
+      artMedium: "Tattoo",
+      artform: "American Traditional Tattoo",
+      creator: {
+        "@type": "Person",
+        name: siteConfig.artist.name,
+      },
+    })),
+  };
+
   return (
     <>
       <main>
         <JsonLd data={breadcrumbJsonLd} />
+        <JsonLd data={imageGalleryJsonLd} />
+        <JsonLd data={portfolioJsonLd} />
         <section className="container lg:px-0">
           <InfiniteScrollShowcase
             label="Recent Work"

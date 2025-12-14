@@ -10,6 +10,7 @@ import { ImageShowcase } from "@/components/image/image-showcase";
 import { ImageLoading } from "./image-loading";
 
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
+import { errorLogger, ErrorType } from "@/lib/error-handling";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
@@ -28,13 +29,24 @@ export function InfiniteScrollShowcase({
   totalCount,
   imageRatio,
 }: InfiniteScrollShowcaseProps) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error } =
     useInfiniteQuery({
-      queryKey: [label, "infinite-scroll"],
+      queryKey: ["images", label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
-        const start = pageParam as number;
-        const end = start + ITEMS_PER_PAGE;
-        return await fetchData(start, end);
+        try {
+          const start = pageParam as number;
+          const end = start + ITEMS_PER_PAGE;
+          return await fetchData(start, end);
+        } catch (err) {
+          errorLogger.log({
+            type: ErrorType.QUERY_ERROR,
+            message: "Query failed",
+            originalError: err,
+            timestamp: new Date(),
+            context: { queryKey: ["images", label, "infinite-scroll"] },
+          });
+          throw err;
+        }
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
@@ -66,13 +78,24 @@ export function InfiniteScrollShowcase({
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  useEffect(() => {
+    if (error) {
+      errorLogger.log({
+        type: ErrorType.QUERY_ERROR,
+        message: "Query failed",
+        originalError: error,
+        timestamp: new Date(),
+        context: { queryKey: ["images", label, "infinite-scroll"] },
+      });
+    }
+  }, [error, label]);
+
   return (
     <ImageShowcase label={label} style={{ link: "hidden" }}>
       {allImages.map((image, idx) => (
         <ImageCard
           key={image._key}
-          src={image?.imageUrl}
-          alt={image?.alt}
+          {...image}
           ratio={imageRatio}
           priority={idx < 3}
         />

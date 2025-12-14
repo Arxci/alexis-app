@@ -23,17 +23,20 @@ import { Skeleton } from "../ui/skeleton";
 
 import { Icons } from "../icons";
 
+import { handleImageError, errorLogger } from "@/lib/error-handling";
 import { cn } from "@/lib/utils";
 import { useImageLoad } from "@/lib/hooks/useImageLoad";
 
+import { ImageItem } from "@/lib/sanity/sanity-api";
+
 export const ImageCard = ({
-  src,
+  imageUrl,
+  thumbUrl,
+  blurDataURL,
   alt,
   ratio,
   priority = false,
-}: {
-  src: string;
-  alt: string;
+}: ImageItem & {
   ratio: number;
   priority?: boolean;
 }) => {
@@ -41,6 +44,12 @@ export const ImageCard = ({
 
   const thumbnail = useImageLoad();
   const modal = useImageLoad();
+
+  const imageAlt = alt || "Tattoo artwork by Ace Arts";
+
+  if (!alt) {
+    errorLogger.warn("Image missing alt text", { imageUrl });
+  }
 
   const handleOpenChanged = (open: boolean) => {
     setOpen(open);
@@ -62,13 +71,13 @@ export const ImageCard = ({
               </div>
             )}
             <Image
-              src={src}
-              alt={alt}
+              src={thumbUrl}
+              alt={imageAlt}
               fill
               quality={75}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
               priority={priority}
-              fetchPriority={priority ? "high" : undefined}
+              fetchPriority={priority ? "high" : "auto"}
               className={cn(
                 "object-cover transition-opacity duration-500",
                 thumbnail.isLoading || thumbnail.hasError
@@ -76,7 +85,8 @@ export const ImageCard = ({
                   : "opacity-100"
               )}
               onLoad={thumbnail.handleLoad}
-              onError={thumbnail.handleError}
+              onError={handleImageError(thumbUrl, thumbnail.handleError)}
+              blurDataURL={blurDataURL}
             />
             <span className="sr-only">Click to enlarge</span>
           </AspectRatio>
@@ -87,8 +97,8 @@ export const ImageCard = ({
         showCloseButton={!modal.isLoading}
         className="min-w-[300px] min-h-[300px]"
       >
-        <DialogTitle className="sr-only" />
-        <DialogDescription className="sr-only" />
+        <DialogTitle className="sr-only">Full size tattoo image</DialogTitle>
+        <DialogDescription className="sr-only">{alt}</DialogDescription>
         {modal.isLoading && (
           <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
         )}
@@ -106,15 +116,15 @@ export const ImageCard = ({
           )}
         >
           <Image
-            src={src}
-            alt={alt}
+            src={imageUrl}
+            alt={imageAlt}
             width={1920}
             height={1080}
             className={cn(
               "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
             )}
             onLoad={modal.handleLoad}
-            onError={modal.handleError}
+            onError={handleImageError(imageUrl, modal.handleError)}
           />
         </div>
       </DialogContent>

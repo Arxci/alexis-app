@@ -10,12 +10,7 @@ export const HomeRecentWork = async () => {
       <ImageShowcase label="Recent Work" link="/recent">
         {items &&
           items.map((image, _id: number) => (
-            <ImageCard
-              key={_id}
-              src={image.imageUrl}
-              alt={image?.alt}
-              ratio={3 / 4}
-            />
+            <ImageCard key={_id} ratio={3 / 4} {...image} />
           ))}
       </ImageShowcase>
     </section>

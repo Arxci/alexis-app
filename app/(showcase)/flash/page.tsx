@@ -65,10 +65,59 @@ export const revalidate = 3600;
 export default async function FlashPage() {
   const { items, totalCount } = await getFlash(0, 24);
 
+  const imageGalleryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    name: "Flash Tattoo Designs by Ace Arts",
+    description: metadata.description,
+    creator: {
+      "@type": "Person",
+      name: siteConfig.artist.name,
+      jobTitle: siteConfig.artist.jobTitle,
+    },
+    thumbnailUrl: items.slice(0, 1).map((item) => item.imageUrl),
+    image: items.slice(0, 12).map((item) => ({
+      "@type": "ImageObject",
+      contentUrl: item.imageUrl,
+      thumbnailUrl: item.thumbUrl,
+      description: item.alt || "Flash tattoo design by Ace Arts",
+      width: item.dimensions?.width,
+      height: item.dimensions?.height,
+      creator: {
+        "@type": "Person",
+        name: siteConfig.artist.name,
+      },
+    })),
+    numberOfItems: totalCount,
+  };
+
+  const creativeWorkJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: "Flash Tattoo Design Collection",
+    description:
+      "Pre-drawn flash tattoo designs available for immediate tattooing",
+    author: {
+      "@type": "Person",
+      name: siteConfig.artist.name,
+      jobTitle: siteConfig.artist.jobTitle,
+    },
+    genre: ["Traditional Tattoo", "American Traditional", "Flash Art"],
+    workExample: items.slice(0, 5).map((item) => ({
+      "@type": "VisualArtwork",
+      name: item.alt || "Flash Tattoo Design",
+      image: item.imageUrl,
+      artMedium: "Tattoo Design",
+      artform: "Traditional Tattoo Art",
+    })),
+  };
+
   return (
     <>
       <main>
         <JsonLd data={breadcrumbJsonLd} />
+        <JsonLd data={imageGalleryJsonLd} />
+        <JsonLd data={creativeWorkJsonLd} />
         <section className="container lg:px-0">
           <InfiniteScrollShowcase
             label="Flash"
