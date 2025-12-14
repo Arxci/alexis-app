@@ -104,7 +104,7 @@ export const ImageCard = ({
         )}
         <div
           className={cn(
-            "relative bg-stone-800 border-2 overflow-hidden transition-opacity duration-150",
+            "relative border-2 overflow-hidden transition-opacity duration-150",
             modal.isLoading || modal.hasError
               ? "opacity-0 w-0 h-0"
               : "opacity-100"

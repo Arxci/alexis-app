@@ -1,10 +1,5 @@
 import { client } from "./sanity-client";
-import {
-  flashCountQuery,
-  flashQuery,
-  recentWorkQuery,
-  recentWorkCountQuery,
-} from "./sanity-queries";
+import { flashQuery, recentWorkQuery } from "./sanity-queries";
 
 import { errorLogger, ErrorType } from "@/lib/error-handling";
 
@@ -32,7 +27,6 @@ export type PagedResult = {
 
 async function fetchPagedData(
   dataQuery: string,
-  countQuery: string,
   fetchCount = true,
   start?: number,
   end?: number
@@ -42,19 +36,18 @@ async function fetchPagedData(
 
   try {
     if (fetchCount) {
-      const [items, totalCount] = await Promise.all([
-        client.fetch<ImageItem[]>(
-          dataQuery,
-          { start: safeStart, end: safeEnd },
-          { next: { revalidate: CACHE_CONFIG.default } }
-        ),
-        client.fetch<number>(
-          countQuery,
-          {},
-          { next: { revalidate: CACHE_CONFIG.default } }
-        ),
-      ]);
-      return { items, totalCount };
+      const result = await client.fetch<{
+        items: ImageItem[];
+        totalCount: number;
+      }>(
+        dataQuery,
+        { start: safeStart, end: safeEnd },
+        { next: { revalidate: CACHE_CONFIG.default } }
+      );
+      return {
+        items: result.items,
+        totalCount: fetchCount ? result.totalCount : -1,
+      };
     }
 
     const items = await client.fetch<ImageItem[]>(dataQuery, {
@@ -81,13 +74,7 @@ export async function getRecentWork(
   end: number,
   fetchCount = true
 ): Promise<PagedResult> {
-  return fetchPagedData(
-    recentWorkQuery,
-    recentWorkCountQuery,
-    fetchCount,
-    start,
-    end
-  );
+  return fetchPagedData(recentWorkQuery, fetchCount, start, end);
 }
 
 export async function getFlash(
@@ -95,5 +82,5 @@ export async function getFlash(
   end: number,
   fetchCount = true
 ): Promise<PagedResult> {
-  return fetchPagedData(flashQuery, flashCountQuery, fetchCount, start, end);
+  return fetchPagedData(flashQuery, fetchCount, start, end);
 }
