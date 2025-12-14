@@ -29,10 +29,12 @@ export const ImageCard = ({
   src,
   alt,
   ratio,
+  blurDataURL,
 }: {
   src: string;
   alt: string;
   ratio: number;
+  blurDataURL?: string;
 }) => {
   const [open, setOpen] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(true);
@@ -46,6 +48,10 @@ export const ImageCard = ({
 
   const handleImageLoaded = () => {
     setIsModalLoading(false);
+  };
+
+  const handleThumbnailLoaded = () => {
+    setIsThumbnailLoading(false);
   };
 
   return (
@@ -62,10 +68,10 @@ export const ImageCard = ({
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               className={cn(
-                "object-cover transition-opacity duration-300",
+                "object-cover transition-opacity duration-500",
                 isThumbnailLoading ? "opacity-0" : "opacity-100"
               )}
-              onLoad={() => setIsThumbnailLoading(false)}
+              onLoad={handleThumbnailLoaded}
             />
           </AspectRatio>
         </ImageFrame>

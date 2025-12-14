@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-
 import { useInView } from "react-intersection-observer";
+
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
-import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
 import { ImageLoading } from "./image-loading";
-import { useScrollRestoration } from "@/lib/hooks/useScrollRestoration";
+
+import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
@@ -28,7 +28,7 @@ export function InfiniteScrollShowcase({
   totalCount,
   imageRatio,
 }: InfiniteScrollShowcaseProps) {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: [label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
@@ -39,34 +39,26 @@ export function InfiniteScrollShowcase({
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
         if (!lastPage) return undefined;
-
         const loadedItemsCount = allPages.flatMap((page) => page.items).length;
-
-        if (loadedItemsCount >= totalCount) {
-          return undefined;
-        }
-
+        if (loadedItemsCount >= totalCount) return undefined;
         return loadedItemsCount;
       },
       initialData: {
-        pages: [
-          {
-            items: initialData,
-            totalCount: totalCount,
-          },
-        ],
+        pages: [{ items: initialData, totalCount: totalCount }],
         pageParams: [0],
       },
       staleTime: 5 * 60 * 1000,
       refetchOnWindowFocus: false,
     });
 
-  useScrollRestoration(isLoading);
-
   const { ref, inView } = useInView({
     threshold: 0,
     rootMargin: "100px",
   });
+
+  const allImages = useMemo(() => {
+    return data?.pages.flatMap((page) => page.items) ?? [];
+  }, [data]);
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -74,17 +66,8 @@ export function InfiniteScrollShowcase({
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const allImages = useMemo(() => {
-    return data?.pages.flatMap((page) => page.items) ?? [];
-  }, [data]);
-
   return (
-    <ImageShowcase
-      label={label}
-      style={{
-        link: "hidden",
-      }}
-    >
+    <ImageShowcase label={label} style={{ link: "hidden" }}>
       {allImages.map((image) => (
         <ImageCard
           key={image._key}

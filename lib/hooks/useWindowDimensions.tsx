@@ -35,7 +35,7 @@ export default function useWindowDimensions(
   const [windowSize, setWindowSize] = useState<WindowSize>(
     getWindowDimensions()
   );
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); //
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleResize = useCallback(() => {
     const newSize = getWindowDimensions();

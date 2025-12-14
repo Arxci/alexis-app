@@ -11,7 +11,7 @@ import { Card } from "@/components/ui/card";
 import { ImageLoading } from "@/components/image/image-loading";
 import { Button } from "@/components/ui/button";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export default function IndexPage() {
   return (

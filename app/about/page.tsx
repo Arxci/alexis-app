@@ -1,13 +1,77 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/seo/json-ld";
+
+import { siteConfig } from "@/config/site";
+
+export const metadata: Metadata = {
+  title: "About Alexis Nesteby",
+  description:
+    "Meet Alexis Nesteby (Lexi), a tattoo artist at Neon Dragon Tattoo in Cedar Rapids, Iowa. Specializing in bold, colorful American traditional tattoo work inspired by pop culture, metal music, and tattoo history.",
+  keywords: [
+    "Alexis Nesteby",
+    "Lexi tattoo artist",
+    "about Ace Arts",
+    "Cedar Rapids tattoo artist bio",
+    "Neon Dragon Tattoo artist",
+    "traditional tattoo artist Iowa",
+    "female tattoo artist Cedar Rapids",
+  ],
+  openGraph: {
+    title: "About Alexis Nesteby | Ace Arts Tattoo",
+    description:
+      "Meet Alexis Nesteby (Lexi), a tattoo artist specializing in bold, colorful traditional work at Neon Dragon Tattoo in Cedar Rapids, Iowa.",
+    url: "https://acearts.com/about",
+    images: [
+      {
+        url: "/about-me.jpg",
+        width: 1200,
+        height: 1600,
+        alt: "Alexis Nesteby - Tattoo Artist",
+      },
+    ],
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Alexis Nesteby | Ace Arts",
+    description:
+      "Meet Alexis Nesteby (Lexi), a tattoo artist specializing in bold, colorful traditional work.",
+    images: ["/about-me.jpg"],
+  },
+  alternates: {
+    canonical: "https://acearts.com/about",
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteConfig.url,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "About",
+      item: `${siteConfig.url}/about`,
+    },
+  ],
+};
 
 export default function AboutPage() {
   return (
-    <main className="">
+    <main>
+      <JsonLd data={breadcrumbJsonLd} />
       <section className="container lg:px-0">
         <Card className="p-0">
           <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -16,7 +80,7 @@ export default function AboutPage() {
                 Learn about me
               </span>
 
-              <h1 className="text-[4vw] text-xs lg:text-lg font-black leading-normal text-foreground mb-6">
+              <h1 className="text-base lg:text-lg font-black leading-normal text-foreground mb-6">
                 My name is Alexis Nesteby, but you can call me Lexi. I am a
                 tattoo artist, music fanatic, and super nerd based out of Cedar
                 Rapids, Iowa.

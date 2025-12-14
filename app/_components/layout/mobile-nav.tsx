@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import { usePathname } from "next/navigation";
 import Link, { LinkProps } from "next/link";
@@ -27,12 +27,7 @@ export const MobileNav = () => {
     setPrevPath(pathname);
   }
 
-  useWindowDimensions(
-    useCallback(() => {
-      setOpen(false);
-    }, []),
-    10
-  );
+  useWindowDimensions(() => setOpen(false), 10);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

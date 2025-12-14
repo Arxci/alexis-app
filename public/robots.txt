@@ -1,0 +1,7 @@
+# Allow all search engines to crawl everything
+User-agent: *
+Allow: /
+
+# Tell search engines where your sitemap is
+# Change to domain when deploy
+Sitemap: https://acearts.com/sitemap.xml

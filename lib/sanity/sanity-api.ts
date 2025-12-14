@@ -10,6 +10,7 @@ export type ImageItem = {
   _key: string;
   alt: string;
   imageUrl: string;
+  blurDataURL?: string;
 };
 
 export type PagedResult = {
@@ -32,9 +33,9 @@ async function fetchPagedData(
       client.fetch(
         dataQuery,
         { start: safeStart, end: safeEnd },
-        { next: { revalidate: 60 } }
+        { next: { revalidate: 3600 } }
       ),
-      client.fetch(countQuery, {}, { next: { revalidate: 60 } }),
+      client.fetch(countQuery, {}, { next: { revalidate: 3600 } }),
     ]);
     return { items, totalCount };
   }
