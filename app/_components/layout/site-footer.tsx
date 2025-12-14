@@ -4,56 +4,65 @@ import { siteConfig } from "@/config/site";
 import { ComponentProps } from "react";
 
 export const SiteFooter = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="border-t border-muted py-24 bg-background-light">
-      <div className="container h-full flex px-4 gap-10 md:gap-16 flex-col lg:flex-row">
-        <Link
-          href="/"
-          className="mr-auto font-medium text-2xl uppercase font-display"
-        >
-          {siteConfig.name}
-        </Link>
-        <div className="flex gap-8 lg:gap-14 flex-col lg:flex-row">
-          <div>
-            <FooterLabel label="Site" />
-            <nav>
-              <ul className="flex flex-col gap-2">
-                {siteConfig.siteMap.map((link, index) => (
-                  <li key={index}>
-                    <FooterLink href={link.href} label={link.name} />
+      <div className="container px-4 flex flex-col gap-16">
+        <div className="flex gap-10 md:gap-16 flex-col items-start lg:flex-row">
+          <Link
+            href="/"
+            className="mr-auto   font-medium text-2xl uppercase font-display"
+          >
+            {siteConfig.name}
+          </Link>
+          <div className="flex gap-8 lg:gap-14 flex-col lg:flex-row">
+            <div>
+              <FooterLabel label="Site" />
+              <nav>
+                <ul className="flex flex-col gap-2">
+                  {siteConfig.siteMap.map((link, index) => (
+                    <li key={index}>
+                      <FooterLink href={link.href} label={link.name} />
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+            <div>
+              <FooterLabel label="Socials" />
+              <nav>
+                <ul className="flex flex-col gap-2">
+                  <li>
+                    <FooterLink
+                      target="_blank"
+                      href={siteConfig.links.instagram}
+                      label="Instagram"
+                    />
                   </li>
-                ))}
-              </ul>
-            </nav>
+                  <li>
+                    <FooterLink
+                      target="_blank"
+                      href={`mailto:${siteConfig.links.email}`}
+                      label="Email"
+                    />
+                  </li>
+                  <li>
+                    <FooterLink
+                      target="_blank"
+                      href={siteConfig.links.tiktok}
+                      label="TikTok"
+                    />
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
-          <div>
-            <FooterLabel label="Socials" />
-            <nav>
-              <ul className="flex flex-col gap-2">
-                <li>
-                  <FooterLink
-                    target="_blank"
-                    href={siteConfig.links.instagram}
-                    label="Instagram"
-                  />
-                </li>
-                <li>
-                  <FooterLink
-                    target="_blank"
-                    href={siteConfig.links.email}
-                    label="Email"
-                  />
-                </li>
-                <li>
-                  <FooterLink
-                    target="_blank"
-                    href={siteConfig.links.tiktok}
-                    label="TikTok"
-                  />
-                </li>
-              </ul>
-            </nav>
-          </div>
+        </div>
+        <div className="border-t border-muted pt-8 text-center gap-4 text-sm text-foreground/60">
+          <p>
+            &copy; 2025-{currentYear} {siteConfig.name}. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
