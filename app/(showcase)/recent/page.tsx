@@ -67,10 +67,6 @@ export default async function RecentWorkPage() {
 
   return (
     <>
-      <head>
-        <link rel="preconnect" href="https://cdn.sanity.io" />
-        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-      </head>
       <main>
         <JsonLd data={breadcrumbJsonLd} />
         <section className="container lg:px-0">

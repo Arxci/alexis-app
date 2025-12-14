@@ -24,10 +24,6 @@ export const revalidate = 3600;
 export default function IndexPage() {
   return (
     <>
-      <head>
-        <link rel="preconnect" href="https://cdn.sanity.io" />
-        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-      </head>
       <main className="">
         <HomeBanner />
         <HomeAbout />
