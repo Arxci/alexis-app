@@ -23,7 +23,7 @@ import { Skeleton } from "../ui/skeleton";
 
 import { Icons } from "../icons";
 
-import { handleImageError, errorLogger } from "@/lib/error-handling";
+import { handleImageError } from "@/lib/error-handling";
 import { cn } from "@/lib/utils";
 import { useImageLoad } from "@/lib/hooks/useImageLoad";
 

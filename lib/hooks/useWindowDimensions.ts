@@ -1,11 +1,5 @@
 // lib/hooks/useWindowDimensions.ts
-import {
-  useState,
-  useLayoutEffect,
-  useEffect,
-  useCallback,
-  useRef,
-} from "react";
+import { useState, useLayoutEffect, useEffect, useRef } from "react";
 
 function getWindowDimensions() {
   if (typeof window === "undefined") {

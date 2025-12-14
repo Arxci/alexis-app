@@ -8,7 +8,6 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { fetchMoreRecentWork } from "./actions";
 
 import { siteConfig } from "@/config/site";
-import { CACHE_CONFIG } from "@/config/cache";
 
 export const metadata: Metadata = {
   title: "Recent Tattoo Work",
@@ -62,7 +61,7 @@ const breadcrumbJsonLd = {
   ],
 };
 
-export const revalidate = CACHE_CONFIG.default;
+export const revalidate = 3600;
 
 export default async function RecentWorkPage() {
   const { items, totalCount } = await getRecentWork(0, 24);

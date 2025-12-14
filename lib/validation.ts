@@ -1,10 +1,5 @@
 // lib/validation.ts
-import {
-  errorLogger,
-  createValidationError,
-  getUserFriendlyErrorMessage,
-  AppError,
-} from "./error-handling";
+import { errorLogger, createValidationError, AppError } from "./error-handling";
 
 export const MAX_PAGE_SIZE = 100;
 
