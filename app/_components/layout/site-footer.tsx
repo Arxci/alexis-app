@@ -46,7 +46,6 @@ export const SiteFooter = () => {
                 </li>
                 <li>
                   <FooterLink
-                    target="_blank"
                     href={`mailto:${siteConfig.links.email}`}
                     label="Email"
                   />
