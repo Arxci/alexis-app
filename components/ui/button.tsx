@@ -15,7 +15,7 @@ const buttonVariants = cva(
           "border-2 border-accent bg-transparent text-accent shadow-[4px_4px_0px_0px_var(--color-accent)] hover:bg-accent hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none hover:text-accent-foreground",
         ghost:
           "hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent",
-        link: "text-accent underline-offset-4 hover:underline underline-accent",
+        link: "text-primary underline-offset-4 hover:underline underline-primary",
       },
       size: {
         default: "h-12 px-6 py-2 has-[>svg]:px-3 text-md",

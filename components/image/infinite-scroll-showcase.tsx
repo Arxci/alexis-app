@@ -92,12 +92,12 @@ export function InfiniteScrollShowcase({
 
   return (
     <ImageShowcase label={label} style={{ link: "hidden" }}>
-      {allImages.map((image, idx) => (
+      {allImages.map((image, id) => (
         <ImageCard
           key={image._key}
           {...image}
           ratio={imageRatio}
-          priority={idx < 3}
+          priority={id < 3}
         />
       ))}
 

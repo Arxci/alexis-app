@@ -1,3 +1,12 @@
+export const VALID_ROUTES = ["/", "/about", "/flash", "/recent"] as const;
+export type ValidRoute = (typeof VALID_ROUTES)[number];
+
+// Type for sitemap entries
+type SiteMapEntry = {
+  name: string;
+  href: ValidRoute;
+};
+
 export const siteConfig = {
   name: "Ace Arts",
   description:
@@ -47,7 +56,7 @@ export const siteConfig = {
     { name: "Flash", href: "/flash" },
     { name: "Recent Work", href: "/recent" },
     // { name: "Contact", href: "/contact" }, // TODO: Add if you create a contact page
-  ],
+  ] satisfies SiteMapEntry[],
 
   // SEO Keywords
   keywords: {

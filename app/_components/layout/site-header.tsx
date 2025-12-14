@@ -10,6 +10,7 @@ export const SiteHeader = () => {
     <header className="sticky top-0 z-50 w-full bg-background-light backdrop-blur-lg lg:supports-backdrop-filter:bg-background-light/60">
       <div className="container h-18 grid grid-cols-[auto_1fr] items-center px-4">
         <Link
+          prefetch={true}
           href="/"
           className="mr-auto font-medium text-2xl uppercase font-display"
         >

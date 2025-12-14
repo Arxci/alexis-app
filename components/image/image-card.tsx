@@ -47,10 +47,6 @@ export const ImageCard = ({
 
   const imageAlt = alt || "Tattoo artwork by Ace Arts";
 
-  if (!alt) {
-    errorLogger.warn("Image missing alt text", { imageUrl });
-  }
-
   const handleOpenChanged = (open: boolean) => {
     setOpen(open);
 
@@ -93,7 +89,6 @@ export const ImageCard = ({
         </ImageFrame>
       </DialogTrigger>
       <DialogContent
-        aria-describedby="Full screen image"
         showCloseButton={!modal.isLoading}
         className="min-w-[300px] min-h-[300px]"
       >

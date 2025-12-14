@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { fetchMoreFlashImages } from "./actions";
 
 import { siteConfig } from "@/config/site";
+import { CACHE_CONFIG } from "@/config/cache";
 
 export const metadata: Metadata = {
   title: "Flash Tattoo Designs",
@@ -60,7 +61,7 @@ const breadcrumbJsonLd = {
   ],
 };
 
-export const revalidate = 3600;
+export const revalidate = CACHE_CONFIG.default;
 
 export default async function FlashPage() {
   const { items, totalCount } = await getFlash(0, 24);

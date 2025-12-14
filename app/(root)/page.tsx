@@ -12,7 +12,9 @@ import { Card } from "@/components/ui/card";
 import { ImageLoading } from "@/components/image/image-loading";
 import { Button } from "@/components/ui/button";
 
-export const revalidate = 3600;
+import { CACHE_CONFIG } from "@/config/cache";
+
+export const revalidate = CACHE_CONFIG.default;
 
 export default function IndexPage() {
   return (

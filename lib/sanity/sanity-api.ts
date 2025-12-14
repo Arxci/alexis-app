@@ -5,7 +5,10 @@ import {
   recentWorkQuery,
   recentWorkCountQuery,
 } from "./sanity-queries";
+
 import { errorLogger, ErrorType } from "@/lib/error-handling";
+
+import { CACHE_CONFIG } from "@/config/cache";
 
 export type ImageItem = {
   _key: string;
@@ -43,9 +46,13 @@ async function fetchPagedData(
         client.fetch<ImageItem[]>(
           dataQuery,
           { start: safeStart, end: safeEnd },
-          { next: { revalidate: 3600 } }
+          { next: { revalidate: CACHE_CONFIG.default } }
         ),
-        client.fetch<number>(countQuery, {}, { next: { revalidate: 3600 } }),
+        client.fetch<number>(
+          countQuery,
+          {},
+          { next: { revalidate: CACHE_CONFIG.default } }
+        ),
       ]);
       return { items, totalCount };
     }

@@ -5,6 +5,7 @@ export enum ErrorType {
   SANITY_FETCH = "SANITY_FETCH",
   QUERY_ERROR = "QUERY_ERROR",
   NETWORK = "NETWORK",
+  VALIDATION = "VALIDATION",
   UNKNOWN = "UNKNOWN",
 }
 
@@ -56,6 +57,18 @@ export function createImageLoadError(
     originalError,
     timestamp: new Date(),
     context: { imageUrl },
+  };
+}
+
+export function createValidationError(
+  message: string,
+  context?: Record<string, unknown>
+): AppError {
+  return {
+    type: ErrorType.VALIDATION,
+    message,
+    timestamp: new Date(),
+    context,
   };
 }
 
@@ -127,6 +140,8 @@ export function getUserFriendlyErrorMessage(error: AppError): string {
       return "Something went wrong. Please try again.";
     case ErrorType.NETWORK:
       return "Network error. Please check your internet connection.";
+    case ErrorType.VALIDATION:
+      return "Invalid request. Please try again.";
     default:
       return "An unexpected error occurred. Please try again.";
   }

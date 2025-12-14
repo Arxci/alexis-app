@@ -5,7 +5,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-export default function Error({}: {
+export default function Error({
+  reset,
+}: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
@@ -26,6 +28,9 @@ export default function Error({}: {
             </p>
             <Button asChild variant="outline">
               <Link href="/">Return Home</Link>
+            </Button>
+            <Button onClick={reset} variant="link" className="mt-4">
+              Try Again
             </Button>
           </div>
         </Card>

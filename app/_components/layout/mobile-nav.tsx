@@ -100,7 +100,7 @@ function MobileLink({
   return (
     <Link
       href={href}
-      onClick={() => {}}
+      prefetch={true}
       className={cn(
         "text-2xl font-medium data-[active=true]:text-accent uppercase",
         className

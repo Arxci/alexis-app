@@ -19,6 +19,7 @@ export function MainNav() {
             <Link
               href={link.href}
               data-active={isActive}
+              prefetch={true}
               className={cn(
                 "text-foreground/80 text-md font-normal hover:text-primary relative transition-colors",
                 "data-[active=true]:text-primary uppercase data-[active=true]:hover:text-foreground/80 "
