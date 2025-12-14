@@ -3,7 +3,7 @@ export const siteConfig = {
   description:
     "Custom tattoo art and flash designs by Alexis Nesteby, a tattoo artist based in Cedar Rapids, Iowa. Specializing in bold, colorful traditional work.",
   url: "https://acearts.com", // TODO: Replace with your actual domain
-  ogImage: "https://acearts.com/og-image.jpg", // TODO: Create 1200x630px image
+  ogImage: "/api/og?title=Ace%20Arts", // TODO: Create 1200x630px image
 
   // Business Info
   business: {
@@ -114,7 +114,6 @@ export const getJsonLd = () => ({
   description: siteConfig.description,
   url: siteConfig.url,
   logo: `${siteConfig.url}/logo.png`,
-  image: siteConfig.ogImage,
   address: {
     "@type": "PostalAddress",
     addressLocality: siteConfig.location.city,
