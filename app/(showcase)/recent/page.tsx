@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { fetchMoreRecentWork } from "./actions";
 
 import { siteConfig } from "@/config/site";
+import { INITIAL_FETCH_SIZE } from "@/config/cache";
 
 export const metadata: Metadata = {
   title: "Recent Tattoo Work",
@@ -64,7 +65,9 @@ const breadcrumbJsonLd = {
 export const revalidate = 3600;
 
 export default async function RecentWorkPage() {
-  const { items, totalCount } = await getRecentWork(0, 24);
+  const { items, totalCount } = await getRecentWork(0, INITIAL_FETCH_SIZE);
+
+  console.log(totalCount);
 
   const imageGalleryJsonLd = {
     "@context": "https://schema.org",

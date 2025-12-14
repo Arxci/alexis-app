@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { fetchMoreFlashImages } from "./actions";
 
 import { siteConfig } from "@/config/site";
+import { INITIAL_FETCH_SIZE } from "@/config/cache";
 
 export const metadata: Metadata = {
   title: "Flash Tattoo Designs",
@@ -63,7 +64,7 @@ const breadcrumbJsonLd = {
 export const revalidate = 3600;
 
 export default async function FlashPage() {
-  const { items, totalCount } = await getFlash(0, 24);
+  const { items, totalCount } = await getFlash(0, INITIAL_FETCH_SIZE);
 
   const imageGalleryJsonLd = {
     "@context": "https://schema.org",
