@@ -1,10 +1,17 @@
-"use client";
+"use client"; // Error boundaries must be Client Components
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import { useEffect } from "react";
 
-export default function NotFound() {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   return (
     <main>
       <section className="container py-24 lg:px-0">
@@ -14,10 +21,10 @@ export default function NotFound() {
               Oops!
             </span>
             <h1 className="font-display text-[10vw] sm:text-5xl lg:text-5xl xl:text-6xl font-black uppercase leading-[0.9] text-foreground mb-6">
-              Wrong Turn
+              Something went wrong
             </h1>
             <p className="text-lg md:text-xl text-stone-800 mb-10 max-w-md leading-relaxed">
-              TThis page is as empty as a fresh canvas. Click below to get back
+              This page is as empty as a fresh canvas. Click below to get back
               to the art.
             </p>
             <Button asChild variant="outline">

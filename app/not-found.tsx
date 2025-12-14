@@ -17,7 +17,7 @@ export default function NotFound() {
               Wrong Turn
             </h1>
             <p className="text-lg md:text-xl text-stone-800 mb-10 max-w-md leading-relaxed">
-              TThis page is as empty as a fresh canvas. Click below to get back
+              This page is as empty as a fresh canvas. Click below to get back
               to the art.
             </p>
             <Button asChild variant="outline">
