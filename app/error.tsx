@@ -1,9 +1,9 @@
-"use client"; // Error boundaries must be Client Components
+"use client";
+
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Link from "next/link";
-import { useEffect } from "react";
 
 export default function Error({
   error,
