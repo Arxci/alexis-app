@@ -35,17 +35,9 @@ export const siteConfig = {
   // Social Links
   links: {
     instagram: "https://instagram.com/ace_arts30",
-    // TODO: Add these if you have them
-    // facebook: "https://facebook.com/acearts",
-    // tiktok: "https://tiktok.com/@ace_arts30",
-    // email: "mailto:hello@acearts.com",
-    // phone: "tel:+13195551234",
-  },
-
-  //Contact (optional)
-  contact: {
-    email: "hello@acearts.com",
-    phone: "+1 (319) 555-1234",
+    tiktok: "https://www.tiktok.com/@ace_arts30",
+    email: "Ace_arts30@gmail.com",
+    neonDrago: "https://neondragontattoo.com/",
   },
 
   // Site Navigation

@@ -24,10 +24,11 @@ export const metadata: Metadata = {
     "Ace Arts portfolio",
   ],
   openGraph: {
+    images: ["/api/og?title=Recent%20Tattoo%20Work"],
     title: "Recent Tattoo Work | Ace Arts",
     description:
       "View recent tattoo work by Alexis Nesteby. Custom pieces featuring bold lines, vibrant colors, and American traditional style.",
-    url: "https://acearts.com/recent",
+    url: `${siteConfig.url}/recent`,
     type: "website",
   },
   twitter: {
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
       "View recent custom tattoo work featuring bold lines and vibrant colors.",
   },
   alternates: {
-    canonical: "https://acearts.com/recent",
+    canonical: `${siteConfig.url}/recent`,
   },
 };
 

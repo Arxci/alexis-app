@@ -24,6 +24,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Icons } from "../icons";
 
 import { cn } from "@/lib/utils";
+import { useImageLoad } from "@/lib/hooks/useImageLoad";
 
 export const ImageCard = ({
   src,
@@ -37,21 +38,14 @@ export const ImageCard = ({
   priority?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-  const [isModalLoading, setIsModalLoading] = useState(true);
-  const [isThumbnailLoading, setIsThumbnailLoading] = useState(true);
+
+  const thumbnail = useImageLoad();
+  const modal = useImageLoad();
 
   const handleOpenChanged = (open: boolean) => {
     setOpen(open);
 
-    if (open) setIsModalLoading(true);
-  };
-
-  const handleImageLoaded = () => {
-    setIsModalLoading(false);
-  };
-
-  const handleThumbnailLoaded = () => {
-    setIsThumbnailLoading(false);
+    if (open) modal.reset();
   };
 
   return (
@@ -59,8 +53,13 @@ export const ImageCard = ({
       <DialogTrigger className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none">
         <ImageFrame>
           <AspectRatio ratio={ratio} className="overflow-hidden">
-            {isThumbnailLoading && (
+            {thumbnail.isLoading && (
               <Skeleton className="h-full w-full bg-stone-300" />
+            )}
+            {thumbnail.hasError && (
+              <div className="h-full flex items-center justify-center bg-stone-800">
+                <Icons.placeholder className="text-stone-900 h-12 w-12" />
+              </div>
             )}
             <Image
               src={src}
@@ -72,28 +71,32 @@ export const ImageCard = ({
               fetchPriority={priority ? "high" : undefined}
               className={cn(
                 "object-cover transition-opacity duration-500",
-                isThumbnailLoading ? "opacity-0" : "opacity-100"
+                thumbnail.isLoading || thumbnail.hasError
+                  ? "opacity-0"
+                  : "opacity-100"
               )}
-              onLoad={handleThumbnailLoaded}
+              onLoad={thumbnail.handleLoad}
+              onError={thumbnail.handleError}
             />
+            <span className="sr-only">Click to enlarge</span>
           </AspectRatio>
         </ImageFrame>
       </DialogTrigger>
       <DialogContent
         aria-describedby="Full screen image"
-        showCloseButton={!isModalLoading}
+        showCloseButton={!modal.isLoading}
         className="min-w-[300px] min-h-[300px]"
       >
         <DialogTitle className="sr-only" />
         <DialogDescription className="sr-only" />
-        {isModalLoading && (
+        {modal.isLoading && (
           <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
         )}
 
         <div
           className={cn(
             "relative bg-stone-800/50 border-2 overflow-hidden transition-opacity duration-150",
-            isModalLoading ? "opacity-0" : "opacity-100"
+            modal.isLoading ? "opacity-0" : "opacity-100"
           )}
         >
           <Image
@@ -104,7 +107,8 @@ export const ImageCard = ({
             className={cn(
               "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
             )}
-            onLoad={handleImageLoaded}
+            onLoad={modal.handleLoad}
+            onError={modal.handleError}
           />
         </div>
       </DialogContent>

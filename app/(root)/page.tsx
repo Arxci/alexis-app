@@ -23,27 +23,23 @@ export const revalidate = 3600;
 
 export default function IndexPage() {
   return (
-    <>
-      <main className="">
-        <HomeBanner />
-        <HomeAbout />
-        <Suspense
-          fallback={
-            <SectionLoader ratio={16 / 9} label="Flash" link="/flash" />
-          }
-        >
-          <HomeFlash />
-        </Suspense>
+    <main>
+      <HomeBanner />
+      <HomeAbout />
+      <Suspense
+        fallback={<SectionLoader ratio={16 / 9} label="Flash" link="/flash" />}
+      >
+        <HomeFlash />
+      </Suspense>
 
-        <Suspense
-          fallback={
-            <SectionLoader ratio={3 / 4} label="Recent Work" link="/recent" />
-          }
-        >
-          <HomeRecentWork />
-        </Suspense>
-      </main>
-    </>
+      <Suspense
+        fallback={
+          <SectionLoader ratio={3 / 4} label="Recent Work" link="/recent" />
+        }
+      >
+        <HomeRecentWork />
+      </Suspense>
+    </main>
   );
 }
 

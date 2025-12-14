@@ -23,10 +23,11 @@ export const metadata: Metadata = {
     "ready to tattoo designs",
   ],
   openGraph: {
+    images: ["/api/og?title=Flash%20Tattoo%20Designs"],
     title: "Flash Tattoo Designs | Ace Arts",
     description:
       "Browse available flash tattoo designs by Ace Arts. Bold, colorful American traditional tattoo art ready to be inked in Cedar Rapids, Iowa.",
-    url: "https://acearts.com/flash",
+    url: `${siteConfig.url}/flash`,
     type: "website",
   },
   twitter: {
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
       "Browse available flash tattoo designs. Bold, colorful traditional tattoo art.",
   },
   alternates: {
-    canonical: "https://acearts.com/flash",
+    canonical: `${siteConfig.url}/flash`,
   },
 };
 

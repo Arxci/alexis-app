@@ -53,7 +53,7 @@ export function InfiniteScrollShowcase({
 
   const { ref, inView } = useInView({
     threshold: 0,
-    rootMargin: "100px",
+    rootMargin: "400px",
   });
 
   const allImages = useMemo(() => {

@@ -81,6 +81,7 @@ export const SplitLayout = ({
                     src={responsiveImages[0].src}
                     alt={imageAlt}
                     fill
+                    fetchPriority={priority ? "high" : undefined}
                     priority={priority}
                     className={cn("object-cover", style?.image)}
                     sizes="(min-width: 1024px) 50vw, 0px"

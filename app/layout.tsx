@@ -42,22 +42,13 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.name} - Custom Tattoo Art`,
-        type: "image/jpeg",
-      },
-    ],
+    images: ["/api/og?title=Ace%20Arts"],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: "@ace_arts30", // TODO: Update if different
   },
   robots: {
     index: true,

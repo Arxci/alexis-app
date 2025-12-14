@@ -23,18 +23,12 @@ export const metadata: Metadata = {
     "female tattoo artist Cedar Rapids",
   ],
   openGraph: {
+    images: ["/api/og?title=About%20Alexis%20Nesteby"],
     title: "About Alexis Nesteby | Ace Arts Tattoo",
     description:
       "Meet Alexis Nesteby (Lexi), a tattoo artist specializing in bold, colorful traditional work at Neon Dragon Tattoo in Cedar Rapids, Iowa.",
-    url: "https://acearts.com/about",
-    images: [
-      {
-        url: "/about-me.jpg",
-        width: 1200,
-        height: 1600,
-        alt: "Alexis Nesteby - Tattoo Artist",
-      },
-    ],
+    url: `${siteConfig.url}/about`,
+
     type: "profile",
   },
   twitter: {
@@ -45,7 +39,7 @@ export const metadata: Metadata = {
     images: ["/about-me.jpg"],
   },
   alternates: {
-    canonical: "https://acearts.com/about",
+    canonical: `${siteConfig.url}/about`,
   },
 };
 
