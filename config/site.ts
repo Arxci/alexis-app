@@ -134,7 +134,5 @@ export const getJsonLd = () => ({
     jobTitle: siteConfig.artist.jobTitle,
     description: siteConfig.artist.bio,
   },
-  // Uncomment when you add contact info
-  // "telephone": siteConfig.contact?.phone,
-  // "email": siteConfig.contact?.email,
+  email: siteConfig.links?.email,
 });
