@@ -18,7 +18,7 @@ export const SiteFooter = () => {
           </Link>
           <div className="flex gap-8 lg:gap-14 flex-col lg:flex-row">
             <div>
-              <FooterLabel label="Site" />
+              <FooterLabel label="Menu" />
               <nav>
                 <ul className="flex flex-col gap-2">
                   {siteConfig.siteMap.map((link, index) => (
@@ -31,31 +31,43 @@ export const SiteFooter = () => {
             </div>
             <div>
               <FooterLabel label="Socials" />
-              <nav>
-                <ul className="flex flex-col gap-2">
-                  <li>
-                    <FooterLink
-                      target="_blank"
-                      href={siteConfig.links.instagram}
-                      label="Instagram"
-                    />
-                  </li>
-                  <li>
-                    <FooterLink
-                      target="_blank"
-                      href={`mailto:${siteConfig.links.email}`}
-                      label="Email"
-                    />
-                  </li>
-                  <li>
-                    <FooterLink
-                      target="_blank"
-                      href={siteConfig.links.tiktok}
-                      label="TikTok"
-                    />
-                  </li>
-                </ul>
-              </nav>
+
+              <ul className="flex flex-col gap-2">
+                <li>
+                  <FooterLink
+                    target="_blank"
+                    href={siteConfig.links.instagram}
+                    label="Instagram"
+                  />
+                </li>
+                <li>
+                  <FooterLink
+                    target="_blank"
+                    href={`mailto:${siteConfig.links.email}`}
+                    label="Email"
+                  />
+                </li>
+                <li>
+                  <FooterLink
+                    target="_blank"
+                    href={siteConfig.links.tiktok}
+                    label="TikTok"
+                  />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <FooterLabel label="Studio" />
+
+              <ul className="flex flex-col gap-2">
+                <li>
+                  <FooterLink
+                    target="_blank"
+                    href={siteConfig.links.neonDrago}
+                    label="Neon Dragon"
+                  />
+                </li>
+              </ul>
             </div>
           </div>
         </div>

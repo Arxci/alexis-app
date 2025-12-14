@@ -19,7 +19,7 @@ type InfiniteScrollShowcaseProps = {
   imageRatio: number;
 };
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 9;
 
 export function InfiniteScrollShowcase({
   label,

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 
 import { SiteHeader } from "./_components/layout/site-header";
@@ -14,6 +14,12 @@ import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
+
+export const viewport: Viewport = {
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "white" }],
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   icons: {
