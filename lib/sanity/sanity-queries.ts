@@ -14,7 +14,7 @@ const buildImageUrls = (baseQuery: string) => `
 export const recentWorkQuery = groq`
 {
   "items":${buildImageUrls('(*[_type == "images"].recentWork[])[$start...$end]')},
-  "totalCount": count(*[_type == "images"].flash[])
+  "totalCount": count(*[_type == "images"].recentWork[])
 }
 `;
 

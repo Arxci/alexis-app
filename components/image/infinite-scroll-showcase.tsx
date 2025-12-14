@@ -36,7 +36,10 @@ export function InfiniteScrollShowcase({
         try {
           const start = pageParam as number;
           const end = start + ITEMS_PER_PAGE;
-          return await fetchData(start, end);
+
+          const newData = await fetchData(start, end);
+          console.log(newData);
+          return newData;
         } catch (err) {
           errorLogger.log({
             type: ErrorType.QUERY_ERROR,
@@ -94,13 +97,12 @@ export function InfiniteScrollShowcase({
     <ImageShowcase label={label} style={{ link: "hidden" }}>
       {allImages.map((image, id) => (
         <ImageCard
-          key={image._key}
+          key={"gallery-" + image._key}
           {...image}
           ratio={imageRatio}
           priority={id < 3}
         />
       ))}
-
       {isFetchingNextPage &&
         Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
           <ImageLoading key={`loading-${i}`} ratio={imageRatio} />

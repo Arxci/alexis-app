@@ -10,8 +10,6 @@ export type ImageItem = {
   alt: string;
   imageUrl: string;
   thumbUrl: string;
-  mediumUrl: string;
-  largeUrl: string;
   blurDataURL?: string;
   dimensions?: {
     width: number;
@@ -27,7 +25,7 @@ export type PagedResult = {
 
 async function fetchPagedData(
   dataQuery: string,
-  fetchCount = true,
+
   start?: number,
   end?: number
 ): Promise<PagedResult> {
@@ -35,27 +33,12 @@ async function fetchPagedData(
   const safeEnd = end ?? 10000;
 
   try {
-    if (fetchCount) {
-      const result = await client.fetch<{
-        items: ImageItem[];
-        totalCount: number;
-      }>(
-        dataQuery,
-        { start: safeStart, end: safeEnd },
-        { next: { revalidate: CACHE_CONFIG.default } }
-      );
-      return {
-        items: result.items,
-        totalCount: fetchCount ? result.totalCount : -1,
-      };
-    }
-
-    const items = await client.fetch<ImageItem[]>(dataQuery, {
+    const { items, totalCount } = await client.fetch<PagedResult>(dataQuery, {
       start: safeStart,
       end: safeEnd,
     });
 
-    return { items, totalCount: -1 };
+    return { items, totalCount };
   } catch (error) {
     console.error("Error fetching paged data from Sanity:", error);
     errorLogger.log({
@@ -71,16 +54,14 @@ async function fetchPagedData(
 
 export async function getRecentWork(
   start: number,
-  end: number,
-  fetchCount = true
+  end: number
 ): Promise<PagedResult> {
-  return fetchPagedData(recentWorkQuery, fetchCount, start, end);
+  return fetchPagedData(recentWorkQuery, start, end);
 }
 
 export async function getFlash(
   start: number,
-  end: number,
-  fetchCount = true
+  end: number
 ): Promise<PagedResult> {
-  return fetchPagedData(flashQuery, fetchCount, start, end);
+  return fetchPagedData(flashQuery, start, end);
 }

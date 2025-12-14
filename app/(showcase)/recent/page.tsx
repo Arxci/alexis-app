@@ -67,8 +67,6 @@ export const revalidate = 3600;
 export default async function RecentWorkPage() {
   const { items, totalCount } = await getRecentWork(0, INITIAL_FETCH_SIZE);
 
-  console.log(totalCount);
-
   const imageGalleryJsonLd = {
     "@context": "https://schema.org",
     "@type": "ImageGallery",
@@ -103,7 +101,6 @@ export default async function RecentWorkPage() {
     numberOfItems: totalCount,
   };
 
-  // Portfolio/Visual Artwork Collection
   const portfolioJsonLd = {
     "@context": "https://schema.org",
     "@type": "Collection",
@@ -130,6 +127,7 @@ export default async function RecentWorkPage() {
     })),
   };
 
+  console.log(items);
   return (
     <>
       <main>
