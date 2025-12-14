@@ -1,11 +1,19 @@
 import { Suspense } from "react";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import { HomeAbout } from "./_sections/home-about";
 import { HomeBanner } from "./_sections/home-banner";
-import { HomeFlash } from "./_sections/home-flash";
-import { HomeRecentWork } from "./_sections/home-recent-work";
+
+const HomeFlash = dynamic(() =>
+  import("./_sections/home-flash").then((mod) => ({ default: mod.HomeFlash }))
+);
+const HomeRecentWork = dynamic(() =>
+  import("./_sections/home-recent-work").then((mod) => ({
+    default: mod.HomeRecentWork,
+  }))
+);
 
 import { Card } from "@/components/ui/card";
 import { ImageLoading } from "@/components/image/image-loading";
@@ -15,23 +23,31 @@ export const revalidate = 3600;
 
 export default function IndexPage() {
   return (
-    <main className="">
-      <HomeBanner />
-      <HomeAbout />
-      <Suspense
-        fallback={<SectionLoader ratio={16 / 9} label="Flash" link="/flash" />}
-      >
-        <HomeFlash />
-      </Suspense>
+    <>
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+      </head>
+      <main className="">
+        <HomeBanner />
+        <HomeAbout />
+        <Suspense
+          fallback={
+            <SectionLoader ratio={16 / 9} label="Flash" link="/flash" />
+          }
+        >
+          <HomeFlash />
+        </Suspense>
 
-      <Suspense
-        fallback={
-          <SectionLoader ratio={3 / 4} label="Recent Work" link="/recent" />
-        }
-      >
-        <HomeRecentWork />
-      </Suspense>
-    </main>
+        <Suspense
+          fallback={
+            <SectionLoader ratio={3 / 4} label="Recent Work" link="/recent" />
+          }
+        >
+          <HomeRecentWork />
+        </Suspense>
+      </main>
+    </>
   );
 }
 

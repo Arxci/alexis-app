@@ -65,17 +65,23 @@ export default async function FlashPage() {
   const { items, totalCount } = await getFlash(0, 9);
 
   return (
-    <main>
-      <JsonLd data={breadcrumbJsonLd} />
-      <section className="container lg:px-0">
-        <InfiniteScrollShowcase
-          label="Flash"
-          initialData={items}
-          fetchData={fetchMoreFlashImages}
-          totalCount={totalCount}
-          imageRatio={16 / 9}
-        />
-      </section>
-    </main>
+    <>
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+      </head>
+      <main>
+        <JsonLd data={breadcrumbJsonLd} />
+        <section className="container lg:px-0">
+          <InfiniteScrollShowcase
+            label="Flash"
+            initialData={items}
+            fetchData={fetchMoreFlashImages}
+            totalCount={totalCount}
+            imageRatio={16 / 9}
+          />
+        </section>
+      </main>
+    </>
   );
 }

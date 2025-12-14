@@ -4,7 +4,7 @@ export const recentWorkQuery = groq`
   (*[_type == "images"].recentWork[])[$start...$end] {
     _key,
     alt,
-    "imageUrl": asset->url,
+    "imageUrl": asset->url + "?w=1200&h=900&fit=max&q=75&auto=format",
     "blurDataURL": asset->metadata.lqip
   }
 `;
@@ -13,7 +13,7 @@ export const flashQuery = groq`
   (*[_type == "images"].flash[])[$start...$end] {
     _key,  
     alt,
-    "imageUrl": asset->url,
+    "imageUrl": asset->url + "?w=1200&h=900&fit=max&q=75&auto=format",
     "blurDataURL": asset->metadata.lqip
   }
 `;

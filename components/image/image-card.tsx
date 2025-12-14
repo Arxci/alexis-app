@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Content as DialogContentPrimitive } from "@radix-ui/react-dialog";
 
 import { AspectRatio } from "../ui/aspect-ratio";
 
@@ -66,6 +66,7 @@ export const ImageCard = ({
               src={src}
               alt={alt}
               fill
+              quality={80}
               sizes="(max-width: 768px) 100vw, 33vw"
               priority={priority}
               fetchPriority={priority ? "high" : undefined}
@@ -116,13 +117,13 @@ function DialogContent({
   children,
   showCloseButton = true,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+}: React.ComponentProps<typeof DialogContentPrimitive> & {
   showCloseButton?: boolean;
 }) {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay className="bg-stone-900/60 supports-backdrop-filter:backdrop-blur-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 " />
-      <DialogPrimitive.Content
+      <DialogContentPrimitive
         data-slot="dialog-content"
         className={cn(
           "outline-none flex items-center justify-center data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%]  p-6 duration-200",
@@ -142,7 +143,7 @@ function DialogContent({
             </Card>
           </DialogClose>
         )}
-      </DialogPrimitive.Content>
+      </DialogContentPrimitive>
     </DialogPortal>
   );
 }

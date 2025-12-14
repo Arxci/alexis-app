@@ -6,6 +6,8 @@ const fontSerif = Libre_Baskerville({
   variable: "--font-serif",
   weight: ["400", "700"],
   display: "swap",
+  preload: true,
+  fallback: ["Georgia", "serif"],
 });
 
 const fontDisplay = Rammetto_One({
@@ -13,6 +15,8 @@ const fontDisplay = Rammetto_One({
   variable: "--font-display",
   weight: "400",
   display: "swap",
+  preload: true,
+  fallback: ["Impact", "sans-serif"],
 });
 
 export const fontVariables = cn(fontSerif.variable, fontDisplay.variable);

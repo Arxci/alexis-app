@@ -66,17 +66,23 @@ export default async function RecentWorkPage() {
   const { items, totalCount } = await getRecentWork(0, 9);
 
   return (
-    <main>
-      <JsonLd data={breadcrumbJsonLd} />
-      <section className="container lg:px-0">
-        <InfiniteScrollShowcase
-          label="Recent Work"
-          initialData={items}
-          fetchData={fetchMoreRecentWork}
-          totalCount={totalCount}
-          imageRatio={3 / 4}
-        />
-      </section>
-    </main>
+    <>
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+      </head>
+      <main>
+        <JsonLd data={breadcrumbJsonLd} />
+        <section className="container lg:px-0">
+          <InfiniteScrollShowcase
+            label="Recent Work"
+            initialData={items}
+            fetchData={fetchMoreRecentWork}
+            totalCount={totalCount}
+            imageRatio={3 / 4}
+          />
+        </section>
+      </main>
+    </>
   );
 }
