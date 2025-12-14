@@ -29,12 +29,12 @@ export const ImageCard = ({
   src,
   alt,
   ratio,
-  blurDataURL,
+  priority = false,
 }: {
   src: string;
   alt: string;
   ratio: number;
-  blurDataURL?: string;
+  priority?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(true);
@@ -67,6 +67,7 @@ export const ImageCard = ({
               alt={alt}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
+              priority={priority}
               className={cn(
                 "object-cover transition-opacity duration-500",
                 isThumbnailLoading ? "opacity-0" : "opacity-100"

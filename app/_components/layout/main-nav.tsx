@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { motion } from "motion/react";
-
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -29,16 +27,7 @@ export function MainNav() {
               {link.name}
 
               {isActive && (
-                <motion.span
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 360,
-                    damping: 30,
-                  }}
-                  className="absolute w-full h-0.5 bg-accent left-0 bottom-0 rounded-md"
-                />
+                <span className="absolute w-full h-0.5 bg-accent left-0 bottom-0 rounded-md animate-in fade-in zoom-in-95 duration-200" />
               )}
             </Link>
           </li>
