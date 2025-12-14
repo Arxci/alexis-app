@@ -13,9 +13,9 @@ export const HomeBanner = () => {
         }
         subheading="Your friendly neighborhood tattoo artist."
         buttonLabel="Neon Dragon"
-        buttonLink="#"
+        buttonLink="#" // TODO: Add Neon Dragon's website URL when available
         imageSrc="/home-banner.jpeg"
-        imageAlt="Ace Art Studio Interior"
+        imageAlt="Interior of Neon Dragon Tattoo studio in Cedar Rapids, featuring traditional tattoo artwork and bold designs by Ace Arts"
         style={{
           image: "object-cover",
           card: "hidden lg:flex",
@@ -32,9 +32,9 @@ export const HomeBanner = () => {
         }
         subheading="Your friendly neighborhood tattoo artist."
         buttonLabel="Neon Dragon"
-        buttonLink="#"
+        buttonLink="#" // TODO: Add Neon Dragon's website URL when available
         imageSrc="/home-banner-wide.jpeg"
-        imageAlt="Ace Art Studio Interior"
+        imageAlt="Interior of Neon Dragon Tattoo studio in Cedar Rapids, featuring traditional tattoo artwork and bold designs by Ace Arts"
         style={{
           card: "block lg:hidden",
         }}

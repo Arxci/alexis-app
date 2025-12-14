@@ -7,10 +7,10 @@ export const HomeAbout = () => {
         eyebrow="Hi, I am Alexis Nesteby"
         heading="A Visual Artist & Tattooer"
         subheading="Based in Cedar Rapids, Iowa."
-        buttonLabel="Learn More"
+        buttonLabel="About Alexis"
         buttonLink="/about"
         imageSrc="/about-me.jpg"
-        imageAlt="Photo of author"
+        imageAlt="Alexis Nesteby, tattoo artist at Neon Dragon Tattoo in Cedar Rapids, Iowa"
         flip={true}
         style={{ image: "object-center" }}
         aspectRatio={3 / 4}

@@ -97,7 +97,9 @@ export default function AboutPage() {
 
               <div className="flex flex-col sm:flex-row  ">
                 <Button asChild variant={"outline"} size="lg">
-                  <Link href={"#"}>Connect @ace_arts30</Link>
+                  <Link href={siteConfig.links.instagram}>
+                    Follow on Instagram
+                  </Link>
                 </Button>
               </div>
             </div>
