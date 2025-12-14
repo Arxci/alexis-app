@@ -9,8 +9,8 @@ export const HomeRecentWork = async () => {
     <section className="container">
       <ImageShowcase label="Recent Work" link="/recent">
         {items &&
-          items.map((image, _id: number) => (
-            <ImageCard key={_id} ratio={3 / 4} {...image} />
+          items.map((image) => (
+            <ImageCard key={image._key} ratio={3 / 4} {...image} />
           ))}
       </ImageShowcase>
     </section>
