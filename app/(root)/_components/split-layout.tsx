@@ -1,14 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import {
+  PlaceholderValue,
+  StaticImport,
+} from "next/dist/shared/lib/get-img-props";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "../../../components/ui/card";
 
 import { cn } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { HTMLAttributeAnchorTarget } from "react";
 
 type ImageSource = {
-  src: string;
+  src: string | StaticImport;
   aspectRatio: number;
   breakpoint?: "sm" | "md" | "lg" | "xl";
 };
@@ -26,19 +32,23 @@ export const SplitLayout = ({
   aspectRatio,
   priority = false,
   responsiveImages,
+  placeholder,
+  linkTarget,
 }: {
   eyebrow?: string | React.ReactNode;
   heading?: string | React.ReactNode;
   subheading?: string | React.ReactNode;
   buttonLabel?: string;
   buttonLink: string;
-  imageSrc: string;
+  imageSrc: string | StaticImport;
   imageAlt: string;
   flip?: boolean;
   style?: { image?: string; card?: string; heading?: string };
   aspectRatio: number;
   priority?: boolean;
   responsiveImages?: ImageSource[];
+  placeholder?: PlaceholderValue | undefined;
+  linkTarget?: HTMLAttributeAnchorTarget | undefined;
 }) => {
   return (
     <Card className={cn("p-0", style?.card)}>
@@ -63,7 +73,9 @@ export const SplitLayout = ({
 
           <div className="flex flex-col sm:flex-row  ">
             <Button asChild variant={"outline"} size="lg">
-              <Link href={buttonLink}>{buttonLabel}</Link>
+              <Link href={buttonLink} target={linkTarget}>
+                {buttonLabel}
+              </Link>
             </Button>
           </div>
         </div>
@@ -79,6 +91,7 @@ export const SplitLayout = ({
                 <AspectRatio ratio={responsiveImages[0].aspectRatio}>
                   <Image
                     src={responsiveImages[0].src}
+                    placeholder={placeholder}
                     alt={imageAlt}
                     fill
                     fetchPriority={priority ? "high" : undefined}
@@ -93,6 +106,7 @@ export const SplitLayout = ({
                 <AspectRatio ratio={responsiveImages[1].aspectRatio}>
                   <Image
                     src={responsiveImages[1].src}
+                    placeholder={placeholder}
                     alt={imageAlt}
                     fill
                     priority={priority}
@@ -107,6 +121,7 @@ export const SplitLayout = ({
               <Image
                 src={imageSrc}
                 alt={imageAlt}
+                placeholder={placeholder}
                 fill
                 loading={priority ? "eager" : "lazy"}
                 priority={priority}

@@ -9,6 +9,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 import { siteConfig } from "@/config/site";
 
+import image from "@/public/about-me.jpg";
+
 export const metadata: Metadata = {
   title: "About Alexis Nesteby",
   description:
@@ -91,7 +93,7 @@ export default function AboutPage() {
 
               <div className="flex flex-col sm:flex-row  ">
                 <Button asChild variant={"outline"} size="lg">
-                  <Link href={siteConfig.links.instagram}>
+                  <Link href={siteConfig.links.instagram} target="_blank">
                     Follow on Instagram
                   </Link>
                 </Button>
@@ -100,9 +102,10 @@ export default function AboutPage() {
             <div className={"relative order-1 lg:order-2 row-start-1"}>
               <AspectRatio ratio={3 / 4}>
                 <Image
-                  src={"/about-me.jpg"}
-                  alt={"Photo of author"}
+                  src={image}
+                  alt="Alexis Nesteby, tattoo artist at Neon Dragon Tattoo in Cedar Rapids, Iowa"
                   fill
+                  placeholder="blur"
                   priority
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"

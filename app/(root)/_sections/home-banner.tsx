@@ -1,4 +1,8 @@
+import { siteConfig } from "@/config/site";
 import { SplitLayout } from "../_components/split-layout";
+
+import imageBanner from "@/public/home-banner.jpeg";
+import imageBannerWide from "@/public/home-banner-wide.jpeg";
 
 export const HomeBanner = () => {
   return (
@@ -13,18 +17,20 @@ export const HomeBanner = () => {
         }
         subheading="Your friendly neighborhood tattoo artist."
         buttonLabel="Visit Neon Dragon Tattoo"
-        buttonLink="#" // TODO: Add Neon Dragon's website URL when available
-        imageSrc="/home-banner.jpeg" // Fallback if responsiveImages not provided
+        buttonLink={siteConfig.links.neonDrago}
+        imageSrc={imageBanner}
+        placeholder="blur"
         imageAlt="Interior of Neon Dragon Tattoo studio in Cedar Rapids, featuring traditional tattoo artwork and bold designs by Ace Arts"
         priority={true}
         aspectRatio={3 / 4}
+        linkTarget="_blank"
         responsiveImages={[
           {
-            src: "/home-banner.jpeg",
+            src: imageBanner,
             aspectRatio: 3 / 4,
           },
           {
-            src: "/home-banner-wide.jpeg",
+            src: imageBannerWide,
             aspectRatio: 16 / 9,
           },
         ]}
