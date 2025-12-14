@@ -93,7 +93,7 @@ export default function RootLayout({
       <body className={cn("group/body overscroll-none antialiased")}>
         <Providers>
           <ScrollToTop />
-          <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
+          <div className="grid grid-rows-[auto_1fr_auto] min-h-dvh">
             <SiteHeader />
             {children}
             <SiteFooter />

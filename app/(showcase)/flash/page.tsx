@@ -63,7 +63,7 @@ const breadcrumbJsonLd = {
 export const revalidate = 3600;
 
 export default async function FlashPage() {
-  const { items, totalCount } = await getFlash(0, 9);
+  const { items, totalCount } = await getFlash(0, 24);
 
   return (
     <>

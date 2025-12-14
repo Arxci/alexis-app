@@ -64,7 +64,7 @@ const breadcrumbJsonLd = {
 export const revalidate = 3600;
 
 export default async function RecentWorkPage() {
-  const { items, totalCount } = await getRecentWork(0, 9);
+  const { items, totalCount } = await getRecentWork(0, 24);
 
   return (
     <>
