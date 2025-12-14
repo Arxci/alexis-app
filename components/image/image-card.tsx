@@ -92,11 +92,15 @@ export const ImageCard = ({
         {modal.isLoading && (
           <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
         )}
-
+        {modal.hasError && (
+          <div className="h-full flex items-center justify-center bg-stone-800">
+            <Icons.placeholder className="text-stone-900 h-12 w-12" />
+          </div>
+        )}
         <div
           className={cn(
             "relative bg-stone-800/50 border-2 overflow-hidden transition-opacity duration-150",
-            modal.isLoading ? "opacity-0" : "opacity-100"
+            modal.isLoading || modal.hasError ? "opacity-0" : "opacity-100"
           )}
         >
           <Image
