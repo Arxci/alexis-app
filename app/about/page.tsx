@@ -74,7 +74,7 @@ export default function AboutPage() {
                 Learn about me
               </span>
 
-              <h1 className="text-base lg:text-lg font-black leading-normal text-foreground mb-6">
+              <h1 className="text-lg font-black leading-normal text-foreground mb-6">
                 My name is Alexis Nesteby, but you can call me Lexi. I am a
                 tattoo artist, music fanatic, and super nerd based out of Cedar
                 Rapids, Iowa.
