@@ -66,8 +66,8 @@ export const ImageCard = ({
               src={src}
               alt={alt}
               fill
-              quality={80}
-              sizes="(max-width: 768px) 100vw, 33vw"
+              quality={75}
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
               priority={priority}
               fetchPriority={priority ? "high" : undefined}
               className={cn(
