@@ -127,7 +127,6 @@ export default async function RecentWorkPage() {
     })),
   };
 
-  console.log(items);
   return (
     <>
       <main>

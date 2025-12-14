@@ -37,9 +37,7 @@ export function InfiniteScrollShowcase({
           const start = pageParam as number;
           const end = start + ITEMS_PER_PAGE;
 
-          const newData = await fetchData(start, end);
-          console.log(newData);
-          return newData;
+          return await fetchData(start, end);
         } catch (err) {
           errorLogger.log({
             type: ErrorType.QUERY_ERROR,
