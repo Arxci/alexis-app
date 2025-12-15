@@ -33,21 +33,25 @@ async function fetchPagedData(
   const safeEnd = end ?? 10000;
 
   try {
-    const { items, totalCount } = await client.fetch<PagedResult>(dataQuery, {
-      start: safeStart,
-      end: safeEnd,
-    });
+    const { items, totalCount } = await client.fetch<PagedResult>(
+      dataQuery,
+      {
+        start: safeStart,
+        end: safeEnd,
+      },
+      { next: { revalidate: CACHE_CONFIG.default } }
+    );
 
     return { items, totalCount };
   } catch (error) {
-    console.error("Error fetching paged data from Sanity:", error);
-    errorLogger.log({
+    const appError = {
       type: ErrorType.SANITY_FETCH,
       message: "Failed to fetch data from Sanity CMS",
       originalError: error,
       timestamp: new Date(),
-      context: { query: dataQuery },
-    });
+      context: { query: dataQuery, start: safeStart, end: safeEnd },
+    };
+    errorLogger.log(appError);
     throw new Error("Failed to fetch images from Sanity CMS");
   }
 }

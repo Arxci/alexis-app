@@ -112,6 +112,9 @@ export function InfiniteScrollShowcase({
           aria-hidden="true"
         />
       )}
+      <div aria-live="polite" className="sr-only">
+        {allImages.length} images loaded of {totalCount}
+      </div>
     </ImageShowcase>
   );
 }

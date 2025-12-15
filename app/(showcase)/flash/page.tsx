@@ -4,7 +4,7 @@ import { InfiniteScrollShowcase } from "@/components/image/infinite-scroll-showc
 import { getFlash } from "@/lib/sanity/sanity-api";
 import { JsonLd } from "@/components/seo/json-ld";
 
-import { fetchMoreFlashImages } from "./actions";
+import { fetchMoreFlash } from "./actions";
 
 import { siteConfig } from "@/config/site";
 import { INITIAL_FETCH_SIZE } from "@/config/cache";
@@ -123,7 +123,7 @@ export default async function FlashPage() {
           <InfiniteScrollShowcase
             label="Flash"
             initialData={items}
-            fetchData={fetchMoreFlashImages}
+            fetchData={fetchMoreFlash}
             totalCount={totalCount}
             imageRatio={16 / 9}
           />

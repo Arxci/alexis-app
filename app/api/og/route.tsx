@@ -5,14 +5,20 @@ export const runtime = "edge";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get("title") || siteConfig.name;
+  const rawTitle = searchParams.get("title") || siteConfig.name;
 
-  // Colors extracted from your globals.css and component context
+  // Sanitize title - remove HTML tags and limit length
+  const title =
+    rawTitle
+      .replace(/<[^>]*>/g, "")
+      .slice(0, 100)
+      .trim() || siteConfig.name;
+
   const colors = {
-    background: "#F5F0E6", // Warm beige (Flash paper)
-    cardBg: "#FAFAF9", // Lighter stone (Card background)
-    ink: "#1c1917", // Stone-900 (Text/Border)
-    gold: "#D4AF37", // Matching your 'bg-gold'
+    background: "#F5F0E6",
+    cardBg: "#FAFAF9",
+    ink: "#1c1917",
+    gold: "#D4AF37",
   };
 
   return new ImageResponse(
@@ -27,7 +33,6 @@ export async function GET(request: Request) {
         backgroundColor: colors.background,
       }}
     >
-      {/* The Card Container - Mimics your UI/Card */}
       <div
         style={{
           display: "flex",
@@ -38,13 +43,11 @@ export async function GET(request: Request) {
           height: "100%",
           backgroundColor: colors.cardBg,
           border: `3px solid ${colors.ink}`,
-          // This mimics the hard shadow found on your badge/buttons, but scaled up for the card
+
           boxShadow: `12px 12px 0px 0px ${colors.ink}`,
           padding: "40px",
         }}
       >
-        {/* 1. The Eyebrow Badge - Exact match to split-layout.tsx */}
-        {/* class: bg-gold text-ink border-2 shadow-[4px_4px_0px_0px] font-mono tracking-widest */}
         <div
           style={{
             display: "flex",
@@ -54,7 +57,7 @@ export async function GET(request: Request) {
             boxShadow: `4px 4px 0px 0px ${colors.ink}`,
             padding: "8px 16px",
             marginBottom: "40px",
-            // Typography
+
             fontFamily: "monospace",
             fontSize: 20,
             fontWeight: 700,
@@ -65,32 +68,29 @@ export async function GET(request: Request) {
           Ace Arts Tattoo
         </div>
 
-        {/* 2. The Heading - Exact match to split-layout.tsx */}
-        {/* class: font-black uppercase leading-[0.9] */}
         <div
           style={{
             display: "flex",
             textAlign: "center",
-            fontSize: 80, // Scaled for OG image size
+            fontSize: 80,
             fontWeight: 900,
             color: colors.ink,
             lineHeight: 0.9,
             textTransform: "uppercase",
             maxWidth: "90%",
-            // Optional: adds a tiny text stroke to simulate "font-display" weight if system font is too thin
+
             textShadow: `2px 2px 0px ${colors.background}`,
           }}
         >
           {title}
         </div>
 
-        {/* Decorative Location/Subheading */}
         <div
           style={{
             marginTop: "40px",
             fontSize: 32,
             color: colors.ink,
-            fontFamily: "serif", // Matches your body text style
+            fontFamily: "serif",
             opacity: 0.8,
           }}
         >

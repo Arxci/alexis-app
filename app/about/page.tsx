@@ -105,6 +105,7 @@ export default function AboutPage() {
                   fill
                   placeholder="blur"
                   priority
+                  fetchPriority="high"
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />

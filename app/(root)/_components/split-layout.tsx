@@ -16,7 +16,6 @@ import { HTMLAttributeAnchorTarget } from "react";
 type ImageSource = {
   src: string | StaticImport;
   aspectRatio: number;
-  breakpoint?: "sm" | "md" | "lg" | "xl";
 };
 
 export const SplitLayout = ({
