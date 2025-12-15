@@ -1,23 +1,14 @@
 // lib/validation.ts
-import { errorLogger, createValidationError, AppError } from "./error-handling";
+import { errorLogger, ValidationError } from "./error-handling";
 
 export const MAX_PAGE_SIZE = 100;
 
-export class ValidationError extends Error {
-  public readonly appError: AppError;
-
-  constructor(message: string, context?: Record<string, unknown>) {
-    super(message);
-    this.name = "ValidationError";
-    this.appError = createValidationError(message, context);
-  }
-}
+export { ValidationError };
 
 export function validatePaginationParams(
   start: unknown,
   end: unknown
 ): { start: number; end: number } {
-  // Type validation
   if (typeof start !== "number" || typeof end !== "number") {
     const error = new ValidationError("Pagination parameters must be numbers", {
       receivedStart: typeof start,
@@ -27,7 +18,6 @@ export function validatePaginationParams(
     throw error;
   }
 
-  // Check for NaN
   if (Number.isNaN(start) || Number.isNaN(end)) {
     const error = new ValidationError("Pagination parameters cannot be NaN", {
       start,

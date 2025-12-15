@@ -2,25 +2,31 @@
 
 import { getRecentWork } from "@/lib/sanity/sanity-api";
 import { validatePaginationParams } from "@/lib/validation";
-import { errorLogger, ErrorType } from "@/lib/error-handling";
+import {
+  createAppError,
+  errorLogger,
+  ErrorType,
+  isKnownError,
+} from "@/lib/error-handling";
 
-export type ActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: string };
+const EMPTY_RESULT = { items: [], totalCount: 0 };
 
 export async function fetchMoreRecentWork(start: number, end: number) {
   try {
     const params = validatePaginationParams(start, end);
     return await getRecentWork(params.start, params.end);
   } catch (error) {
-    errorLogger.log({
-      type: ErrorType.SANITY_FETCH,
-      message: "Failed to fetch flash images",
-      originalError: error,
-      timestamp: new Date(),
-      context: { start, end },
-    });
+    if (!isKnownError(error)) {
+      errorLogger.log(
+        createAppError(
+          ErrorType.UNKNOWN,
+          "Unexpected error in fetchMoreRecentWork",
+          error,
+          { start, end }
+        )
+      );
+    }
 
-    return { items: [], totalCount: 0 };
+    return EMPTY_RESULT;
   }
 }

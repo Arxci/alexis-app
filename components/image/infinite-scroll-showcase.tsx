@@ -33,21 +33,12 @@ export function InfiniteScrollShowcase({
     useInfiniteQuery({
       queryKey: ["images", label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
-        try {
-          const start = pageParam as number;
-          const end = start + ITEMS_PER_PAGE;
+        const start = pageParam as number;
+        const end = start + ITEMS_PER_PAGE;
 
-          return await fetchData(start, end);
-        } catch (err) {
-          errorLogger.log({
-            type: ErrorType.QUERY_ERROR,
-            message: "Query failed",
-            originalError: err,
-            timestamp: new Date(),
-            context: { queryKey: ["images", label, "infinite-scroll"] },
-          });
-          throw err;
-        }
+        // Server action handles errors internally and returns empty result
+        // No need to try-catch here - errors are already logged server-side
+        return await fetchData(start, end);
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
@@ -78,18 +69,6 @@ export function InfiniteScrollShowcase({
       fetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  useEffect(() => {
-    if (error) {
-      errorLogger.log({
-        type: ErrorType.QUERY_ERROR,
-        message: "Query failed",
-        originalError: error,
-        timestamp: new Date(),
-        context: { queryKey: ["images", label, "infinite-scroll"] },
-      });
-    }
-  }, [error, label]);
 
   return (
     <ImageShowcase label={label} style={{ link: "hidden" }}>

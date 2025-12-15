@@ -4,15 +4,15 @@ import { AspectRatio } from "../ui/aspect-ratio";
 import { cn } from "@/lib/utils";
 
 export const ImagePlaceholder = ({
-  aspectRatio = 0,
+  ratio = 0,
   className,
 }: {
-  aspectRatio?: number;
+  ratio?: number;
   className?: string;
 }) => {
   return (
     <AspectRatio
-      ratio={aspectRatio}
+      ratio={ratio}
       className={cn(
         "flex items-center justify-center bg-stone-800 border border-gray-600 w-full",
         className

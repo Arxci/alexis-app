@@ -69,22 +69,3 @@ function SectionLoader({
     </section>
   );
 }
-
-function SectionError({
-  resetErrorBoundary,
-}: {
-  resetErrorBoundary: () => void;
-}) {
-  return (
-    <section className="container">
-      <Card className="p-8 text-center">
-        <p className="text-lg text-stone-600 mb-4">
-          Unable to load this section. Please try again.
-        </p>
-        <Button onClick={resetErrorBoundary} variant="outline">
-          Retry
-        </Button>
-      </Card>
-    </section>
-  );
-}

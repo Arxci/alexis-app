@@ -1,9 +1,26 @@
-import { getFlash } from "@/lib/sanity/sanity-api";
 import { ImageShowcase } from "../../../components/image/image-showcase";
 import { ImageCard } from "@/components/image/image-card";
 
+import { getFlash } from "@/lib/sanity/sanity-api";
+
+import { errorLogger, ErrorType } from "@/lib/error-handling";
+
 export const HomeFlash = async () => {
-  const { items } = await getFlash(0, 3);
+  let items: Awaited<ReturnType<typeof getFlash>>["items"] = [];
+
+  try {
+    const result = await getFlash(0, 3);
+    items = result.items;
+  } catch (error) {
+    // Error already logged in getFlash, but log context
+    errorLogger.log({
+      type: ErrorType.SANITY_FETCH,
+      message: "Failed to load flash section on home page",
+      originalError: error,
+      timestamp: new Date(),
+      context: { section: "HomeFlash" },
+    });
+  }
 
   return (
     <section className="container">

@@ -1,7 +1,7 @@
 import { client } from "./sanity-client";
 import { flashQuery, recentWorkQuery } from "./sanity-queries";
 
-import { errorLogger, ErrorType } from "@/lib/error-handling";
+import { errorLogger, SanityFetchError } from "@/lib/error-handling";
 
 import { CACHE_CONFIG } from "@/config/cache";
 
@@ -44,15 +44,9 @@ async function fetchPagedData(
 
     return { items, totalCount };
   } catch (error) {
-    const appError = {
-      type: ErrorType.SANITY_FETCH,
-      message: "Failed to fetch data from Sanity CMS",
-      originalError: error,
-      timestamp: new Date(),
-      context: { query: dataQuery, start: safeStart, end: safeEnd },
-    };
-    errorLogger.log(appError);
-    throw new Error("Failed to fetch images from Sanity CMS");
+    const sanityError = new SanityFetchError(dataQuery, error);
+    errorLogger.log(sanityError.appError);
+    throw sanityError;
   }
 }
 
