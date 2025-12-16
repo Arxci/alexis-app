@@ -9,6 +9,12 @@ import { fetchMoreFlash } from "./actions";
 import { siteConfig } from "@/config/site";
 import { INITIAL_FETCH_SIZE } from "@/config/cache";
 
+import {
+  createBreadcrumbJsonLd,
+  createFlashCollectionJsonLd,
+  createImageGalleryJsonLd,
+} from "@/lib/json-ld";
+
 export const metadata: Metadata = {
   title: "Flash Tattoo Designs",
   description:
@@ -42,83 +48,32 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteConfig.url,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Flash Designs",
-      item: `${siteConfig.url}/flash`,
-    },
-  ],
-};
-
 export const revalidate = 3600;
 
 export default async function FlashPage() {
   const { items, totalCount } = await getFlash(0, INITIAL_FETCH_SIZE);
 
-  const imageGalleryJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ImageGallery",
-    name: "Flash Tattoo Designs by Ace Arts",
-    description: metadata.description,
-    creator: {
-      "@type": "Person",
-      name: siteConfig.artist.name,
-      jobTitle: siteConfig.artist.jobTitle,
-    },
-    thumbnailUrl: items.slice(0, 1).map((item) => item.imageUrl),
-    image: items.slice(0, 12).map((item) => ({
-      "@type": "ImageObject",
-      contentUrl: item.imageUrl,
-      thumbnailUrl: item.thumbUrl,
-      description: item.alt || "Flash tattoo design by Ace Arts",
-      width: item.dimensions?.width,
-      height: item.dimensions?.height,
-      creator: {
-        "@type": "Person",
-        name: siteConfig.artist.name,
-      },
-    })),
-    numberOfItems: totalCount,
-  };
+  const breadcrumbJsonLd = createBreadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "Flash Designs", path: "/flash" },
+  ]);
 
-  const creativeWorkJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: "Flash Tattoo Design Collection",
-    description:
-      "Pre-drawn flash tattoo designs available for immediate tattooing",
-    author: {
-      "@type": "Person",
-      name: siteConfig.artist.name,
-      jobTitle: siteConfig.artist.jobTitle,
-    },
-    genre: ["Traditional Tattoo", "American Traditional", "Flash Art"],
-    workExample: items.slice(0, 5).map((item) => ({
-      "@type": "VisualArtwork",
-      name: item.alt || "Flash Tattoo Design",
-      image: item.imageUrl,
-      artMedium: "Tattoo Design",
-      artform: "Traditional Tattoo Art",
-    })),
-  };
+  const imageGalleryJsonLd = createImageGalleryJsonLd({
+    name: "Flash Tattoo Designs by Ace Arts",
+    description: metadata.description as string,
+    images: items,
+    totalCount,
+  });
+
+  const flashCollectionJsonLd = createFlashCollectionJsonLd(items);
 
   return (
     <>
       <main>
         <JsonLd data={breadcrumbJsonLd} />
         <JsonLd data={imageGalleryJsonLd} />
-        <JsonLd data={creativeWorkJsonLd} />
+        <JsonLd data={flashCollectionJsonLd} />
+        <JsonLd data={createFlashCollectionJsonLd(items)} />
         <section className="container lg:px-0">
           <InfiniteScrollShowcase
             label="Flash"

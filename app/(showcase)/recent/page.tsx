@@ -10,6 +10,12 @@ import { fetchMoreRecentWork } from "./actions";
 import { siteConfig } from "@/config/site";
 import { INITIAL_FETCH_SIZE } from "@/config/cache";
 
+import {
+  createBreadcrumbJsonLd,
+  createPortfolioJsonLd,
+  createRecentWorkGalleryJsonLd,
+} from "@/lib/json-ld";
+
 export const metadata: Metadata = {
   title: "Recent Tattoo Work",
   description:
@@ -43,89 +49,23 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteConfig.url,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Recent Work",
-      item: `${siteConfig.url}/recent`,
-    },
-  ],
-};
-
 export const revalidate = 3600;
 
 export default async function RecentWorkPage() {
   const { items, totalCount } = await getRecentWork(0, INITIAL_FETCH_SIZE);
 
-  const imageGalleryJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ImageGallery",
-    name: "Recent Tattoo Work Portfolio by Ace Arts",
-    description: metadata.description,
-    creator: {
-      "@type": "Person",
-      name: siteConfig.artist.name,
-      jobTitle: siteConfig.artist.jobTitle,
-      worksFor: {
-        "@type": "TattooParlor",
-        name: siteConfig.business.shop,
-      },
-    },
-    thumbnailUrl: items.slice(0, 1).map((item) => item.imageUrl),
-    image: items.slice(0, 12).map((item) => ({
-      "@type": "ImageObject",
-      contentUrl: item.imageUrl,
-      thumbnailUrl: item.thumbUrl,
-      description: item.alt || "Custom tattoo work by Ace Arts",
-      width: item.dimensions?.width,
-      height: item.dimensions?.height,
-      creator: {
-        "@type": "Person",
-        name: siteConfig.artist.name,
-      },
-      copyrightHolder: {
-        "@type": "Person",
-        name: siteConfig.artist.name,
-      },
-    })),
-    numberOfItems: totalCount,
-  };
+  const breadcrumbJsonLd = createBreadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "Recent Work", path: "/recent" },
+  ]);
 
-  const portfolioJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Collection",
-    name: "Tattoo Portfolio",
-    description: "Portfolio of custom tattoo work by Alexis Nesteby (Ace Arts)",
-    collectionSize: totalCount,
-    creator: {
-      "@type": "Person",
-      name: siteConfig.artist.name,
-      jobTitle: siteConfig.artist.jobTitle,
-      description: siteConfig.artist.bio,
-    },
-    itemListElement: items.slice(0, 10).map((item, index) => ({
-      "@type": "VisualArtwork",
-      position: index + 1,
-      name: item.alt || `Tattoo Work ${index + 1}`,
-      image: item.imageUrl,
-      artMedium: "Tattoo",
-      artform: "American Traditional Tattoo",
-      creator: {
-        "@type": "Person",
-        name: siteConfig.artist.name,
-      },
-    })),
-  };
+  const imageGalleryJsonLd = createRecentWorkGalleryJsonLd({
+    description: metadata.description as string,
+    images: items,
+    totalCount,
+  });
+
+  const portfolioJsonLd = createPortfolioJsonLd(items, totalCount);
 
   return (
     <>

@@ -1,9 +1,9 @@
-import ShowcaseLoading from "../_components/showcase-loading";
+import { ImageShowcaseSkeleton } from "@/components/image/image-showcase-skeleton";
 
 export default function Loading() {
   return (
     <section className="container lg:px-0">
-      <ShowcaseLoading label="Flash" ratio={16 / 9} />
+      <ImageShowcaseSkeleton label="Flash" ratio={16 / 9} />
     </section>
   );
 }

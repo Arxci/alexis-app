@@ -1,8 +1,8 @@
+// app/(root)/_sections/home-about.tsx
 import { SplitLayout } from "../_components/split-layout";
-
 import image from "@/public/about-me.jpg";
 
-export const HomeAbout = () => {
+export function HomeAbout() {
   return (
     <section className="container py-24 lg:px-0">
       <SplitLayout
@@ -11,13 +11,14 @@ export const HomeAbout = () => {
         subheading="Based in Cedar Rapids, Iowa."
         buttonLabel="About Alexis"
         buttonLink="/about"
-        imageSrc={image}
-        placeholder="blur"
-        imageAlt="Alexis Nesteby, tattoo artist at Neon Dragon Tattoo in Cedar Rapids, Iowa"
-        flip={true}
-        style={{ image: "object-center" }}
-        aspectRatio={3 / 4}
+        flip
+        image={{
+          desktop: { src: image, aspectRatio: 3 / 4 },
+          alt: "Alexis Nesteby, tattoo artist at Neon Dragon Tattoo",
+          placeholder: "blur",
+        }}
+        className={{ image: "object-center" }}
       />
     </section>
   );
-};
+}

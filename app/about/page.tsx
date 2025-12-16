@@ -6,10 +6,12 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/seo/json-ld";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 import { siteConfig } from "@/config/site";
 
 import image from "@/public/about-me.jpg";
+import { createBreadcrumbJsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "About Alexis Nesteby",
@@ -43,26 +45,12 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteConfig.url,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "About",
-      item: `${siteConfig.url}/about`,
-    },
-  ],
-};
-
 export default function AboutPage() {
+  const breadcrumbJsonLd = createBreadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "About", path: "/about" },
+  ]);
+
   return (
     <main>
       <JsonLd data={breadcrumbJsonLd} />
@@ -70,9 +58,9 @@ export default function AboutPage() {
         <Card className="p-0">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="flex flex-col justify-center p-4 sm:p-8 md:p-10 lg:p-12 order-2 lg:order-1">
-              <span className="w-fit mb-6 inline-block text-xs font-bold uppercase tracking-widest bg-gold text-ink px-2 py-1 border-2 shadow-[4px_4px_0px_0px_var(--color-foreground)]">
+              <Eyebrow className="w-fit mb-6 inline-block text-xs font-bold uppercase tracking-widest bg-gold text-ink px-2 py-1 border-2 shadow-[4px_4px_0px_0px_var(--color-foreground)]">
                 Learn about me
-              </span>
+              </Eyebrow>
 
               <h1 className="text-lg font-black leading-normal text-foreground mb-6">
                 My name is Alexis Nesteby, but you can call me Lexi. I am a

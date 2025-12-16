@@ -24,13 +24,7 @@ export const HomeFlash = async () => {
 
   return (
     <section className="container">
-      <ImageShowcase
-        label="Flash"
-        link="/flash"
-        style={{
-          container: "pt-0",
-        }}
-      >
+      <ImageShowcase label="Flash" link="/flash">
         {items &&
           items.map((image) => (
             <ImageCard key={image._key} ratio={16 / 9} {...image} />

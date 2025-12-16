@@ -7,10 +7,9 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
-import { ImageLoading } from "./image-loading";
+import { ImageCardSkeleton } from "./image-card-skeleton";
 
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
-import { errorLogger, ErrorType } from "@/lib/error-handling";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
@@ -37,7 +36,6 @@ export function InfiniteScrollShowcase({
         const end = start + ITEMS_PER_PAGE;
 
         // Server action handles errors internally and returns empty result
-        // No need to try-catch here - errors are already logged server-side
         return await fetchData(start, end);
       },
       initialPageParam: 0,
@@ -71,7 +69,7 @@ export function InfiniteScrollShowcase({
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <ImageShowcase label={label} style={{ link: "hidden" }}>
+    <ImageShowcase label={label} showLink={false}>
       {allImages.map((image, id) => (
         <ImageCard
           key={"gallery-" + image._key}
@@ -82,7 +80,7 @@ export function InfiniteScrollShowcase({
       ))}
       {isFetchingNextPage &&
         Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-          <ImageLoading key={`loading-${i}`} ratio={imageRatio} />
+          <ImageCardSkeleton key={`loading-${i}`} ratio={imageRatio} />
         ))}
       {hasNextPage && (
         <div

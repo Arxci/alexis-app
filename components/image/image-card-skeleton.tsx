@@ -1,7 +1,7 @@
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Skeleton } from "../ui/skeleton";
 
-export const ImageLoading = ({ ratio }: { ratio: number }) => {
+export const ImageCardSkeleton = ({ ratio }: { ratio: number }) => {
   return (
     <div className="flex flex-col gap-2 group">
       <div className="border-2 bg-white p-2 shadow-sm">
