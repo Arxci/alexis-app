@@ -22,6 +22,7 @@ type InfiniteScrollShowcaseProps = {
 };
 
 const LOADING_SKELETONS = Array.from({ length: INITIAL_FETCH_SIZE });
+const FECTH_SIZE = Math.max(1, INITIAL_FETCH_SIZE);
 
 export function InfiniteScrollShowcase({
   label,
@@ -35,13 +36,15 @@ export function InfiniteScrollShowcase({
       queryKey: ["images", label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
         const start = pageParam as number;
-        const end = start + INITIAL_FETCH_SIZE;
+        const end = start + FECTH_SIZE;
 
         // Server action handles errors internally and returns empty result
         return await fetchData(start, end);
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.items.length === 0) return undefined;
+
         const loadedCount = allPages.reduce(
           (acc, page) => acc + page.items.length,
           0

@@ -1,8 +1,10 @@
 import { useState, useCallback } from "react";
 
-export function useImageLoad() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+export function useImageLoad(src?: string | null) {
+  const hasValidSource = !!src;
+
+  const [isLoading, setIsLoading] = useState(hasValidSource);
+  const [hasError, setHasError] = useState(!hasValidSource);
 
   const handleLoad = useCallback(() => {
     setIsLoading(false);
@@ -14,9 +16,11 @@ export function useImageLoad() {
   }, []);
 
   const reset = useCallback(() => {
-    setIsLoading(true);
-    setHasError(false);
-  }, []);
+    if (src) {
+      setIsLoading(true);
+      setHasError(false);
+    }
+  }, [src]);
 
   return {
     isLoading,

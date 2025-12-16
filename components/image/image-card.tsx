@@ -41,8 +41,8 @@ export const ImageCard = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  const thumbnail = useImageLoad();
-  const modal = useImageLoad();
+  const thumbnail = useImageLoad(thumbUrl);
+  const modal = useImageLoad(imageUrl);
 
   const imageAlt = alt || "Tattoo artwork by Ace Arts";
 
@@ -63,28 +63,29 @@ export const ImageCard = ({
             {thumbnail.isLoading && (
               <Skeleton className="h-full w-full bg-stone-300" />
             )}
-            {thumbnail.hasError && (
+            {thumbnail.hasError ? (
               <div className="h-full flex items-center justify-center bg-stone-800">
                 <Icons.placeholder className="text-stone-900 h-12 w-12" />
               </div>
+            ) : (
+              <Image
+                src={thumbUrl}
+                alt={imageAlt}
+                fill
+                quality={75}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
+                priority={priority}
+                fetchPriority={priority ? "high" : "auto"}
+                className={cn(
+                  "object-cover transition-opacity duration-500",
+                  thumbnail.isLoading || thumbnail.hasError
+                    ? "opacity-0"
+                    : "opacity-100"
+                )}
+                onLoad={thumbnail.handleLoad}
+                onError={handleImageError(thumbUrl, thumbnail.handleError)}
+              />
             )}
-            <Image
-              src={thumbUrl}
-              alt={imageAlt}
-              fill
-              quality={75}
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
-              priority={priority}
-              fetchPriority={priority ? "high" : "auto"}
-              className={cn(
-                "object-cover transition-opacity duration-500",
-                thumbnail.isLoading || thumbnail.hasError
-                  ? "opacity-0"
-                  : "opacity-100"
-              )}
-              onLoad={thumbnail.handleLoad}
-              onError={handleImageError(thumbUrl, thumbnail.handleError)}
-            />
             <span className="sr-only">Click to enlarge</span>
           </AspectRatio>
         </ImageFrame>
@@ -98,31 +99,32 @@ export const ImageCard = ({
         {modal.isLoading && (
           <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
         )}
-        {modal.hasError && (
+        {modal.hasError ? (
           <div className="relative bg-stone-800 border-2 overflow-hidden flex items-center justify-center max-w-[80vw] max-h-[95vh] w-[1920px] h-[1080px]">
             <Icons.placeholder className="text-stone-900 h-12 w-12" />
           </div>
-        )}
-        <div
-          className={cn(
-            "relative border-2 overflow-hidden transition-opacity duration-150",
-            modal.isLoading || modal.hasError
-              ? "opacity-0 w-0 h-0"
-              : "opacity-100"
-          )}
-        >
-          <Image
-            src={imageUrl}
-            alt={imageAlt}
-            width={1920}
-            height={1080}
+        ) : (
+          <div
             className={cn(
-              "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+              "relative border-2 overflow-hidden transition-opacity duration-150",
+              modal.isLoading || modal.hasError
+                ? "opacity-0 w-0 h-0"
+                : "opacity-100"
             )}
-            onLoad={modal.handleLoad}
-            onError={handleImageError(imageUrl, modal.handleError)}
-          />
-        </div>
+          >
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              width={1920}
+              height={1080}
+              className={cn(
+                "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+              )}
+              onLoad={modal.handleLoad}
+              onError={handleImageError(imageUrl, modal.handleError)}
+            />
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
