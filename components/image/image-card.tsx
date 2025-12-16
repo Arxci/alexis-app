@@ -120,6 +120,7 @@ export const ImageCard = ({
               className={cn(
                 "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
               )}
+              sizes="95w"
               onLoad={modal.handleLoad}
               onError={handleImageError(imageUrl, modal.handleError)}
             />
@@ -140,7 +141,7 @@ function DialogContent({
 }) {
   return (
     <DialogPortal data-slot="dialog-portal">
-      <DialogOverlay className="bg-stone-900/60 supports-backdrop-filter:backdrop-blur-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 " />
+      <DialogOverlay className="bg-stone-900/60 supports-backdrop-filter:backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 " />
       <DialogContentPrimitive
         data-slot="dialog-content"
         className={cn(
