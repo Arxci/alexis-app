@@ -121,9 +121,7 @@ export const getJsonLd = () => ({
   "@type": "TattooParlor",
   name: siteConfig.business.name,
   description: siteConfig.description,
-
   url: siteConfig.url,
-  logo: `${siteConfig.url}/logo.png`,
   address: {
     "@type": "PostalAddress",
     addressLocality: siteConfig.location.city,

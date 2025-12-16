@@ -11,6 +11,8 @@ import { ImageCardSkeleton } from "./image-card-skeleton";
 
 import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
 
+import { CACHE_CONFIG, INITIAL_FETCH_SIZE } from "@/config/cache";
+
 type InfiniteScrollShowcaseProps = {
   label: string;
   initialData: ImageItem[];
@@ -19,7 +21,7 @@ type InfiniteScrollShowcaseProps = {
   imageRatio: number;
 };
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = INITIAL_FETCH_SIZE;
 
 export function InfiniteScrollShowcase({
   label,
@@ -49,8 +51,9 @@ export function InfiniteScrollShowcase({
         pages: [{ items: initialData, totalCount: totalCount }],
         pageParams: [0],
       },
-      staleTime: 5 * 60 * 1000,
+      staleTime: CACHE_CONFIG.default,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     });
 
   const { ref, inView } = useInView({
@@ -70,28 +73,52 @@ export function InfiniteScrollShowcase({
 
   return (
     <ImageShowcase label={label} showLink={false}>
+      {allImages.length === 0 && !isFetchingNextPage && (
+        <ShowcaseEmpty label={label} />
+      )}
       {allImages.map((image, id) => (
         <ImageCard
-          key={"gallery-" + image._key}
+          key={image._key}
           {...image}
           ratio={imageRatio}
           priority={id < 3}
         />
       ))}
-      {isFetchingNextPage &&
-        Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-          <ImageCardSkeleton key={`loading-${i}`} ratio={imageRatio} />
-        ))}
-      {hasNextPage && (
-        <div
-          ref={ref}
-          className="col-span-full w-full h-4 invisible"
-          aria-hidden="true"
-        />
-      )}
+      {isFetchingNextPage && <ShowcaseLoading imageRatio={imageRatio} />}
+      {hasNextPage && <InViewTrigger ref={ref} />}
       <div aria-live="polite" className="sr-only">
         {allImages.length} images loaded of {totalCount}
       </div>
     </ImageShowcase>
   );
 }
+
+const ShowcaseEmpty = ({ label }: { label: string }) => {
+  return (
+    <div className="col-span-full text-center py-12">
+      <p className="text-lg text-stone-600">
+        No {label.toLowerCase()} available yet. Check back soon!
+      </p>
+    </div>
+  );
+};
+
+const ShowcaseLoading = ({ imageRatio }: { imageRatio: number }) => {
+  return Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+    <ImageCardSkeleton key={`loading-${i}`} ratio={imageRatio} />
+  ));
+};
+
+const InViewTrigger = ({
+  ref,
+}: {
+  ref: (node?: Element | null | undefined) => void;
+}) => {
+  return (
+    <div
+      ref={ref}
+      className="col-span-full w-full h-4 invisible"
+      aria-hidden="true"
+    />
+  );
+};
