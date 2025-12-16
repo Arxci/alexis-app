@@ -1,4 +1,3 @@
-// lib/validation.ts
 import { errorLogger, ValidationError } from "./error-handling";
 
 export const MAX_PAGE_SIZE = 100;
