@@ -1,22 +1,50 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { visionTool } from "@sanity/vision";
 
-import { schemaTypes } from "./sanity/schemaTypes";
+import { schemaTypes } from "./schemas";
 
 import { env } from "./lib/env";
 
+const singletonActions = new Set(["publish", "discardChanges", "restore"]);
+const singletonTypes = new Set(["images"]);
+
 export default defineConfig({
   name: "default",
-  title: "My Sanity Studio",
-
+  title: "Alexis App",
   projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: env.NEXT_PUBLIC_SANITY_DATASET,
-
   basePath: "/studio",
+  plugins: [
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title("Content")
+          .items([
+            S.listItem()
+              .title("Images")
+              .id("images")
+              .child(S.document().schemaType("images").documentId("images")),
 
-  plugins: [structureTool()],
+            ...S.documentTypeListItems().filter(
+              (item) => !singletonTypes.has(item.getId()!)
+            ),
+          ]),
+    }),
+    visionTool(),
+  ],
 
   schema: {
     types: schemaTypes,
+
+    templates: (templates) =>
+      templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+  },
+
+  document: {
+    actions: (input, context) =>
+      singletonTypes.has(context.schemaType)
+        ? input.filter(({ action }) => action && singletonActions.has(action))
+        : input,
   },
 });
