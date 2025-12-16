@@ -9,6 +9,10 @@ export enum ErrorType {
   UNKNOWN = "UNKNOWN",
 }
 
+export type ActionResponse<T> =
+  | { success: true; data: T }
+  | { success: false; error: string };
+
 export interface AppError {
   type: ErrorType;
   message: string;

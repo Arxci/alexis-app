@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+
 import { InfiniteScrollShowcase } from "@/components/image/infinite-scroll-showcase";
 import { getFlash } from "@/lib/sanity/sanity-api";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -14,6 +16,7 @@ import {
   createFlashCollectionJsonLd,
   createImageGalleryJsonLd,
 } from "@/lib/json-ld";
+import { getQueryClient } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Flash Tattoo Designs",
@@ -51,8 +54,14 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function FlashPage() {
-  const { items, totalCount } = await getFlash(0, INITIAL_FETCH_SIZE);
+  const queryClient = getQueryClient();
 
+  const initialData = await getFlash(0, INITIAL_FETCH_SIZE);
+
+  queryClient.setQueryData(["images", "Flash", "infinite-scroll"], {
+    pages: [initialData],
+    pageParams: [0],
+  });
   const breadcrumbJsonLd = createBreadcrumbJsonLd([
     { name: "Home", path: "" },
     { name: "Flash Designs", path: "/flash" },
@@ -61,11 +70,11 @@ export default async function FlashPage() {
   const imageGalleryJsonLd = createImageGalleryJsonLd({
     name: "Flash Tattoo Designs by Ace Arts",
     description: metadata.description as string,
-    images: items,
-    totalCount,
+    images: initialData.items,
+    totalCount: initialData.totalCount,
   });
 
-  const flashCollectionJsonLd = createFlashCollectionJsonLd(items);
+  const flashCollectionJsonLd = createFlashCollectionJsonLd(initialData.items);
 
   return (
     <main>
@@ -73,13 +82,14 @@ export default async function FlashPage() {
       <JsonLd data={imageGalleryJsonLd} />
       <JsonLd data={flashCollectionJsonLd} />
       <section className="container lg:px-0">
-        <InfiniteScrollShowcase
-          label="Flash"
-          initialData={items}
-          fetchData={fetchMoreFlash}
-          totalCount={totalCount}
-          imageRatio={16 / 9}
-        />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <InfiniteScrollShowcase
+            label="Flash"
+            fetchData={fetchMoreFlash}
+            totalCount={initialData.totalCount}
+            imageRatio={16 / 9}
+          />
+        </HydrationBoundary>
       </section>
     </main>
   );

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { client } from "./sanity-client";
 import { flashQuery, recentWorkQuery } from "./sanity-queries";
 
@@ -5,27 +7,13 @@ import { errorLogger, SanityFetchError } from "@/lib/error-handling";
 
 import { CACHE_CONFIG } from "@/config/cache";
 
-export type ImageItem = {
-  _key: string;
-  alt: string;
-  imageUrl: string;
-  thumbUrl: string;
-  blurDataURL?: string;
-  dimensions?: {
-    width: number;
-    height: number;
-    aspectRatio: number;
-  };
-};
+import { ImageItemSchema, PagedResultSchema } from "@/schemas";
 
-export type PagedResult = {
-  items: ImageItem[];
-  totalCount: number;
-};
+export type ImageItem = z.infer<typeof ImageItemSchema>;
+export type PagedResult = z.infer<typeof PagedResultSchema>;
 
 async function fetchPagedData(
   dataQuery: string,
-
   start?: number,
   end?: number
 ): Promise<PagedResult> {
@@ -33,7 +21,7 @@ async function fetchPagedData(
   const safeEnd = end ?? 10000;
 
   try {
-    const { items, totalCount } = await client.fetch<PagedResult>(
+    const data = await client.fetch<PagedResult>(
       dataQuery,
       {
         start: safeStart,
@@ -42,7 +30,7 @@ async function fetchPagedData(
       { next: { revalidate: CACHE_CONFIG.default } }
     );
 
-    return { items, totalCount };
+    return PagedResultSchema.parse(data);
   } catch (error) {
     const sanityError = new SanityFetchError(dataQuery, error);
     errorLogger.log(sanityError.appError);

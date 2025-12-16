@@ -9,24 +9,26 @@ import { ImageCard } from "@/components/image/image-card";
 import { ImageShowcase } from "@/components/image/image-showcase";
 import { ImageCardSkeleton } from "./image-card-skeleton";
 
-import { ImageItem, PagedResult } from "@/lib/sanity/sanity-api";
+import { PagedResult } from "@/lib/sanity/sanity-api";
 
 import { CACHE_CONFIG, INITIAL_FETCH_SIZE } from "@/config/cache";
+import { ActionResponse } from "@/lib/error-handling";
 
 type InfiniteScrollShowcaseProps = {
   label: string;
-  initialData: ImageItem[];
-  fetchData: (start: number, end: number) => Promise<PagedResult>;
+  fetchData: (
+    start: number,
+    end: number
+  ) => Promise<ActionResponse<PagedResult>>;
   totalCount: number;
   imageRatio: number;
 };
 
 const LOADING_SKELETONS = Array.from({ length: INITIAL_FETCH_SIZE });
-const FECTH_SIZE = Math.max(1, INITIAL_FETCH_SIZE);
+const FETCH_SIZE = Math.max(1, INITIAL_FETCH_SIZE);
 
 export function InfiniteScrollShowcase({
   label,
-  initialData,
   fetchData,
   totalCount,
   imageRatio,
@@ -36,10 +38,15 @@ export function InfiniteScrollShowcase({
       queryKey: ["images", label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
         const start = pageParam as number;
-        const end = start + FECTH_SIZE;
+        const end = start + FETCH_SIZE;
 
-        // Server action handles errors internally and returns empty result
-        return await fetchData(start, end);
+        const result = await fetchData(start, end);
+
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+
+        return result.data;
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
@@ -50,10 +57,6 @@ export function InfiniteScrollShowcase({
           0
         );
         return loadedCount < totalCount ? loadedCount : undefined;
-      },
-      initialData: {
-        pages: [{ items: initialData, totalCount: totalCount }],
-        pageParams: [0],
       },
       staleTime: CACHE_CONFIG.default,
       refetchOnWindowFocus: false,

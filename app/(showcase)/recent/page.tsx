@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+
 import { InfiniteScrollShowcase } from "@/components/image/infinite-scroll-showcase";
 
 import { getRecentWork } from "@/lib/sanity/sanity-api";
@@ -9,6 +11,7 @@ import { fetchMoreRecentWork } from "./actions";
 
 import { siteConfig } from "@/config/site";
 import { INITIAL_FETCH_SIZE } from "@/config/cache";
+import { getQueryClient } from "@/lib/utils";
 
 import {
   createBreadcrumbJsonLd,
@@ -52,7 +55,14 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function RecentWorkPage() {
-  const { items, totalCount } = await getRecentWork(0, INITIAL_FETCH_SIZE);
+  const queryClient = getQueryClient();
+
+  const initialData = await getRecentWork(0, INITIAL_FETCH_SIZE);
+
+  queryClient.setQueryData(["images", "Recent Work", "infinite-scroll"], {
+    pages: [initialData],
+    pageParams: [0],
+  });
 
   const breadcrumbJsonLd = createBreadcrumbJsonLd([
     { name: "Home", path: "" },
@@ -61,11 +71,14 @@ export default async function RecentWorkPage() {
 
   const imageGalleryJsonLd = createRecentWorkGalleryJsonLd({
     description: metadata.description as string,
-    images: items,
-    totalCount,
+    images: initialData.items,
+    totalCount: initialData.totalCount,
   });
 
-  const portfolioJsonLd = createPortfolioJsonLd(items, totalCount);
+  const portfolioJsonLd = createPortfolioJsonLd(
+    initialData.items,
+    initialData.totalCount
+  );
 
   return (
     <main>
@@ -73,13 +86,14 @@ export default async function RecentWorkPage() {
       <JsonLd data={imageGalleryJsonLd} />
       <JsonLd data={portfolioJsonLd} />
       <section className="container lg:px-0">
-        <InfiniteScrollShowcase
-          label="Recent Work"
-          initialData={items}
-          fetchData={fetchMoreRecentWork}
-          totalCount={totalCount}
-          imageRatio={3 / 4}
-        />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <InfiniteScrollShowcase
+            label="Recent Work"
+            fetchData={fetchMoreRecentWork}
+            totalCount={initialData.totalCount}
+            imageRatio={3 / 4}
+          />
+        </HydrationBoundary>
       </section>
     </main>
   );
