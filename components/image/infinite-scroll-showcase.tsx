@@ -23,6 +23,8 @@ type InfiniteScrollShowcaseProps = {
 
 const ITEMS_PER_PAGE = INITIAL_FETCH_SIZE;
 
+const LOADING_SKELETONS = Array.from({ length: INITIAL_FETCH_SIZE });
+
 export function InfiniteScrollShowcase({
   label,
   initialData,
@@ -30,22 +32,23 @@ export function InfiniteScrollShowcase({
   totalCount,
   imageRatio,
 }: InfiniteScrollShowcaseProps) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
     useInfiniteQuery({
       queryKey: ["images", label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {
         const start = pageParam as number;
-        const end = start + ITEMS_PER_PAGE;
+        const end = start + INITIAL_FETCH_SIZE;
 
         // Server action handles errors internally and returns empty result
         return await fetchData(start, end);
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
-        if (!lastPage) return undefined;
-        const loadedItemsCount = allPages.flatMap((page) => page.items).length;
-        if (loadedItemsCount >= totalCount) return undefined;
-        return loadedItemsCount;
+        const loadedCount = allPages.reduce(
+          (acc, page) => acc + page.items.length,
+          0
+        );
+        return loadedCount < totalCount ? loadedCount : undefined;
       },
       initialData: {
         pages: [{ items: initialData, totalCount: totalCount }],
@@ -66,16 +69,17 @@ export function InfiniteScrollShowcase({
   }, [data]);
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage && !isError) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isError]);
+
+  const isEmpty = allImages.length === 0 && !isFetchingNextPage && !isError;
 
   return (
     <ImageShowcase label={label} showLink={false}>
-      {allImages.length === 0 && !isFetchingNextPage && (
-        <ShowcaseEmpty label={label} />
-      )}
+      {isEmpty && <ShowcaseEmpty label={label} />}
+      {isError && <ShowcaseError />}
       {allImages.map((image, id) => (
         <ImageCard
           key={image._key}
@@ -84,41 +88,39 @@ export function InfiniteScrollShowcase({
           priority={id < 3}
         />
       ))}
-      {isFetchingNextPage && <ShowcaseLoading imageRatio={imageRatio} />}
-      {hasNextPage && <InViewTrigger ref={ref} />}
-      <div aria-live="polite" className="sr-only">
-        {allImages.length} images loaded of {totalCount}
+      {isFetchingNextPage && (
+        <>
+          {LOADING_SKELETONS.map((_, i) => (
+            <ImageCardSkeleton key={`loading-${i}`} ratio={imageRatio} />
+          ))}
+        </>
+      )}
+      {hasNextPage && (
+        <div
+          ref={ref}
+          className="col-span-full h-4 w-full invisible"
+          aria-hidden="true"
+        />
+      )}
+      <div role="status" aria-live="polite" className="sr-only">
+        {isFetchingNextPage
+          ? `Loading more ${label}...`
+          : `${allImages.length} images loaded of ${totalCount}`}
       </div>
     </ImageShowcase>
   );
 }
 
-const ShowcaseEmpty = ({ label }: { label: string }) => {
-  return (
-    <div className="col-span-full text-center py-12">
-      <p className="text-lg text-stone-600">
-        No {label.toLowerCase()} available yet. Check back soon!
-      </p>
-    </div>
-  );
-};
+const ShowcaseEmpty = ({ label }: { label: string }) => (
+  <div className="col-span-full py-12 text-center">
+    <p className="text-lg text-stone-600">
+      No {label.toLowerCase()} available yet. Check back soon!
+    </p>
+  </div>
+);
 
-const ShowcaseLoading = ({ imageRatio }: { imageRatio: number }) => {
-  return Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-    <ImageCardSkeleton key={`loading-${i}`} ratio={imageRatio} />
-  ));
-};
-
-const InViewTrigger = ({
-  ref,
-}: {
-  ref: (node?: Element | null | undefined) => void;
-}) => {
-  return (
-    <div
-      ref={ref}
-      className="col-span-full w-full h-4 invisible"
-      aria-hidden="true"
-    />
-  );
-};
+const ShowcaseError = () => (
+  <div className="col-span-full py-12 text-center text-red-500">
+    <p>Failed to load more images. Please refresh the page.</p>
+  </div>
+);
