@@ -1,4 +1,4 @@
-import React, { ReactEventHandler } from "react";
+import type { ReactEventHandler } from "react";
 
 export enum ErrorType {
   IMAGE_LOAD = "IMAGE_LOAD",

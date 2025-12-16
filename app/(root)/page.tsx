@@ -38,7 +38,7 @@ export default function IndexPage() {
               label="Recent Work"
               ratio={3 / 4}
               count={3}
-              link="/flash"
+              link="/recent"
             />
           </section>
         }

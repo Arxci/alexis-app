@@ -28,7 +28,7 @@ export function InfiniteScrollShowcase({
   totalCount,
   imageRatio,
 }: InfiniteScrollShowcaseProps) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["images", label, "infinite-scroll"],
       queryFn: async ({ pageParam }) => {

@@ -68,21 +68,19 @@ export default async function RecentWorkPage() {
   const portfolioJsonLd = createPortfolioJsonLd(items, totalCount);
 
   return (
-    <>
-      <main>
-        <JsonLd data={breadcrumbJsonLd} />
-        <JsonLd data={imageGalleryJsonLd} />
-        <JsonLd data={portfolioJsonLd} />
-        <section className="container lg:px-0">
-          <InfiniteScrollShowcase
-            label="Recent Work"
-            initialData={items}
-            fetchData={fetchMoreRecentWork}
-            totalCount={totalCount}
-            imageRatio={3 / 4}
-          />
-        </section>
-      </main>
-    </>
+    <main>
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={imageGalleryJsonLd} />
+      <JsonLd data={portfolioJsonLd} />
+      <section className="container lg:px-0">
+        <InfiniteScrollShowcase
+          label="Recent Work"
+          initialData={items}
+          fetchData={fetchMoreRecentWork}
+          totalCount={totalCount}
+          imageRatio={3 / 4}
+        />
+      </section>
+    </main>
   );
 }

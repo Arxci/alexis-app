@@ -32,7 +32,6 @@ import { ImageItem } from "@/lib/sanity/sanity-api";
 export const ImageCard = ({
   imageUrl,
   thumbUrl,
-  blurDataURL,
   alt,
   ratio,
   priority = false,
@@ -55,7 +54,10 @@ export const ImageCard = ({
 
   return (
     <Dialog onOpenChange={handleOpenChanged} open={open}>
-      <DialogTrigger className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none">
+      <DialogTrigger
+        aria-label={`View full size: ${imageAlt}`}
+        className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none"
+      >
         <ImageFrame>
           <AspectRatio ratio={ratio} className="overflow-hidden">
             {thumbnail.isLoading && (
@@ -82,7 +84,6 @@ export const ImageCard = ({
               )}
               onLoad={thumbnail.handleLoad}
               onError={handleImageError(thumbUrl, thumbnail.handleError)}
-              blurDataURL={blurDataURL}
             />
             <span className="sr-only">Click to enlarge</span>
           </AspectRatio>

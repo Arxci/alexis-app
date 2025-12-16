@@ -68,22 +68,19 @@ export default async function FlashPage() {
   const flashCollectionJsonLd = createFlashCollectionJsonLd(items);
 
   return (
-    <>
-      <main>
-        <JsonLd data={breadcrumbJsonLd} />
-        <JsonLd data={imageGalleryJsonLd} />
-        <JsonLd data={flashCollectionJsonLd} />
-        <JsonLd data={createFlashCollectionJsonLd(items)} />
-        <section className="container lg:px-0">
-          <InfiniteScrollShowcase
-            label="Flash"
-            initialData={items}
-            fetchData={fetchMoreFlash}
-            totalCount={totalCount}
-            imageRatio={16 / 9}
-          />
-        </section>
-      </main>
-    </>
+    <main>
+      <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={imageGalleryJsonLd} />
+      <JsonLd data={flashCollectionJsonLd} />
+      <section className="container lg:px-0">
+        <InfiniteScrollShowcase
+          label="Flash"
+          initialData={items}
+          fetchData={fetchMoreFlash}
+          totalCount={totalCount}
+          imageRatio={16 / 9}
+        />
+      </section>
+    </main>
   );
 }

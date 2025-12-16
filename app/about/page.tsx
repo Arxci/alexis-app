@@ -58,9 +58,7 @@ export default function AboutPage() {
         <Card className="p-0">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="flex flex-col justify-center p-4 sm:p-8 md:p-10 lg:p-12 order-2 lg:order-1">
-              <Eyebrow className="w-fit mb-6 inline-block text-xs font-bold uppercase tracking-widest bg-gold text-ink px-2 py-1 border-2 shadow-[4px_4px_0px_0px_var(--color-foreground)]">
-                Learn about me
-              </Eyebrow>
+              <Eyebrow>Learn about me</Eyebrow>
 
               <h1 className="text-lg font-black leading-normal text-foreground mb-6">
                 My name is Alexis Nesteby, but you can call me Lexi. I am a

@@ -56,9 +56,7 @@ export function SplitLayout({
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {/* Content */}
         <div className="flex flex-col justify-center p-4 sm:p-8 md:p-10 lg:p-12 order-2 lg:order-1">
-          <Eyebrow className="w-fit mb-6 inline-block font-mono text-xs font-bold uppercase tracking-widest bg-gold text-ink px-2 py-1 border-2 shadow-[4px_4px_0px_0px_var(--color-foreground)]">
-            {eyebrow}
-          </Eyebrow>
+          <Eyebrow>{eyebrow}</Eyebrow>
 
           <h1
             className={cn(

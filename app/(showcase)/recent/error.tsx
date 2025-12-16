@@ -12,9 +12,7 @@ export default function RecentWorkError({
   return (
     <section className="container lg:px-0">
       <Card className="p-8 text-center">
-        <h2 className="text-2xl font-bold mb-4">
-          Failed to load flash designs
-        </h2>
+        <h2 className="text-2xl font-bold mb-4">Failed to load recent work</h2>
         <p className="mb-6 text-stone-600">
           We couldn&apos;t load the gallery. Please try again.
         </p>
