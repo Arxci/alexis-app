@@ -89,9 +89,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
       </head>
-      <body className={cn("group/body overscroll-none antialiased font-serif")}>
+      <body className={cn("group/body antialiased font-serif")}>
+        <ScrollToTop />
         <Providers>
-          <ScrollToTop />
           <div className="grid grid-rows-[auto_1fr_auto] min-h-dvh">
             <SiteHeader />
             {children}

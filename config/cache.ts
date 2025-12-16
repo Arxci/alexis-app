@@ -10,4 +10,4 @@ export const CACHE_CONFIG = {
 
 export type CacheConfig = typeof CACHE_CONFIG;
 
-export const INITIAL_FETCH_SIZE = 24;
+export const INITIAL_FETCH_SIZE = 9;

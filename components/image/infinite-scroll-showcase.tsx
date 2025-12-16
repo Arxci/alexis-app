@@ -76,8 +76,11 @@ export function InfiniteScrollShowcase({
 
   return (
     <ImageShowcase label={label} showLink={false}>
-      {isEmpty && <ShowcaseEmpty label={label} />}
-      {isError && <ShowcaseError />}
+      <div role="status" aria-live="polite" className="sr-only">
+        {isFetchingNextPage
+          ? `Loading more ${label}...`
+          : `${allImages.length} images loaded of ${totalCount}`}
+      </div>
       {allImages.map((image, id) => (
         <ImageCard
           key={image._key}
@@ -93,6 +96,8 @@ export function InfiniteScrollShowcase({
           ))}
         </>
       )}
+      {isEmpty && <ShowcaseEmpty label={label} />}
+      {isError && <ShowcaseError />}
       {hasNextPage && (
         <div
           ref={ref}
@@ -100,11 +105,6 @@ export function InfiniteScrollShowcase({
           aria-hidden="true"
         />
       )}
-      <div role="status" aria-live="polite" className="sr-only">
-        {isFetchingNextPage
-          ? `Loading more ${label}...`
-          : `${allImages.length} images loaded of ${totalCount}`}
-      </div>
     </ImageShowcase>
   );
 }
@@ -118,7 +118,7 @@ const ShowcaseEmpty = ({ label }: { label: string }) => (
 );
 
 const ShowcaseError = () => (
-  <div className="col-span-full py-12 text-center text-red-500">
+  <div className="col-span-full pt-12 text-center text-stone-800">
     <p>Failed to load more images. Please refresh the page.</p>
   </div>
 );

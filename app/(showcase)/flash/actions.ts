@@ -9,8 +9,6 @@ import {
   isKnownError,
 } from "@/lib/error-handling";
 
-const EMPTY_RESULT = { items: [], totalCount: 0 };
-
 export async function fetchMoreFlash(start: number, end: number) {
   try {
     const params = validatePaginationParams(start, end);
@@ -27,6 +25,6 @@ export async function fetchMoreFlash(start: number, end: number) {
       );
     }
 
-    return EMPTY_RESULT;
+    throw error;
   }
 }
