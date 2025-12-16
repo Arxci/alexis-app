@@ -21,8 +21,6 @@ type InfiniteScrollShowcaseProps = {
   imageRatio: number;
 };
 
-const ITEMS_PER_PAGE = INITIAL_FETCH_SIZE;
-
 const LOADING_SKELETONS = Array.from({ length: INITIAL_FETCH_SIZE });
 
 export function InfiniteScrollShowcase({
