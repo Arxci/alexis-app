@@ -8,7 +8,7 @@ import { HomeRecentWork } from "./_sections/home-recent-work";
 
 import { ImageShowcaseSkeleton } from "@/components/image/image-showcase-skeleton";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export default function IndexPage() {
   return (

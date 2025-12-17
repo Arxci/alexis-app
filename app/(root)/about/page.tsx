@@ -45,6 +45,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 86400;
+
 export default function AboutPage() {
   const breadcrumbJsonLd = createBreadcrumbJsonLd([
     { name: "Home", path: "" },
