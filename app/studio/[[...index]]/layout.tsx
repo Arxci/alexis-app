@@ -11,8 +11,6 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
 };
 
 export default function StudioLayout({
@@ -20,5 +18,5 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="bg-red-500">{children}</div>;
+  return <div>{children}</div>;
 }

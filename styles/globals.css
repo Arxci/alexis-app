@@ -49,6 +49,19 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+[data-testid="loading-block"] {
+  height: 100% !important;     /* Force it to fill your red container */
+  width: 100% !important;
+  display: flex !important;    /* Enable flexbox */
+  align-items: center !important;     /* Center vertically */
+  justify-content: center !important; /* Center horizontally */
+  
+
+  font-size: clamp(2rem, 2vw, 5rem) !important;
+}
+
+
+
 :root {
   
   /* --background: oklch(0.98 0 0);

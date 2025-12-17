@@ -1,17 +1,18 @@
-import { defineConfig } from "sanity";
+import { defineConfig, buildLegacyTheme } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+
+import logo from "@/app/apple-touch-icon.png";
 
 import { schemaTypes } from "./schemas";
 
 import { env } from "./lib/env";
-import { buildLegacyTheme } from "sanity";
 
 const singletonActions = new Set(["publish", "discardChanges", "restore"]);
 const singletonTypes = new Set(["images"]);
 
 const props = {
-  "--my-white": "#FDFBF7", // ~oklch(0.92 0.02 90) - Warm Beige
+  "--my-white": "#e2dac5", // ~oklch(0.92 0.02 90) - Warm Beige
   "--my-black": "#363533", // ~oklch(21.6% 0.006 56) - Soft Black
   "--my-red": "#d40e14", // ~oklch(0.55 0.22 28) - Traditional Red
   "--my-gold": "#edc409", // ~oklch(0.83 0.17 93) - Gold
@@ -57,7 +58,8 @@ export const theme = buildLegacyTheme({
 
 export default defineConfig({
   name: "default",
-  title: "Alexis App",
+  title: "AceArts",
+  subtitle: "Manage images",
   projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: env.NEXT_PUBLIC_SANITY_DATASET,
   theme,
