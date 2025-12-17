@@ -1,12 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
 
-import { SiteHeader } from "./_components/layout/site-header";
-import { SiteFooter } from "./_components/layout/site-footer";
-import { ScrollToTop } from "./_components/layout/scroll-to-top";
 import { JsonLd } from "@/components/seo/json-ld";
-
-import { Providers } from "./_helpers/providers";
 
 import { siteConfig, getAllKeywords, getJsonLd } from "@/config/site";
 
@@ -89,17 +83,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
       </head>
-      <body className={cn("group/body antialiased font-serif")}>
-        <ScrollToTop />
-        <Providers>
-          <div className="grid grid-rows-[auto_1fr_auto] min-h-dvh">
-            <SiteHeader />
-            {children}
-            <SiteFooter />
-          </div>
-        </Providers>
-        <Analytics />
-      </body>
+      <body className={cn("antialiased font-serif")}>{children}</body>
     </html>
   );
 }

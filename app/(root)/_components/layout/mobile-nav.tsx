@@ -15,7 +15,7 @@ import {
 import { siteConfig } from "@/config/site";
 
 import { cn } from "@/lib/utils";
-import useWindowDimensions from "../../../lib/hooks/useWindowDimensions";
+import useWindowDimensions from "@/lib/hooks/useWindowDimensions";
 
 export const MobileNav = () => {
   const pathname = usePathname();
