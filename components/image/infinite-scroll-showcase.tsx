@@ -14,12 +14,14 @@ import { PagedResult } from "@/lib/sanity/sanity-api";
 import { CACHE_CONFIG, INITIAL_FETCH_SIZE } from "@/config/cache";
 import { ActionResponse } from "@/lib/error-handling";
 
+type FetchAction = (
+  start: number,
+  end: number
+) => Promise<ActionResponse<PagedResult>>;
+
 type InfiniteScrollShowcaseProps = {
   label: string;
-  fetchData: (
-    start: number,
-    end: number
-  ) => Promise<ActionResponse<PagedResult>>;
+  fetchData: FetchAction;
   totalCount: number;
   imageRatio: number;
 };

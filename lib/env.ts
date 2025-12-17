@@ -13,7 +13,12 @@ if (!parsedEnv.success) {
     "Invalid environment variables:",
     JSON.stringify(parsedEnv.error.format(), null, 4)
   );
-  process.exit(1); // Fail build immediately
+  if (!parsedEnv.success) {
+    throw new Error(
+      "Invalid environment variables: " +
+        JSON.stringify(parsedEnv.error.format())
+    );
+  }
 }
 
 export const env = parsedEnv.data;

@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
 import Image from "next/image";
-
 import { Content as DialogContentPrimitive } from "@radix-ui/react-dialog";
 
 import { AspectRatio } from "../ui/aspect-ratio";
-
 import { ImageFrame } from "./image-frame";
 import {
   Dialog,
@@ -29,6 +26,56 @@ import { useImageLoad } from "@/lib/hooks/useImageLoad";
 
 import { ImageItem } from "@/lib/sanity/sanity-api";
 
+const ImageModalContent = ({
+  imageUrl,
+  alt,
+}: {
+  imageUrl: string;
+  alt: string;
+}) => {
+  const modal = useImageLoad(imageUrl);
+
+  return (
+    <DialogContent
+      showCloseButton={!modal.isLoading}
+      className="min-w-[300px] min-h-[300px]"
+    >
+      <DialogTitle className="sr-only">Full size tattoo image</DialogTitle>
+      <DialogDescription className="sr-only">{alt}</DialogDescription>
+      {modal.isLoading && (
+        <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
+      )}
+      {modal.hasError ? (
+        <div className="relative bg-stone-800 border-2 overflow-hidden flex items-center justify-center max-w-[80vw] max-h-[95vh] w-[1920px] h-[1080px]">
+          <Icons.placeholder className="text-stone-900 h-12 w-12" />
+        </div>
+      ) : (
+        <div
+          className={cn(
+            "relative border-2 overflow-hidden transition-opacity duration-150",
+            modal.isLoading || modal.hasError
+              ? "opacity-0 w-0 h-0"
+              : "opacity-100"
+          )}
+        >
+          <Image
+            src={imageUrl}
+            alt={alt}
+            width={1920}
+            height={1080}
+            className={cn(
+              "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+            )}
+            sizes="95w"
+            onLoad={modal.handleLoad}
+            onError={handleImageError(imageUrl, modal.handleError)}
+          />
+        </div>
+      )}
+    </DialogContent>
+  );
+};
+
 export const ImageCard = ({
   imageUrl,
   thumbUrl,
@@ -40,20 +87,12 @@ export const ImageCard = ({
   priority?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-
   const thumbnail = useImageLoad(thumbUrl);
-  const modal = useImageLoad(imageUrl);
 
   const imageAlt = alt || "Tattoo artwork by Ace Arts";
 
-  const handleOpenChanged = (open: boolean) => {
-    setOpen(open);
-
-    if (open) modal.reset();
-  };
-
   return (
-    <Dialog onOpenChange={handleOpenChanged} open={open}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger
         aria-label={`View full size: ${imageAlt}`}
         className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none"
@@ -90,43 +129,8 @@ export const ImageCard = ({
           </AspectRatio>
         </ImageFrame>
       </DialogTrigger>
-      <DialogContent
-        showCloseButton={!modal.isLoading}
-        className="min-w-[300px] min-h-[300px]"
-      >
-        <DialogTitle className="sr-only">Full size tattoo image</DialogTitle>
-        <DialogDescription className="sr-only">{alt}</DialogDescription>
-        {modal.isLoading && (
-          <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
-        )}
-        {modal.hasError ? (
-          <div className="relative bg-stone-800 border-2 overflow-hidden flex items-center justify-center max-w-[80vw] max-h-[95vh] w-[1920px] h-[1080px]">
-            <Icons.placeholder className="text-stone-900 h-12 w-12" />
-          </div>
-        ) : (
-          <div
-            className={cn(
-              "relative border-2 overflow-hidden transition-opacity duration-150",
-              modal.isLoading || modal.hasError
-                ? "opacity-0 w-0 h-0"
-                : "opacity-100"
-            )}
-          >
-            <Image
-              src={imageUrl}
-              alt={imageAlt}
-              width={1920}
-              height={1080}
-              className={cn(
-                "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
-              )}
-              sizes="95w"
-              onLoad={modal.handleLoad}
-              onError={handleImageError(imageUrl, modal.handleError)}
-            />
-          </div>
-        )}
-      </DialogContent>
+
+      {open && <ImageModalContent imageUrl={imageUrl} alt={imageAlt} />}
     </Dialog>
   );
 };
