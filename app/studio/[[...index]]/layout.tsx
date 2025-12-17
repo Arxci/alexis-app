@@ -1,6 +1,4 @@
-// app/studio/layout.tsx
 import type { Metadata, Viewport } from "next";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Sanity Studio",
