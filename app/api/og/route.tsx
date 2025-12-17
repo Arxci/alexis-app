@@ -26,7 +26,7 @@ async function loadGoogleFont(font: string, text: string) {
 }
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const rawTitle = searchParams.get("title") || siteConfig.name;
   const title = rawTitle
     .replace(/<[^>]*>/g, "")
