@@ -11,14 +11,14 @@ export const siteConfig = {
   name: "Ace Arts",
   description:
     "Custom tattoo art and flash designs by Alexis Nesteby, a tattoo artist based in Cedar Rapids, Iowa. Specializing in bold, colorful traditional work.",
-  url: "https://www.acearttattoos.com/", // TODO: Replace with your actual domain
-  ogImage: "/api/og?title=Ace%20Arts", // TODO: Create 1200x630px image
+  url: "https://www.acearttattoos.com",
+  ogImage: "/api/og?title=Ace%20Arts%20%7C%20Custom%20Tattoos%20%26%20Flash",
 
   // Business Info
   business: {
     name: "Ace Arts",
-    legalName: "Ace Arts Tattoo", // If different
-    shop: "Neon Dragon Tattoo & Art Collective",
+    legalName: "Ace Arts Tattoo",
+    shop: "Neon Dragon Tattoo",
     priceRange: "$$", // $ = cheap, $$ = moderate, $$$ = expensive, $$$$ = luxury
   },
 
@@ -55,7 +55,6 @@ export const siteConfig = {
     { name: "About", href: "/about" },
     { name: "Flash", href: "/flash" },
     { name: "Recent Work", href: "/recent" },
-    // { name: "Contact", href: "/contact" }, // TODO: Add if you create a contact page
   ] satisfies SiteMapEntry[],
 
   // SEO Keywords
