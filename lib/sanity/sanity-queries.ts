@@ -13,15 +13,15 @@ const buildImageUrls = (baseQuery: string) => `
 
 export const recentWorkQuery = groq`
 {
-  "items":${buildImageUrls('(*[_type == "images"].recentWork[])[$start...$end]')},
-  "totalCount": count(*[_type == "images"].recentWork[])
+  "items":${buildImageUrls('(*[_type == "images"].recentWork[defined(asset)])[$start...$end]')},
+  "totalCount": count(*[_type == "images"].recentWork[defined(asset)])
 }
 `;
 
 export const flashQuery = groq`
 {
-  "items":${buildImageUrls('(*[_type == "images"].flash[])[$start...$end]')},
-  "totalCount": count(*[_type == "images"].flash[])
+  "items":${buildImageUrls('(*[_type == "images"].flash[defined(asset)])[$start...$end]')},
+  "totalCount": count(*[_type == "images"].flash[defined(asset)])
 }
 `;
 
