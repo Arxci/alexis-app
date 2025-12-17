@@ -20,9 +20,8 @@ import {
 } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
-  title: "Recent Tattoo Work",
-  description:
-    "View recent tattoo work by Alexis Nesteby at Neon Dragon Tattoo. Custom tattoo pieces featuring bold lines, vibrant colors, and American traditional style in Cedar Rapids, Iowa.",
+  title: "Recent Tattoo Portfolio & Work",
+  description: `View recent tattoo work by ${siteConfig.artist.name} at ${siteConfig.business.shop}. Custom tattoo pieces featuring bold lines, vibrant colors, and American traditional style in ${siteConfig.location.city}, ${siteConfig.location.state}.`,
   keywords: [
     "recent tattoo work",
     "tattoo portfolio",

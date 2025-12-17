@@ -19,9 +19,8 @@ import {
 import { getQueryClient } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Flash Tattoo Designs",
-  description:
-    "Browse available flash tattoo designs by Ace Arts. Bold, colorful American traditional tattoo art ready to be inked. Walk-ins welcome at Neon Dragon Tattoo in Cedar Rapids, Iowa.",
+  title: "Flash Designs & Art",
+  description: `Browse available flash tattoo designs by ${siteConfig.artist.name}. Bold, colorful American traditional tattoo art ready to be inked. Walk-ins welcome at ${siteConfig.business.shop} in ${siteConfig.location.city}, ${siteConfig.location.state}.`,
   keywords: [
     "tattoo flash",
     "flash tattoo designs",

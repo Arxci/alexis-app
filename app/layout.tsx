@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: "Ace Arts | Custom Tattoos & Flash in Cedar Rapids",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.name,
+    title: "Ace Arts | Custom Tattoos & Flash in Cedar Rapids",
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [siteConfig.ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: "Ace Arts | Custom Tattoos & Flash in Cedar Rapids",
     description: siteConfig.description,
   },
   robots: {

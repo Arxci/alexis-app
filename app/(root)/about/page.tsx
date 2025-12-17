@@ -14,9 +14,8 @@ import image from "@/public/about-me.jpg";
 import { createBreadcrumbJsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
-  title: "About Alexis Nesteby",
-  description:
-    "Meet Alexis Nesteby (Lexi), a tattoo artist at Neon Dragon Tattoo in Cedar Rapids, Iowa. Specializing in bold, colorful American traditional tattoo work inspired by pop culture, metal music, and tattoo history.",
+  title: `About ${siteConfig.artist.name} (${siteConfig.artist.nickname})`,
+  description: `Meet ${siteConfig.artist.name}, a tattoo artist based in ${siteConfig.location.city}, ${siteConfig.location.state}. Specializing in bold, colorful American traditional tattoo work. inspired by pop culture, metal music, and tattoo history.`,
   keywords: [
     "Alexis Nesteby",
     "Lexi tattoo artist",

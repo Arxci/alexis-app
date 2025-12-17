@@ -30,7 +30,6 @@ export default function IndexPage() {
       >
         <HomeFlash />
       </Suspense>
-
       <Suspense
         fallback={
           <section className="container">
