@@ -2,8 +2,6 @@ import { defineConfig, buildLegacyTheme } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 
-import logo from "@/app/apple-touch-icon.png";
-
 import { schemaTypes } from "./schemas";
 
 import { env } from "./lib/env";
