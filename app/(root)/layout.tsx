@@ -16,7 +16,7 @@ export default function WebsiteLayout({
       <Providers>
         <div className="grid grid-rows-[auto_1fr_auto] min-h-dvh">
           <SiteHeader />
-          <main>{children}</main>
+          {children}
           <SiteFooter />
         </div>
       </Providers>
