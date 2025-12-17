@@ -11,7 +11,7 @@ export const siteConfig = {
   name: "Ace Arts",
   description:
     "Custom tattoo art and flash designs by Alexis Nesteby, a tattoo artist based in Cedar Rapids, Iowa. Specializing in bold, colorful traditional work.",
-  url: "https://acearts.com", // TODO: Replace with your actual domain
+  url: "https://www.acearttattoos.com/", // TODO: Replace with your actual domain
   ogImage: "/api/og?title=Ace%20Arts", // TODO: Create 1200x630px image
 
   // Business Info
