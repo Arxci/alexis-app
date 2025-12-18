@@ -20,8 +20,8 @@ export function HomeBanner() {
         buttonLink={siteConfig.links.neonDrago}
         buttonExternal
         image={{
-          desktop: { src: imageBanner },
-          mobile: { src: imageBannerWide },
+          desktop: { src: imageBanner, aspectRatio: 3 / 4 },
+          mobile: { src: imageBannerWide, aspectRatio: 16 / 9 },
           alt: "Interior of Neon Dragon Tattoo studio in Cedar Rapids",
           priority: true,
           placeholder: "blur",

@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 
 type ImageConfig = {
   src: string | StaticImport;
+  aspectRatio: number;
 };
 
 type SplitLayoutProps = {
@@ -110,12 +111,16 @@ export function SplitLayout({
 
         {/* Image Section - CSS Aspect Ratio Swap */}
         <div
+          style={
+            {
+              "--mobile-ratio": mobileImage.aspectRatio,
+              "--desktop-ratio": desktopImage.aspectRatio,
+            } as React.CSSProperties
+          }
           className={cn(
             "relative w-full overflow-hidden",
 
-            "aspect-video",
-
-            "lg:aspect-3/4",
+            "aspect-(--mobile-ratio) lg:aspect-(--desktop-ratio)",
             "order-1 lg:order-2",
             flip && "row-start-1"
           )}
