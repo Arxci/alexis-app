@@ -46,7 +46,7 @@ const ImageModalContent = ({
         <Icons.spinner className="absolute animate-spin w-10 h-10 text-stone-400" />
       )}
       {modal.hasError ? (
-        <div className="relative bg-stone-800 border-2 overflow-hidden flex items-center justify-center max-w-[80vw] max-h-[95vh] w-[1920px] h-[1080px]">
+        <div className="relative bg-stone-800 border-2 overflow-hidden flex items-center justify-center max-w-[80vw] max-h-[95vh] w-480 h-270">
           <Icons.placeholder className="text-stone-900 h-12 w-12" />
         </div>
       ) : (
@@ -112,7 +112,7 @@ export const ImageCard = ({
                 alt={imageAlt}
                 fill
                 quality={75}
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 384px"
+                sizes="(max-width: 640px) 95vw, (max-width: 768px) 100vw, (max-width: 1024px) 32vw, 341px"
                 priority={priority}
                 fetchPriority={priority ? "high" : "auto"}
                 className={cn(
