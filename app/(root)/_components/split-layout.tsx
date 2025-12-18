@@ -72,7 +72,7 @@ export function SplitLayout({
   } = getImageProps({
     ...commonProps,
     src: mobileImage.src,
-    sizes: "100vw",
+    sizes: "95vw",
   });
 
   return (
