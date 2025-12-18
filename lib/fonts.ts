@@ -15,7 +15,7 @@ const fontDisplay = Rammetto_One({
   subsets: ["latin"],
   variable: "--font-display",
   weight: "400",
-  display: "optional",
+  display: "swap",
   adjustFontFallback: true,
   preload: true,
   fallback: ["Arial Black", "sans-serif"],

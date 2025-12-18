@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
       },
     ],
     qualities: [75],
-    minimumCacheTTL: 60,
+
     dangerouslyAllowSVG: false,
   },
 
