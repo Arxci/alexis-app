@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
 
   allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
   serverExternalPackages: ["jsdom"],
+
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -25,7 +26,7 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
       },
     ],
-    qualities: [75, 80],
+    qualities: [75],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: false,
   },

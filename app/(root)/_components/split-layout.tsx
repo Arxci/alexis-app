@@ -119,7 +119,6 @@ export function SplitLayout({
           }
           className={cn(
             "relative w-full overflow-hidden",
-
             "aspect-(--mobile-ratio) lg:aspect-(--desktop-ratio)",
             "order-1 lg:order-2",
             flip && "row-start-1"
