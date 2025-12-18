@@ -13,7 +13,7 @@ export function HomeAbout() {
         buttonLink="/about"
         flip
         image={{
-          desktop: { src: image, aspectRatio: 3 / 4 },
+          desktop: { src: image },
           alt: "Alexis Nesteby, tattoo artist at Neon Dragon Tattoo",
           placeholder: "blur",
         }}

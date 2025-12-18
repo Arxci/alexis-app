@@ -1,9 +1,8 @@
-// app/(root)/_sections/home-banner.tsx
 import { siteConfig } from "@/config/site";
 import { SplitLayout } from "../_components/split-layout";
 
-import imageBanner from "@/public/home-banner.jpeg";
-import imageBannerWide from "@/public/home-banner-wide.jpeg";
+import imageBanner from "@/public/home-desktop-banner.webp";
+import imageBannerWide from "@/public/home-mobile-banner.webp";
 
 export function HomeBanner() {
   return (
@@ -21,8 +20,8 @@ export function HomeBanner() {
         buttonLink={siteConfig.links.neonDrago}
         buttonExternal
         image={{
-          desktop: { src: imageBanner, aspectRatio: 3 / 4 },
-          mobile: { src: imageBannerWide, aspectRatio: 16 / 9 },
+          desktop: { src: imageBanner },
+          mobile: { src: imageBannerWide },
           alt: "Interior of Neon Dragon Tattoo studio in Cedar Rapids",
           priority: true,
           placeholder: "blur",

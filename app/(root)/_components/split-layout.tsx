@@ -1,18 +1,16 @@
 // app/(root)/_components/split-layout.tsx
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Eyebrow } from "@/components/ui/eyebrow";
 
 import { cn } from "@/lib/utils";
 
 type ImageConfig = {
   src: string | StaticImport;
-  aspectRatio: number;
 };
 
 type SplitLayoutProps = {
@@ -24,7 +22,7 @@ type SplitLayoutProps = {
   buttonExternal?: boolean;
   image: {
     desktop: ImageConfig;
-    mobile?: ImageConfig; // Falls back to desktop if not provided
+    mobile?: ImageConfig;
     alt: string;
     priority?: boolean;
     placeholder?: "blur" | "empty";
@@ -51,10 +49,36 @@ export function SplitLayout({
   const desktopImage = image.desktop;
   const mobileImage = image.mobile ?? image.desktop;
 
+  const commonProps = {
+    alt: image.alt,
+    priority: image.priority,
+    placeholder: image.placeholder,
+    fill: true,
+    className: cn("object-cover w-full h-full", className?.image),
+  };
+
+  // 1. Prepare Desktop Props (50vw width)
+  const {
+    props: { srcSet: desktopSrcSet, ...desktopProps },
+  } = getImageProps({
+    ...commonProps,
+    src: desktopImage.src,
+    sizes: "(min-width: 1024px) 50vw, 100vw",
+  });
+
+  // 2. Prepare Mobile Props (100vw width)
+  const {
+    props: { srcSet: mobileSrcSet, src: mobileSrc, ...mobileProps },
+  } = getImageProps({
+    ...commonProps,
+    src: mobileImage.src,
+    sizes: "100vw",
+  });
+
   return (
-    <Card className={cn("p-0", className?.card)}>
+    <Card className={cn("p-0 overflow-hidden", className?.card)}>
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Content */}
+        {/* Content Section */}
         <div className="flex flex-col justify-center p-4 sm:p-8 md:p-10 lg:p-12 order-2 lg:order-1">
           <Eyebrow>{eyebrow}</Eyebrow>
 
@@ -84,39 +108,37 @@ export function SplitLayout({
           </div>
         </div>
 
-        {/* Image */}
+        {/* Image Section - CSS Aspect Ratio Swap */}
         <div
-          className={cn("relative order-1 lg:order-2", flip && "row-start-1")}
-        >
-          {/* Desktop */}
-          <div className="hidden lg:block">
-            <AspectRatio ratio={desktopImage.aspectRatio}>
-              <Image
-                src={desktopImage.src}
-                alt={image.alt}
-                fill
-                priority={image.priority}
-                placeholder={image.placeholder}
-                className={cn("object-cover", className?.image)}
-                sizes="(min-width: 1024px) 50vw, 0px"
-              />
-            </AspectRatio>
-          </div>
+          className={cn(
+            "relative w-full overflow-hidden",
 
-          {/* Mobile */}
-          <div className="block lg:hidden">
-            <AspectRatio ratio={mobileImage.aspectRatio}>
-              <Image
-                src={mobileImage.src}
-                alt={image.alt}
-                fill
-                priority={image.priority}
-                placeholder={image.placeholder}
-                className={cn("object-cover", className?.image)}
-                sizes="(max-width: 1023px) 100vw, 0px"
-              />
-            </AspectRatio>
-          </div>
+            "aspect-video",
+
+            "lg:aspect-3/4",
+            "order-1 lg:order-2",
+            flip && "row-start-1"
+          )}
+        >
+          <picture>
+            {/* Desktop Source: Uses 50vw sizing */}
+            <source
+              media="(min-width: 1024px)"
+              srcSet={desktopSrcSet}
+              sizes={desktopProps.sizes}
+            />
+            {/* Mobile Source: Uses 100vw sizing */}
+            <source srcSet={mobileSrcSet} sizes={mobileProps.sizes} />
+            {/* Fallback Image */}
+            <img
+              {...mobileProps}
+              src={mobileSrc}
+              alt={image.alt}
+              className={cn("object-cover w-full h-full", className?.image)}
+              fetchPriority={image.priority ? "high" : "auto"}
+              decoding={image.priority ? "sync" : "async"}
+            />
+          </picture>
         </div>
       </div>
     </Card>
