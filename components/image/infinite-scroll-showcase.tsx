@@ -11,7 +11,7 @@ import { ImageCardSkeleton } from "./image-card-skeleton";
 
 import { PagedResult } from "@/lib/sanity/sanity-api";
 
-import { CACHE_CONFIG, INITIAL_FETCH_SIZE } from "@/config/cache";
+import { CACHE_CONFIG, INITIAL_FETCH_SIZE, PAGE_SIZE } from "@/config/cache";
 import { ActionResponse } from "@/lib/error-handling";
 
 type FetchAction = (
@@ -27,7 +27,7 @@ type InfiniteScrollShowcaseProps = {
 };
 
 const LOADING_SKELETONS = Array.from({ length: INITIAL_FETCH_SIZE });
-const FETCH_SIZE = Math.max(1, INITIAL_FETCH_SIZE);
+const FETCH_SIZE = Math.max(1, PAGE_SIZE ?? INITIAL_FETCH_SIZE);
 
 export function InfiniteScrollShowcase({
   label,
