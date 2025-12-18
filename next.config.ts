@@ -12,7 +12,13 @@ const nextConfig: NextConfig = {
 
   // Remove X-Powered-By header for security
   poweredByHeader: false,
-
+  transpilePackages: [
+    "next-sanity",
+    "sanity",
+    "styled-components",
+    "@sanity/vision",
+    "sanity/structure",
+  ],
   allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
   serverExternalPackages: ["jsdom"],
 
