@@ -3,7 +3,7 @@ import { ImageShowcaseSkeleton } from "@/components/image/image-showcase-skeleto
 export default function Loading() {
   return (
     <section className="container lg:px-0">
-      <ImageShowcaseSkeleton label="Flash" ratio={16 / 9} />
+      <ImageShowcaseSkeleton label="Flash" ratio={16 / 9} mobileCols={2} />
     </section>
   );
 }

@@ -139,7 +139,7 @@
 
 @utility container {
   margin-inline: auto;
-  @apply max-w-5xl px-2 lg:px-0;
+  @apply max-w-5xl px-1 sm:px-2 lg:px-0;
 }
 
 @utility text-brand-outline {

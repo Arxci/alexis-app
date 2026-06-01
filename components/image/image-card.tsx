@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Content as DialogContentPrimitive } from "@radix-ui/react-dialog";
 
@@ -55,7 +55,7 @@ const ImageModalContent = ({
             "relative border-2 overflow-hidden transition-opacity duration-150",
             modal.isLoading || modal.hasError
               ? "opacity-0 w-0 h-0"
-              : "opacity-100"
+              : "opacity-100",
           )}
         >
           <Image
@@ -63,10 +63,11 @@ const ImageModalContent = ({
             alt={alt}
             width={1920}
             height={1080}
+            unoptimized
             className={cn(
-              "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain"
+              "w-auto h-auto max-w-[95vw] max-h-[95vh] object-contain",
             )}
-            sizes="95w"
+            sizes="95vw"
             onLoad={modal.handleLoad}
             onError={handleImageError(imageUrl, modal.handleError)}
           />
@@ -87,15 +88,24 @@ export const ImageCard = ({
   priority?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
+  const prefetched = useRef(false);
   const thumbnail = useImageLoad(thumbUrl);
 
   const imageAlt = alt || "Tattoo artwork by Ace Arts";
+
+  const prefetchFullSize = () => {
+    if (prefetched.current || typeof window === "undefined") return;
+    prefetched.current = true;
+    new window.Image().src = imageUrl;
+  };
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger
         aria-label={`View full size: ${imageAlt}`}
         className="cursor-pointer group hover:-translate-y-2 transition-transform rounded-none"
+        onMouseEnter={prefetchFullSize}
+        onPointerDown={prefetchFullSize}
       >
         <ImageFrame>
           <AspectRatio ratio={ratio} className="overflow-hidden">
@@ -112,14 +122,14 @@ export const ImageCard = ({
                 alt={imageAlt}
                 fill
                 quality={75}
-                sizes="(max-width: 640px) 95vw, (max-width: 768px) 100vw, (max-width: 1024px) 32vw, 341px"
+                sizes="(max-width: 768px) 32vw, (max-width: 1024px) 32vw, 341px"
                 priority={priority}
                 fetchPriority={priority ? "high" : "auto"}
                 className={cn(
                   "object-cover transition-opacity duration-500",
                   thumbnail.isLoading || thumbnail.hasError
                     ? "opacity-0"
-                    : "opacity-100"
+                    : "opacity-100",
                 )}
                 onLoad={thumbnail.handleLoad}
                 onError={handleImageError(thumbUrl, thumbnail.handleError)}
@@ -150,7 +160,7 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           "outline-none flex items-center justify-center data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%]  p-6 duration-200",
-          className
+          className,
         )}
         {...props}
       >

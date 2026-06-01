@@ -87,6 +87,7 @@ export default async function FlashPage() {
             fetchData={fetchMoreFlash}
             totalCount={initialData.totalCount}
             imageRatio={16 / 9}
+            mobileCols={2}
           />
         </HydrationBoundary>
       </section>

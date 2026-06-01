@@ -16,7 +16,7 @@ import { ActionResponse } from "@/lib/error-handling";
 
 type FetchAction = (
   start: number,
-  end: number
+  end: number,
 ) => Promise<ActionResponse<PagedResult>>;
 
 type InfiniteScrollShowcaseProps = {
@@ -24,8 +24,8 @@ type InfiniteScrollShowcaseProps = {
   fetchData: FetchAction;
   totalCount: number;
   imageRatio: number;
+  mobileCols?: 2 | 3;
 };
-
 const LOADING_SKELETONS = Array.from({ length: INITIAL_FETCH_SIZE });
 const FETCH_SIZE = Math.max(1, PAGE_SIZE ?? INITIAL_FETCH_SIZE);
 
@@ -34,6 +34,7 @@ export function InfiniteScrollShowcase({
   fetchData,
   totalCount,
   imageRatio,
+  mobileCols,
 }: InfiniteScrollShowcaseProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
     useInfiniteQuery({
@@ -56,7 +57,7 @@ export function InfiniteScrollShowcase({
 
         const loadedCount = allPages.reduce(
           (acc, page) => acc + page.items.length,
-          0
+          0,
         );
         return loadedCount < totalCount ? loadedCount : undefined;
       },
@@ -67,7 +68,7 @@ export function InfiniteScrollShowcase({
 
   const { ref, inView } = useInView({
     threshold: 0,
-    rootMargin: "400px",
+    rootMargin: "1200px",
   });
 
   const allImages = useMemo(() => {
@@ -83,7 +84,7 @@ export function InfiniteScrollShowcase({
   const isEmpty = allImages.length === 0 && !isFetchingNextPage && !isError;
 
   return (
-    <ImageShowcase label={label} showLink={false}>
+    <ImageShowcase label={label} showLink={false} mobileCols={mobileCols}>
       <div role="status" aria-live="polite" className="sr-only">
         {isFetchingNextPage
           ? `Loading more ${label}...`

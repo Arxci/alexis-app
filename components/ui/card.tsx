@@ -13,9 +13,9 @@ export const Card = ({
         "bg-background-light",
         "rounded-none",
         "border-2",
-        "shadow-[6px_6px_0px_0px_var(--foreground)]",
+        "shadow-[2px_2px_0px_0px_var(--foreground)] sm:shadow-[6px_6px_0px_0px_var(--foreground)]",
         "my-10",
-        className
+        className,
       )}
     >
       {children}

@@ -10,8 +10,8 @@ export function ImageFrame({
   return (
     <div
       className={cn(
-        "border-2 bg-white p-2 shadow-sm transition-colors duration-300 group-hover:border-gold",
-        className
+        "border bg-white p-0.5 shadow-sm transition-colors duration-300 group-hover:border-gold sm:border-2 sm:p-2",
+        className,
       )}
     >
       <div className="relative overflow-hidden border border-stone-200">
