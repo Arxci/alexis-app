@@ -45,7 +45,7 @@ export const siteConfig = {
   links: {
     instagram: "https://instagram.com/ace_arts30",
     tiktok: "https://www.tiktok.com/@ace_arts30",
-    email: "Ace_arts30@gmail.com",
+    email: "Ace.arts30@gmail.com",
     neonDrago: "https://neondragontattoo.com/",
   },
 
